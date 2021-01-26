@@ -14,3 +14,9 @@ jQuery(document).ready(function() {
     	
     });
 });
+
+function selectSrc(name)
+{
+    $("#keywords").val(name);
+    $("#results").hide();
+}

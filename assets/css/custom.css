@@ -44,9 +44,76 @@
   background: #555; 
 }
 
-
-/* Hide scrollbar for IE, Edge and Firefox */
-/* #resContent {
-  -ms-overflow-style: none;  /* IE and Edge */
-  /*scrollbar-width: none;  /* Firefox */
+.footMenu
+	{
+		display: none;
+		background: #FFC500;
+		padding: 15px;
+		width: 100%;
+		position: fixed;
+		z-index: 999;
+		left: 0;
+		bottom: 0;
+	}
+.footMenu ul li 
+{
+	list-style-type: none;
+	display: inline-block;
+	padding: 0px 25px;
+	font-size: 32px;
 }
+@media only screen and (max-width: 1980px)
+{
+.footMenu
+	{
+		display: none;
+		
+	}
+}
+
+@media only screen and (max-width: 991px) 
+{
+	#mob-view
+	{
+		display: none !important;
+	}
+
+	.footMenu
+	{
+		display: block;
+		
+	}
+	.footMenu ul li 
+	{
+		list-style-type: none;
+		display: inline-block;
+		padding: 0px 25px;
+		font-size: 32px;
+	}
+}
+
+
+@media only screen and (max-width: 375px)
+{
+	.footMenu ul li 
+	{
+		list-style-type: none;
+		display: inline-block;
+		padding: 0px 18px;
+		font-size: 30px;
+	}
+} 
+
+@media only screen and (max-width: 414px)
+{
+	.footMenu ul li 
+	{
+		list-style-type: none;
+		display: inline-block;
+		padding: 0px 20px;
+		font-size: 32px;
+	}
+} 
+
+
+} 
