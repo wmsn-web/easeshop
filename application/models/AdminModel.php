@@ -343,6 +343,7 @@ class AdminModel extends CI_model
 			}
 			elseif($row->var_type=="color")
 			{
+				$this->db->order_by("id","ASC");
 				$this->db->where("product_id",$row->pro_id);
 				$getVarious = $this->db->get("varcolor");
 				if($getVarious->num_rows()==0)

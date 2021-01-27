@@ -161,12 +161,12 @@
 															
 														<div class="form-group col-sm-3">
 															<label>Color</label>
-															<input type="color" name="colors[]" class="form-control clr"  placeholder="">
+															<input type="color" id="cl_<?= $vars['var_id']; ?>" name="colors[]" class="form-control clr clrd"  value="<?= $vars['size']; ?>">
 														</div>
 														
 														<div class="form-group col-sm-4">
 															<label>Price</label>
-															<input type="text" name="prcce[]" class="form-control clr"  placeholder="Price">
+															<input type="text" id="clp_<?= $vars['var_id']; ?>" name="prcce[]" class="form-control clr clrP" value="<?= $vars['price']; ?>"  placeholder="Price">
 														</div>
 														</div>
 													<?php endforeach; ?>
@@ -183,19 +183,19 @@
 															
 														<div class="form-group col-sm-3">
 															<label>Size</label>
-															<input type="text" id="sz_<?= $vars['var_id']; ?>" name="size[]" class="form-control siz" value="<?= $vars['size']; ?>"  placeholder="10 gm">
+															<input type="text" id="sz_<?= $vars['var_id']; ?>" name="size[]" class="form-control siz sizd" value="<?= $vars['size']; ?>"  placeholder="10 gm">
 														</div>
 														
 														<div class="form-group col-sm-4">
 															<label>Price</label>
-															<input type="text" name="prcce2[]" class="form-control siz" value="<?= $vars['price']; ?>"  placeholder="Price">
+															<input type="text" id="clz_<?= $vars['var_id']; ?>" name="prcce2[]" class="form-control siz priz" value="<?= $vars['price']; ?>"  placeholder="Price">
 														</div>
 														
 														    
 														</div>
 													<?php endforeach; ?>
 													</div>
-													<a href="javascript:void(0);" class="add_button2" title="Add field"><i class="fas fa-plus"></i> Add Mores</a>
+													<a href="javascript:void(0);" class="add_button2" title="Add field"><i class="fas fa-plus"></i> Add More</a>
 												</div>
 												<!--================Size End===========-->
 												<div class="form-group col-sm-4">&nbsp;</div>
@@ -221,7 +221,7 @@
 												
 												<div class="form-group col-sm-4">
 													<label>Product Offer(%)</label>
-													<input type="text" name="offer" class="form-control" value="0">
+													<input type="text" name="offer" class="form-control" value="<?= $prodata['offer']; ?>" >
 												</div>
 												<div class="form-group col-sm-12">
 													<label>Short Description</label>
@@ -234,6 +234,7 @@
 											<label>Select an Image</label>
 											<input type="file" name="main_img" class="dropify" data-height="200" data-default-file="<?= base_url('uploads/products/'.$prodata['img']); ?>" />
 										</div>
+										
 										<input type="hidden" name="id" value="<?= $prodata['prId']; ?>">
 										<input type="hidden" name="proId" value="<?= $prodata["proId"]; ?>">
 										<div class="col-md-12">
@@ -364,7 +365,7 @@
         x--; //Decrement field counter
     });
     //========================================================================
-    $(".siz").blur(function(){
+    $(".sizd").blur(function(){
     	var ids = this.id;
     	var size = this.value;
     	spl = ids.split("_");
@@ -377,6 +378,59 @@
     			function(resp)
     			{
     				//alert("dd")
+    			}
+    		)
+    });
+
+    $(".priz").blur(function(){
+    	var ids = this.id;
+    	var price = this.value;
+    	spl = ids.split("_");
+    	id = spl[1];
+    	$.post("<?= base_url('admin_panel/AllProducts/ChangeVarSize_prize'); ?>",
+    			{
+    				id: id,
+    				price: price
+    			},
+    			function(resp)
+    			{
+    				//alert();
+    			}
+    		)
+    });
+
+
+    //Change Colors data===========================================================
+    $(".clr").blur(function(){
+    	var ids = this.id;
+    	var colorcode = this.value;
+    	spl = ids.split("_");
+    	id = spl[1];
+    	$.post("<?= base_url('admin_panel/AllProducts/ChangeVarColor'); ?>",
+    			{
+    				id: id,
+    				colorcode: colorcode
+    			},
+    			function(resp)
+    			{
+    				//alert(colorcode)
+    			}
+    		)
+    });
+
+    $(".clrP").blur(function(){
+    	var ids = this.id;
+    	var price = this.value;
+    	spl = ids.split("_");
+    	id = spl[1];
+    	$.post("<?= base_url('admin_panel/AllProducts/ChangeVarColor_prize'); ?>",
+    			{
+    				id: id,
+    				price: price
+    			},
+    			function(resp)
+    			{
+    				//alert();
     			}
     		)
     })

@@ -217,7 +217,29 @@ class AllProducts extends CI_controller
 		$getvar = $this->db->update("varsize", ["sizeString" =>$size]);
 	}
 
+	public function ChangeVarSize_prize()
+	{
+		$id = $this->input->post("id");
+		$price = $this->input->post("price");
+		$this->db->where("id",$id);
+		$getvar = $this->db->update("varsize", ["price" =>$price]);
+	}
 
+	public function ChangeVarColor()
+	{
+		$id = $this->input->post("id");
+		$colorcode = $this->input->post("colorcode");
+		$this->db->where("id",$id);
+		$getvar = $this->db->update("varcolor", ["colorcode" =>$colorcode]);
+	}
+
+	public function ChangeVarColor_prize()
+	{
+		$id = $this->input->post("id");
+		$price = $this->input->post("price");
+		$this->db->where("id",$id);
+		$getvar = $this->db->update("varcolor", ["price" =>$price]);
+	}
 
 	public function getVarious()
 	{
