@@ -46,6 +46,7 @@ class AddProducts extends CI_controller
 		//$varsUnit = $this->input->post("prcce");
 		$offer = $this->input->post("offer");
 		$returnable = $this->input->post("returnable");
+		$slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $prod_name)));
 		$proId = uniqid();
 		if($offer == "" || $offer == "0")
 		{
@@ -62,7 +63,7 @@ class AddProducts extends CI_controller
 		
 
 
-		$setProduct = $this->AdminModel->insrtProducts($prod_name,$catId,$qty,$units,$price,$descr,$pro_type,$var_type, $proId,$brand,$offer,$salePrice,$returnable);
+		$setProduct = $this->AdminModel->insrtProducts($prod_name,$catId,$qty,$units,$price,$descr,$pro_type,$var_type, $proId,$brand,$offer,$salePrice,$returnable,$slug);
 		
 		if($pro_type =="various")
 		{

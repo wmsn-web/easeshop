@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr"> 
 	<head>
 		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -233,6 +233,23 @@
 										<div class="col-md-4">
 											<label>Select an Image</label>
 											<input type="file" name="main_img" class="dropify" data-height="200" data-default-file="<?= base_url('uploads/products/'.$prodata['img']); ?>" />
+
+											<div class="row">
+												<?php if(!empty($getGal)){ ?>
+													<?php foreach ($getGal as $gal) { ?>
+														
+														<div class="col-sm-2 imgThumb">
+															<span class="closes">
+																<a href="<?= base_url('admin_panel/AllProducts/delgal/'.$gal['id'].'/'.$prodata['prId']); ?>">
+																	<i class="far fa-times-circle"></i>
+																</a>
+															</span>
+															<img src="<?= base_url('uploads/products/'.$gal['images']); ?>">
+														</div>
+											    	<?php } ?>
+											    <?php } ?>
+											</div>
+											<a data-toggle="modal" data-target="#morImg" href="javascript:void(0)">Upload More Images</a>
 										</div>
 										
 										<input type="hidden" name="id" value="<?= $prodata['prId']; ?>">
@@ -243,10 +260,48 @@
 									</div>
 								</form>
 							</div>
+							
 						</div>
 					</div>
 					
 				</div>
+
+				<div class="modal fade" id="morImg" role="dialog">
+			    <div class="modal-dialog modal-lg">
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <h4 class="modal-title">Upload More Pictures</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          
+			        </div>
+			        <div class="modal-body">
+			        	<div class="card-body">
+									<form action="<?= base_url('admin_panel/AllProducts/uplGal'); ?>" method="post" enctype="multipart/form-data">
+										<div class="row">
+		                                	<div class="gallerys col-md-12"></div>
+		                                	
+		                                </div>
+		                                
+		                                <input id="gallery-photo-add" type="file" name="proImg[]" accept=".jpg, .png, image/jpeg, image/png, html, zip, css,js" class="form-control" multiple>
+		                                <div class="form-group">
+		                                	<label for="gallery-photo-add">
+		                                	<span class="upldd"><i class="far fa-image"></i><br>Add More</span>
+		                                	</label><br><br>
+		                                	<input type="hidden" name="id" value="<?= $prodata['prId']; ?>">
+		                                	<button disabled="disabled" id="uplbtn" class="btn btn-warning text-white">Upload</button>
+		                                </div>
+	                                </form>
+                                </div>
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        </div>
+			      </div>
+			      
+			    </div>
+			  </div>
 				
 				<!-- row closed -->
 				<?php if($feed = $this->session->flashdata("Feed")){ ?>
@@ -265,6 +320,29 @@
 					<?php else: ?>
 					$("#varr1New").hide();
 				<?php endif; ?>
+				// Multiple images preview in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+
+        if (input.files) {
+            var filesAmount = input.files.length;
+
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $($.parseHTML('<img class="col-md-2">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                }
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+
+    };
+
+    $('#gallery-photo-add').on('change', function() {
+        imagesPreview(this, 'div.gallerys');
+        $("#uplbtn").attr("disabled",false);
+    });
 				$("#varr1").hide();
 				//$("#varr1New").hide();
 				$("#varr2").hide();

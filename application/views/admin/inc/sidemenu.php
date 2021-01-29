@@ -26,6 +26,7 @@
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-layers  menu-icons"></i><span class="side-menu__label">Category</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AddCategory'); ?>">Add Category</a></li>
+							<li><a class="slide-item" href="<?= base_url('admin_panel/Brands'); ?>">Brands/Sub-category</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AllCategory'); ?>">View All Category</a></li>
 							
 						</ul>
@@ -33,13 +34,16 @@
 					<li class="slide">
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-briefcase"></i><span class="side-menu__label">Products</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
-							<li><a class="slide-item" href="<?= base_url('admin_panel/Brands'); ?>">Brands/Sub-category</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AddProducts'); ?>">Add New Products</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AllProducts'); ?>">View All Products</a></li>
 							
 						</ul>
 					</li>
 					<?php endif; ?>
+					<li class="slide">
+						<a class="side-menu__item"  href="<?= base_url('admin_panel/SliderBanner'); ?>"><i class="side-menu__icon ti-help-alt menu-icon"></i><span class="side-menu__label">Slider Banner</span></a>
+						
+					</li>
 					<li class="slide">
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-help-alt menu-icon"></i><span class="side-menu__label">Orders</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
@@ -56,10 +60,7 @@
 						<a class="side-menu__item"  href="<?= base_url('admin_panel/Return-Requests'); ?>"><i class="side-menu__icon ti-help-alt menu-icon"></i><span class="side-menu__label">Return Requests</span></a>
 						
 					</li>
-					<li class="slide">
-						<a class="side-menu__item"  href="<?= base_url('admin_panel/AdvertisementBanner'); ?>"><i class="side-menu__icon ti-help-alt menu-icon"></i><span class="side-menu__label">Advertisement Banner</span></a>
-						
-					</li>
+					
 
 					<li class="slide">
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-bell menu-icon"></i><span class="side-menu__label">Notifications</span><i class="angle fe fe-chevron-down"></i></a>
@@ -100,6 +101,7 @@
 						<a class="side-menu__item"  href="<?= base_url('admin_panel/MembershipPlans'); ?>"><i class="side-menu__icon ti-id-badge menu-icon"></i><span class="side-menu__label">Membership Plans</span></a>
 					</li>
 				<?php endif; ?>
+			
 					<?= br(5); ?>
 					
 				</ul>

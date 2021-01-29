@@ -66,7 +66,7 @@
 												<td><img src="<?= base_url('uploads/products/'.$key['img']); ?>" width="30"></td>
 												<td>
 													<?php if($key['pro_type']=="various"):?>
-														<a class="modal-effect" data-effect="effect-newspaper" data-toggle="modal" href="#modaldemo8" onclick="showVerPro('pr_<?= $key['pro_id']; ?>')"><?= $key['prod_name']; ?></a>
+														<a class="modal-effect text-warning" data-effect="effect-newspaper" data-toggle="modal" href="#modaldemo8" onclick="showVerPro('pr_<?= $key['pro_id']; ?>')"><?= $key['prod_name']; ?></a>
 													<?php else: ?>
 														<span><?= $key['prod_name']; ?></span>
 													<?php endif; ?>
@@ -77,12 +77,7 @@
 												<td><?= $key['units']; ?></td>
 												<td>
 													<?php if($key['pro_type']=="various"){ ?>
-														<select>
-															<option>Various Product</option>
-														<?php foreach ($key['var'] as $val) { ?>
-															<option><?= $val['qty_unit']."-- &#8377;".$val['price']; ?></option>
-														<?php } ?>
-														</select>
+														<a class="modal-effect text-warning" data-effect="effect-newspaper" data-toggle="modal" href="#modaldemo8" onclick="showVerPro('pr_<?= $key['pro_id']; ?>')">Various ProductPrice</a>
 													<?php }else{ echo $key['price']; } ?>
 												</td>
 												<td><?= $key['offer']; ?>%</td>
@@ -111,10 +106,10 @@
 						<table class="table table-bordered">
 							<thead>
 								<tr>
-									<th>Image</th>
-									<th>Product Qty</th>
+									
+									<th>Product Various</th>
 									<th>Price</th>
-									<th>Stock</th>
+									<th>Sale Price</th>
 									
 								</tr>
 							</thead>

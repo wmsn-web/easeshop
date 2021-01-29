@@ -68,6 +68,9 @@ class AllProducts extends CI_controller
 		$var_type = $this->input->post("var_type");
 		$offer = $this->input->post("offer");
 		$returnable = $this->input->post("returnable");
+		$pronameSmall = strtolower($prod_name);
+		$slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $prod_name)));
+
 		$units = $nm.' '.$unitss;
 
 		if($offer == "" || $offer == 0)
@@ -82,7 +85,7 @@ class AllProducts extends CI_controller
 			$salePrice = $price - $acOfer;
 		}
 
-		$updtProduct = $this->AdminModel->updtProduct($prod_name,$catId,$qty,$units,$price,$descr,$id,$brand,$pro_type,$var_type,$proId,$offer,$salePrice,$returnable);
+		$updtProduct = $this->AdminModel->updtProduct($prod_name,$catId,$qty,$units,$price,$descr,$id,$brand,$pro_type,$var_type,$proId,$offer,$salePrice,$returnable,$slug);
 		if($pro_type =="various")
 		{
 			if($var_type=="color")
@@ -246,55 +249,73 @@ class AllProducts extends CI_controller
 		$pro_id = $this->input->post("pro_id");
 		$this->db->where("pro_id",$pro_id);
 		$gtProd = $this->db->get("products")->row();
-		$this->db->where("product_id",$pro_id);
-		$getvar = $this->db->get("various");
-		if($getvar->num_rows()==0)
+		if($gtProd->var_type=="size")
 		{
-			$data = array();
+			$this->db->where("product_id",$pro_id);
+			$getvar = $this->db->get("varsize");
+			if($getvar->num_rows()==0)
+			{
+				$data = array();
+			}
+			else
+			{
+				$res = $getvar->result();
+				foreach ($res as $key => $value) {
+					$data[] = array
+									(
+										"size" =>$value->sizeString,
+										"price"	=>$value->price,
+										"salePrice"	=>$value->sale_price,
+										"img"	=>$value->img,
+										"id"	=>$value->id,
+										"var_type" =>$gtProd->var_type
+									);
+				}
+			}
 		}
 		else
 		{
-			$res = $getvar->result();
-			foreach ($res as $key => $value) {
-				$data[] = array
-								(
-									"qty_unit" =>$value->qty_unit,
-									"price"	=>$value->price,
-									"stock"	=>$value->stock_qty,
-									"img"	=>$value->img,
-									"id"	=>$value->id
-								);
+			$this->db->where("product_id",$pro_id);
+			$getvar = $this->db->get("varcolor");
+			if($getvar->num_rows()==0)
+			{
+				$data = array();
+			}
+			else
+			{
+				$res = $getvar->result();
+				foreach ($res as $key => $value) {
+					$data[] = array
+									(
+										"size" =>$value->colorcode,
+										"price"	=>$value->price,
+										"salePrice"	=>$value->sale_price,
+										"img"	=>$value->img,
+										"id"	=>$value->id,
+										"var_type" =>$gtProd->var_type
+									);
+				}
 			}
 		}
+		
 		$s = 1;
 
 		foreach ($data as $key):
 			$ss = $s++;
-			if($key['img']==null)
+			if($key['var_type']=="size")
 			{
-				$img = "<form action='".base_url('admin_panel/AllProducts/uplvarImg')."' method='post' enctype='multipart/form-data'>
-						<label id='lb_".$ss."' for='inp_".$ss."'><i class='fas fa-upload cp'></i></label>
-						<input onchange='maketick(this.id)' id='inp_".$ss."' type='file' name='varImg' class='upld' required>
-						<input type='hidden' name='id' value='".$key['id']."'>
-						<button id='bt_".$ss."'  class='btn plbtn'>Upload</button>
-				</form>";
+				$sz = "<span>".$key['size']."</span>";
 			}
 			else
 			{
-				$img = "<form action='".base_url('admin_panel/AllProducts/uplvarImg')."' method='post' enctype='multipart/form-data'>
-						<label id='lb_".$ss."' for='inp_".$ss."'><img width='35' src='".base_url('uploads/products/'.$key['img'])."' /></label>
-						<input onchange='maketick(this.id)' id='inp_".$ss."' type='file' name='varImg' class='upld' required>
-						<input type='hidden' name='id' value='".$key['id']."'>
-						<button  id='bt_".$ss."'  class='btn plbtn'>Upload</button>
-				</form>";
+				$sz = "<span style='display:inline-block; width:25px; height:25px; background:".$key['size']."; border-radius:50%; '></span>";
 			}
 		 ?>
 
 			<tr>
-				<td class="text-center"><?= $img; ?></td>
-				<td><?= $key['qty_unit']; ?></td>
+				<td><?= $sz; ?></td>
 				<td><?= $key['price']; ?></td>
-				<td><?= $key['stock']; ?></td>
+				<td><?= $key['salePrice']; ?></td>
 				
 			</tr>
 		<?php endforeach; 

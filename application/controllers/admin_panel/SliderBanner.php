@@ -2,7 +2,7 @@
 /**
  * 
  */
-class AdvertisementBanner extends CI_controller
+class SliderBanner extends CI_controller
 {
 	
 	public function __construct()
@@ -28,7 +28,7 @@ class AdvertisementBanner extends CI_controller
 			$getBannerById = $this->AdminModel->getBannerById($id);
 		}
 		
-		$this->load->view("admin/AdvertisementBanner",["data"=>$getBanner,"catData"=>$getAllCat,"banData"=>$getBannerById]); 
+		$this->load->view("admin/SliderBanner",["data"=>$getBanner,"catData"=>$getAllCat,"banData"=>$getBannerById]); 
 	}
 
 	public function uploadBanner()
@@ -68,7 +68,7 @@ class AdvertisementBanner extends CI_controller
 				}
 				//$addbanner = $this->AdminModel->addbannerTs($title,$status,$cat_id);
 				$this->session->set_flashdata("Feed","Banner Successfully Updated.");
-				return redirect("admin_panel/AdvertisementBanner");
+				return redirect("admin_panel/SliderBanner");
 	}
 
 	public function DelBanner($id='')
@@ -76,7 +76,7 @@ class AdvertisementBanner extends CI_controller
 		$this->db->where("id",$id);
 		$this->db->delete("ad_banner");
 		$this->session->set_flashdata("Feed","Banner Successfully Deleted.");
-		return redirect("admin_panel/AdvertisementBanner");
+		return redirect("admin_panel/SliderBanner");
 	}
 
 	public function EdituploadBanner()
@@ -122,7 +122,7 @@ class AdvertisementBanner extends CI_controller
 				}
 				//$addbanner = $this->AdminModel->addbannerTs($title,$status,$cat_id);
 				$this->session->set_flashdata("Feed","Banner Successfully Updated.");
-				return redirect("admin_panel/AdvertisementBanner");
+				return redirect("admin_panel/SliderBanner");
 	}
 
 }

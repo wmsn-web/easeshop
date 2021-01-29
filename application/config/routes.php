@@ -9,3 +9,6 @@ $route['base_url'] = 'front_controller/Home';
 $route['admin_panel/([a-z]+)/(:any)'] = "admin_panel/home/$1/$2";
 $route['admin_panel/([a-z]+)'] = "admin_panel/home/$1";
 $route['admin_panel'] = "admin_panel/home";
+
+//Front-end
+

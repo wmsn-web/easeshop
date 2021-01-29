@@ -107,7 +107,7 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function insrtProducts($prod_name,$catId,$qty,$units,$price,$descr,$pro_type,$var_type, $proId,$brand,$offer,$salePrice,$returnable)
+	public function insrtProducts($prod_name,$catId,$qty,$units,$price,$descr,$pro_type,$var_type, $proId,$brand,$offer,$salePrice,$returnable,$slug)
 	{
 		$this->db->where(["product_name"=>$prod_name,"cat_id"=>$catId]);
 		$get = $this->db->get("products");
@@ -135,7 +135,8 @@ class AdminModel extends CI_model
 								"descr"=>$descr,
 								"active"=>1,
 								"sale_price"=>$salePrice,
-								"returnable"=>$returnable
+								"returnable"=>$returnable,
+								"slug"		=>$slug
 							);
 			$this->db->insert("products",$proArray);
 			$return = $proId;
@@ -424,7 +425,7 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function updtProduct($prod_name,$catId,$qty,$units,$price,$descr,$id,$brand,$pro_type,$var_type,$proId,$offer,$salePrice,$returnable)
+	public function updtProduct($prod_name,$catId,$qty,$units,$price,$descr,$id,$brand,$pro_type,$var_type,$proId,$offer,$salePrice,$returnable,$slug)
 	{
 		$this->db->where("id",$catId);
 		$getCat = $this->db->get("category")->row();
@@ -442,7 +443,8 @@ class AdminModel extends CI_model
 								"offer"=>$offer,
 								"descr"=>$descr,
 								"sale_price"=>$salePrice,
-								"returnable"=>$returnable
+								"returnable"=>$returnable,
+								"slug"		=>$slug
 							);
 		$this->db->where("id",$id);
 		$this->db->update("products",$proArray);
