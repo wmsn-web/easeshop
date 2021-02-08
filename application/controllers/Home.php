@@ -14,9 +14,14 @@ class Home extends CI_controller
 	public function index()
 	{
 		$getMenudata = $this->ThemeModel->getMenudata();
-		$this->load->view("fronts/Home",["menus"=>$getMenudata]);
-		//echo password_hash("Admin123456", PASSWORD_DEFAULT);
+		$getBanner = $this->ThemeModel->getBanner();
+		$newProd = $this->ThemeModel->getNewProducts();
+		$splOffer = $this->ThemeModel->splOffer();
+		$fetPro = $this->ThemeModel->fetPro();
+		$getCat = $this->ThemeModel->getCat();
+		$this->load->view("fronts/Home",["menus"=>$getMenudata,"banData" => $getBanner, "new_pro"=>$newProd,"spalOffer"=>$splOffer,"cats"=>$getCat,"fetPro"=>$fetPro ]);
+		
 		//echo "<pre>";
-		//print_r($getMenudata);
+		//print_r($getCat);
 	}
 }

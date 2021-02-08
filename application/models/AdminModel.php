@@ -549,7 +549,7 @@ class AdminModel extends CI_model
 					$roww = $gt->row();
 					$cat_name = $roww->cat_name;
 				}
-				$data[] = array("title"=>$row->title,"imgg"=>$row->images,"cat_name"=>$cat_name,"status"=>$row->status,"id"=>$row->id);
+				$data[] = array("title"=>$row->title,"sl_text"=>$row->sl_text,"imgg"=>$row->images,"cat_name"=>$cat_name,"status"=>$row->status,"id"=>$row->id);
 			}
 
 		}
@@ -579,7 +579,7 @@ class AdminModel extends CI_model
 					$roww = $gt->row();
 					$cat_name = $roww->cat_name;
 				}
-			$data = array("title"=>$row->title,"imgg"=>$row->images,"cat_id"=>$row->cat_id,"cat_name"=>$cat_name,"status"=>$row->status);
+			$data = array("title"=>$row->title,"sl_text"=>$row->sl_text,"imgg"=>$row->images,"cat_id"=>$row->cat_id,"cat_name"=>$cat_name,"status"=>$row->status);
 		}
 
 		return $data;
@@ -601,11 +601,12 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function addbanner($title,$file_name,$status,$cat_id) 
+	public function addbanner($title,$sl_text,$file_name,$status,$cat_id) 
 	{
 		$data = array
 					(
 						"title"=>$title,
+						"sl_text"=>$sl_text,
 						"images"=>$file_name,
 						"cat_id"=>$cat_id,
 						"status"=>$status
@@ -625,11 +626,12 @@ class AdminModel extends CI_model
 		return "succ";
 	}
 
-	public function updtbanner($id,$title,$status,$cat_id)
+	public function updtbanner($id,$title,$sl_text,$status,$cat_id)
 	{
 		$data = array
 					(
 						"title"=>$title,
+						"sl_text"=>$sl_text,
 						"cat_id"=>$cat_id,
 						"status"=>$status
 					);
@@ -637,11 +639,12 @@ class AdminModel extends CI_model
 		$this->db->update("ad_banner",$data);
 	}
 
-	public function updtbannerFile($id,$title,$file_name,$status,$cat_id)
+	public function updtbannerFile($id,$title,$file_name,$sl_text,$status,$cat_id)
 	{
 		$data = array
 					(
 						"title"=>$title,
+						"sl_text"=>$sl_text,
 						"images"=>$file_name,
 						"cat_id"=>$cat_id,
 						"status"=>$status

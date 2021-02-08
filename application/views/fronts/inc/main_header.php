@@ -12,7 +12,7 @@
           <!-- /.contact-row --> 
           <!-- ============================================================= SEARCH AREA ============================================================= -->
           <div class="search-area">
-            <form>
+            <form action="<?= base_url('Search/posts'); ?>" method="post">
               <div class="control-group">
                 <!--ul class="categories-filter animate-dropdown">
                   <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="category.html">Categories <b class="caret"></b></a>
@@ -25,36 +25,13 @@
                     </ul>
                   </li>
                 </ul-->
-                <input class="search-field" id="keywords" placeholder="Search here..." />
-                <a class="search-button" href="#" ></a> </div>
+                <input name="keys" class="search-field" id="keywords" placeholder="Search here..." autocomplete="off" />
+                <button class="search-button" ></button> </div>
                 
             </form>
           </div>
           <div id="results">
-            <ul id="resContent">
-              <li onclick="selectSrc('Search Key')">Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-              <li>Search here...</li>
-            </ul>
+            <ul id="resContent"></ul>
           </div>
           <!-- /.search-area --> 
           <!-- ============================================================= SEARCH AREA : END ============================================================= --> </div>

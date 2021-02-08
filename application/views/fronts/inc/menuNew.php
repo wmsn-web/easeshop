@@ -9,7 +9,7 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-                <li class="active dropdown yamm-fw"> <a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+                <li class="active dropdown yamm-fw"> <a href="<?= base_url(); ?>" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
                 <?php if(!empty($menus)): ?>
                   <?php foreach($menus as $menu): ?>
                       <li class="dropdown"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><?= $menu['catName']; ?></a>

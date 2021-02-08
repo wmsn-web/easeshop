@@ -82,10 +82,15 @@
 												</td>
 												<td><?= $key['offer']; ?>%</td>
 												<td>
-													<a href="<?= base_url('admin_panel/AllProducts/EditProd/'.$key['prId']); ?>">
-													<button class="btn btn-warning">Edit</button></a>
-													<a onclick="return confirm('Are You Sure ? Delete this product.');" href="<?= base_url('admin_panel/AllProducts/DelProd/'.$key['prId']); ?>">
-													<button class="btn btn-danger">Delete</button></a>
+													<a class="text-warning" href="<?= base_url('admin_panel/AllProducts/EditProd/'.$key['prId']); ?>">
+													<i class="fas fa-pen"></i></a>
+													<?= nbs(2); ?>
+													<a class="text-danger" onclick="return confirm('Are You Sure ? Delete this product.');" href="<?= base_url('admin_panel/AllProducts/DelProd/'.$key['prId']); ?>">
+													<i class="fas fa-trash"></i></a>
+													<?= nbs(2); ?>
+													<a class="text-white" href="#" data-toggle="modal" data-target="#proSetting" onclick="getProsettings('pr_<?= $key['pro_id']; ?>')">
+														<i class="fa fa-cog"></i>
+													</a>
 												</td>
 											</tr>
 
@@ -97,37 +102,74 @@
 					</div>
 				</div>
 				<div class="modal" id="modaldemo8">
-			<div class="modal-dialog modal-md modal-dialog-centered" role="document">
-				<div class="modal-content modal-content-demo">
-					<div class="modal-header">
-						<h6 id="proName" class="modal-title">Product Name</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-					</div>
-					<div class="modal-body">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									
-									<th>Product Various</th>
-									<th>Price</th>
-									<th>Sale Price</th>
-									
-								</tr>
-							</thead>
-							<tbody id="proTbl">
+					<div class="modal-dialog modal-md modal-dialog-centered" role="document">
+						<div class="modal-content modal-content-demo">
+							<div class="modal-header">
+								<h6 id="proName" class="modal-title">Product Name</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+							</div>
+							<div class="modal-body">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											
+											<th>Product Various</th>
+											<th>Price</th>
+											<th>Sale Price</th>
+											
+										</tr>
+									</thead>
+									<tbody id="proTbl">
+										
+									</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
 								
-							</tbody>
-						</table>
+								<button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Close</button>
+							</div>
+						</div>
 					</div>
-					<div class="modal-footer">
-						
-						<button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Close</button>
-					</div>
-				</div>
-			</div>
 		</div>
+
+		
 				
 				<!-- row closed -->
 			</div>
+			<div class="modal" id="proSetting">
+					<div class="modal-dialog modal-md modal-dialog-centered" role="document">
+						<div class="modal-content modal-content-demo">
+							<div class="modal-header">
+								<h6 id="proNameSS" class="modal-title"></h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+							</div>
+							<div class="modal-body">
+								<form action="<?= base_url('admin_panel/AllProducts/SetProSetting'); ?>" method="post">
+									<div class="form-group">
+										<input type="checkbox" name="new_pro" id="Npro" value="1">
+										<label>New Product</label>
+									</div>
+									<div class="form-group">
+										<input type="checkbox" name="feature_pro" id="Fpro" value="1">
+										<label>Featured Product</label>
+									</div>
+									<div class="form-group">
+										<input type="checkbox" name="top_pro" id="Tpro" value="1">
+										<label>Top Product</label>
+									</div>
+									<div class="form-group">
+										<input type="checkbox" name="spl_offer" id="Spro" value="1">
+										<label>Special Offered Product</label>
+									</div>
+									<input type="hidden" name="pro_id" id="pro_id">
+									<button class="btn btn-warning">Save</button>
+								</form>
+							</div>
+							<div class="modal-footer">
+								
+								<button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Close</button>
+							</div>
+						</div>
+					</div>
+		</div>
 			<?php if($feed = $this->session->flashdata("Feed")){ ?>
 					<div class="flashd"><?= $feed; ?></div>
 				<?php } ?>
@@ -175,6 +217,58 @@
 						 function(response,status)
 						 {
 						 	$("#proTbl").html(response);
+						 }
+					)
+			}
+
+			function getProsettings(name)
+			{
+				spl = name.split("_");
+					pro_id = spl[1];
+
+					$.post("<?= base_url('admin_panel/AllProducts/getProsettings'); ?>", 
+						 {
+						 	pro_id: pro_id
+						 },
+						 function(response,status)
+						 {
+						 	//$("#proTbl").html(response);
+						 	var obj = JSON.parse(response);
+						 	$("#pro_id").val(obj.pro_id);
+						 	$("#proNameSS").html(obj.prod_name);
+						 	//alert(obj.prod_name)
+						 	if(obj.top_pro == "1")
+						 	{
+						 		$("#Tpro").attr("checked",true);
+						 	}
+						 	else
+						 	{
+						 		$("#Tpro").attr("checked",false);
+						 	}
+						 	if(obj.new_pro == "1")
+						 	{
+						 		$("#Npro").attr("checked",true);
+						 	}
+						 	else
+						 	{
+						 		$("#Npro").attr("checked",false);
+						 	}
+						 	if(obj.feature_pro == "1")
+						 	{
+						 		$("#Fpro").attr("checked",true);
+						 	}
+						 	else
+						 	{
+						 		$("#Fpro").attr("checked",false);
+						 	}
+						 	if(obj.spl_offer == "1")
+						 	{
+						 		$("#Spro").attr("checked",true);
+						 	}
+						 	else
+						 	{
+						 		$("#Spro").attr("checked",false);
+						 	}
 						 }
 					)
 			}

@@ -37,8 +37,12 @@
 							<div class="card-body">
 								<?= form_open_multipart('admin_panel/SliderBanner/uploadBanner'); ?>
 							<div class="form-group">
-								<label>Banner Title</label>
-								<input type="text" name="title" class="form-control" value="Slider" readonly="readonly" />
+								<label>Slider Title</label>
+								<input type="text" name="title" class="form-control" value=""  />
+							</div>
+							<div class="form-group">
+								<label>Slider Text</label>
+								<input type="text" name="sl_text" class="form-control" value=""  />
 							</div>
 							<div class="form-group">
 								<label>Select an Image</label>
@@ -80,6 +84,7 @@
 										<tr>
 											<th>Image</th>
 											<th>Title</th>
+											<th>Text</th>
 											<th>Delete</th>
 										</tr>
 									</thead>
@@ -97,7 +102,7 @@
 											<tr <?= $style; ?>>
 												<td><img src="<?= base_url('uploads/banners/'.$key['imgg']); ?>" width="100"></td>
 												<td><?= $key['title']; ?></td>
-												
+												<td><?= $key['sl_text']; ?></td>
 												<td>
 													<a href="<?= base_url('admin_panel/SliderBanner/index/editBanner/'.$key['id']); ?>">Update</a><?= nbs(5); ?>
 													<a onclick="return confirm('Delete this Banner?');" href="<?= base_url('admin_panel/SliderBanner/DelBanner/'.$key['id']); ?>" class="text-danger">Delete</a></td>
@@ -133,11 +138,15 @@
 								<input type="text" name="title" class="form-control" value="<?= $banData['title']; ?>" required="" />
 							</div>
 							<div class="form-group">
+								<label>Slider Text</label>
+								<input type="text" name="sl_text" class="form-control" value="<?= $banData['sl_text']; ?>"  />
+							</div>
+							<div class="form-group">
 								<label>Select an Image</label>
 								<input type="file" name="main_img" class="dropify"  data-height="100" data-default-file='<?= base_url('uploads/banners/'.$banData['imgg']); ?>' />
 							</div>
-							
-							<div class="form-group">
+							<input type="hidden" name="cat_id" value="1">
+							<!--div class="form-group">
 								<label>Select Category</label>
 								<select type="text" name="cat_id" class="form-control" placeholder="" required="">
 									<option  value="">Select Category</option>
@@ -156,7 +165,7 @@
 										<?php endforeach; ?>
 									<?php endif; ?>
 								</select>
-							</div>
+							</div-->
 							<div class="form-group">
 								<label>Status</label>
 								<select name="status" class="form-control">

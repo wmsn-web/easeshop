@@ -34,6 +34,7 @@ class SliderBanner extends CI_controller
 	public function uploadBanner()
 	{
 		$title = $this->input->post("title");
+		$sl_text = $this->input->post("sl_text");
 		$status = $this->input->post("status");
 		$cat_id = $this->input->post("cat_id");
 		$dir_name ='./uploads/banners';
@@ -63,7 +64,7 @@ class SliderBanner extends CI_controller
                         $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
 						$file_name = $upload_data['file_name'];
 						
-						$addbanner = $this->AdminModel->addbanner($title,$file_name,$status,$cat_id); 
+						$addbanner = $this->AdminModel->addbanner($title,$sl_text,$file_name,$status,$cat_id); 
 						
 				}
 				//$addbanner = $this->AdminModel->addbannerTs($title,$status,$cat_id);
@@ -82,6 +83,7 @@ class SliderBanner extends CI_controller
 	public function EdituploadBanner()
 	{
 		$title = $this->input->post("title");
+		$sl_text = $this->input->post("sl_text");
 		$status = $this->input->post("status");
 		$cat_id = $this->input->post("cat_id");
 		$id = $this->input->post("id");
@@ -109,7 +111,7 @@ class SliderBanner extends CI_controller
                         $error = array('error' => $this->upload->display_errors());
                         //print_r($error);
                         $this->session->set_flashdata("FL","Maximum size issue!");
-                        $updtbanner = $this->AdminModel->updtbanner($id,$title,$status,$cat_id);
+                        $updtbanner = $this->AdminModel->updtbanner($id,$title,$sl_text,$status,$cat_id);
                         
                 }
                 else
@@ -117,7 +119,7 @@ class SliderBanner extends CI_controller
                         $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
 						$file_name = $upload_data['file_name'];
 						
-						$updtbanner = $this->AdminModel->updtbannerFile($id,$title,$file_name,$status,$cat_id); 
+						$updtbanner = $this->AdminModel->updtbannerFile($id,$title,$sl_text,$file_name,$status,$cat_id); 
 						
 				}
 				//$addbanner = $this->AdminModel->addbannerTs($title,$status,$cat_id);

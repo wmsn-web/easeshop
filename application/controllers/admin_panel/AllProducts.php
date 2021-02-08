@@ -354,4 +354,45 @@ class AllProducts extends CI_controller
 				
 		}
 	}
+
+
+	public function getProsettings()
+	{
+		$pro_id = $this->input->post("pro_id");
+		$this->db->where("pro_id",$pro_id);
+		$gtProd = $this->db->get("products")->row();
+		$data  = array
+					(
+						"top_pro" =>$gtProd->top_pro,
+						"feature_pro"	=>$gtProd->feature_pro,
+						"spl_offer"		=>$gtProd->spl_offer,
+						"new_pro"		=>$gtProd->new_pro,
+						"pro_id"		=>$pro_id,
+						"prod_name"		=>$gtProd->product_name
+					);
+
+		echo json_encode($data);
+	}
+
+	public function SetProSetting()
+	{
+		$pro_id = $this->input->post("pro_id");
+		$top_pro = $this->input->post("top_pro");
+		$feature_pro = $this->input->post("feature_pro");
+		$spl_offer = $this->input->post("spl_offer");
+		$new_pro = $this->input->post("new_pro");
+		$data = array
+					(
+						"top_pro" 		=>$top_pro,
+						"feature_pro"	=>$feature_pro,
+						"spl_offer"		=>$spl_offer,
+						"new_pro"		=>$new_pro
+
+						
+					);
+		$this->db->where("pro_id",$pro_id);
+		$this->db->update("products",$data);
+		$this->session->set_flashdata("Feed","Product Settings Successfully");
+				return redirect("admin_panel/AllProducts");
+	}
 }
