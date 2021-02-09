@@ -112,6 +112,7 @@ class SliderBanner extends CI_controller
                         //print_r($error);
                         $this->session->set_flashdata("FL","Maximum size issue!");
                         $updtbanner = $this->AdminModel->updtbanner($id,$title,$sl_text,$status,$cat_id);
+                        print_r($error);
                         
                 }
                 else

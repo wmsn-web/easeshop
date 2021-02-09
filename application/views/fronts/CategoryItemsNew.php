@@ -50,7 +50,7 @@
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
         <li><a href="#">Home</a></li>
-        <li class='active'><?= $this->uri->segment(3); ?></li>
+        <li class='active'><?= urldecode($this->uri->segment(3)); ?></li>
       </ul>
     </div>
     <!-- /.breadcrumb-inner --> 
@@ -125,7 +125,7 @@
                                 <!-- /.col -->
                                 <div class="col col-sm-8 col-lg-8">
                                   <div class="product-info">
-                                    <h3 class="name"><a href="detail.html"><?= $brI['prod_name']; ?></a></h3>
+                                    <h3 class="name"><a href="<?= base_url('Product_details/index/'.$brI['pro_id']); ?>"><?= $brI['prod_name']; ?></a></h3>
                                     <div class="rating rateit-small"></div>
                                     <div class="product-price"> <span class="price">&#8377; <?= $brI['price']; ?> </span> <span class="price-before-discount">&#8377; <?= $brI['sale_price']; ?></span> </div>
                                     <!-- /.product-price -->
@@ -321,6 +321,7 @@
 </div>
 <!-- /.body-content --> 
 <!-- ============================================================= FOOTER ============================================================= -->
+<?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
 </div>

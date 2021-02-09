@@ -283,4 +283,88 @@ class ThemeModel extends CI_Model
 		$num  = $getpro->num_rows();
 		return $num;
 	}
+
+	public function getProDetailsById($proId)
+	{
+		$this->db->where(["pro_id"=>$proId,"status"=>1]);
+		$getpro = $this->db->get("products");
+		if($getpro->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$key = $getpro->row();
+			$this->db->order_by("id","ASC");
+			$this->db->where("product_id",$key->id);
+			$gtGal = $this->db->get("product_gallery");
+			if($gtGal->num_rows()==0)
+			{
+				$galData = array();
+			}
+			else
+			{
+				$allgal = $gtGal->result();
+				foreach($allgal as $gal)
+				{
+					$galData[] = array
+										(
+											"galImg"	=>$gal->images,
+											"gal_id"	=>$gal->id
+										);
+				}
+			}
+			if($key->pro_type == "various")
+			{
+				if($key->var_type == "color")
+				{
+					$this->db->where("product_id",$key->pro_id);
+					$gtvar = $this->db->get("varcolor")->result();
+					foreach($gtvar as $vars)
+					{
+						$vardata[] = array
+											(
+												"sale_price"=>$vars->sale_price,
+												"varName"	=>$vars->color_name
+											);
+					}
+				}
+				else
+				{
+					$this->db->where("product_id",$key->pro_id);
+					$gtvar = $this->db->get("varsize")->result();
+					foreach($gtvar as $vars)
+					{
+						$vardata[] = array
+											(
+												"varName"	=>$vars->sizeString,
+												"sale_price"=>$vars->sale_price
+											);
+					}
+				}
+			}
+			else
+			{
+				$vardata = array();
+			}
+			
+				$data = array
+								(
+									"prod_name"		=>$key->product_name,
+									"price"			=>$key->price,
+									"sale_price"	=>$key->sale_price,
+									"id"			=>$key->id,
+									"pro_id"		=>$key->pro_id,
+									"mnImg"			=>$key->main_img,
+									"descr"			=>$key->descr,
+									"galData"		=>$galData,
+									"stock"			=>$key->qty,
+									"varData"		=>$vardata,
+									"pro_type"		=>$key->pro_type
+								);
+			
+		}
+
+		return $data;
+	}
 }

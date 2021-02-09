@@ -639,7 +639,7 @@ class AdminModel extends CI_model
 		$this->db->update("ad_banner",$data);
 	}
 
-	public function updtbannerFile($id,$title,$file_name,$sl_text,$status,$cat_id)
+	public function updtbannerFile($id,$title,$sl_text,$file_name,$status,$cat_id)
 	{
 		$data = array
 					(

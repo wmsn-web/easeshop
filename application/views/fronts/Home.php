@@ -106,7 +106,7 @@
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="#"><?= $spl['prod_name']; ?></a></h3>
+                            <h3 class="name"><a href="<?= base_url('Product_details/index/'.$spl['pro_id']); ?>"><?= $spl['prod_name']; ?></a></h3>
                             <div class="rating rateit-small"></div>
                             <div class="product-price"> <span class="price">&#8377; <?= $spl['sale_price']; ?> </span> </div>
                             <!-- /.product-price --> 
@@ -171,7 +171,7 @@
                     <div class="products">
                       <div class="product">
                         <div class="product-image">
-                          <div class="image"> <a href="detail.html"><img  src="<?= base_url('uploads/products/'.$nPro['mnImg']); ?>" alt=""></a> </div>
+                          <div class="image"> <a href="<?= base_url('Product_details/index/'.$nPro['pro_id']); ?>"><img  src="<?= base_url('uploads/products/'.$nPro['mnImg']); ?>" alt=""></a> </div>
                           <!-- /.image -->
                           
                           <div class="tag new"><span>new</span></div>
@@ -179,7 +179,7 @@
                         <!-- /.product-image -->
                         
                         <div class="product-info text-left">
-                          <h3 class="name"><a href="detail.html"><?= $nPro['prod_name']; ?></a></h3>
+                          <h3 class="name"><a href="<?= base_url('Product_details/index/'.$nPro['pro_id']); ?>"><?= $nPro['prod_name']; ?></a></h3>
                           <div class="rating rateit-small"></div>
                           <div class="description"></div>
                           <div class="product-price"> <span class="price">&#8377; <?= $nPro['sale_price']; ?> </span> <span class="price-before-discount">&#8377; <?= $nPro['price']; ?></span> </div>
@@ -252,7 +252,7 @@
                   <div class="products">
                     <div class="product">
                       <div class="product-image">
-                        <div class="image"> <a href="detail.html"><img  src="<?= base_url('uploads/products/'.$fPro['mnImg']); ?>" alt=""></a> </div>
+                        <div class="image"> <a href="<?= base_url('Product_details/index/'.$fPro['pro_id']); ?>"><img  src="<?= base_url('uploads/products/'.$fPro['mnImg']); ?>" alt=""></a> </div>
                         <!-- /.image -->
                         
                         <div class="tag hot"><span>hot</span></div>
@@ -260,7 +260,7 @@
                       <!-- /.product-image -->
                       
                       <div class="product-info text-left">
-                        <h3 class="name"><a href="detail.html"><?= $fPro['prod_name']; ?></a></h3>
+                        <h3 class="name"><a href="<?= base_url('Product_details/index/'.$fPro['pro_id']); ?>"><?= $fPro['prod_name']; ?></a></h3>
                         <div class="rating rateit-small"></div>
                         <div class="description"></div>
                         <div class="product-price"> <span class="price">&#8377; <?= $fPro['sale_price']; ?> </span> <span class="price-before-discount">&#8377; <?= $fPro['price']; ?></span> </div>
@@ -305,14 +305,7 @@
 <!-- /#top-banner-and-menu --> 
 
 <!-- ============================================================= FOOTER ============================================================= -->
-<div class="footMenu">
-  <ul>
-    <li><i class="fa fa-home"></i></li>
-    <li><i class="fa fa-shopping-cart"></i></li>
-    <li><i class="fa fa-user"></i></li>
-    <li><i class="fa fa-heart"></i></li>
-  </ul>
-</div>
+<?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
 </div>

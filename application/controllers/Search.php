@@ -14,14 +14,16 @@ class Search extends CI_controller
 
 	public function posts()
 	{
-		$keys = $_POST['keys'];
-		$return = base_url() . "Search/Result/".$keys;
+		$keys = urlencode($_POST['keys']);
+		$replc = str_replace("+", "%20", $keys);
+		$return = base_url() . "Search/Result/".$replc;
 		return redirect($return);
+		//echo $replc;
 	}
 
 	public function Result() 
 	{
-       $keys = $this->uri->segment(3);
+       $keys = urldecode($this->uri->segment(3));
        $config = array();
         $config["base_url"] = base_url() . "Search/Result/".$keys;
         $config["total_rows"] = $this->ThemeModel->get_count_searchPro($keys);

@@ -58,9 +58,31 @@
 .footMenu ul li 
 {
 	list-style-type: none;
-	display: inline-block;
-	padding: 0px 25px;
-	font-size: 32px;
+		display: inline-block;
+		/*
+		padding: 0px 26px;
+		font-size: 22px;
+		*/
+		float: left;
+		width: 25%;
+		font-size: 22px;
+		text-align: center;
+}
+.color-thumb
+{
+	padding: 6px;
+	margin-top: 15px;
+	float: left;
+	margin-left: 6px;
+}
+.actv1
+{
+	border: solid 1px #0081F3;
+	border-radius: 15px;
+}
+.cp
+{
+	cursor: pointer !important;
 }
 @media only screen and (max-width: 1980px)
 {
@@ -87,8 +109,12 @@
 	{
 		list-style-type: none;
 		display: inline-block;
-		padding: 0px 25px;
-		font-size: 32px;
+		/*
+		padding: 0px 26px;
+		font-size: 22px;
+		*/
+		float: left;
+		width: 25%;
 	}
 }
 
@@ -99,8 +125,12 @@
 	{
 		list-style-type: none;
 		display: inline-block;
-		padding: 0px 18px;
-		font-size: 30px;
+		/*
+		padding: 0px 26px;
+		font-size: 22px;
+		*/
+		float: left;
+		width: 25%;
 	}
 } 
 
@@ -110,8 +140,12 @@
 	{
 		list-style-type: none;
 		display: inline-block;
-		padding: 0px 20px;
-		font-size: 32px;
+		/*
+		padding: 0px 26px;
+		font-size: 22px;
+		*/
+		float: left;
+		width: 25%;
 	}
 } 
 
