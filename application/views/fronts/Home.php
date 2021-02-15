@@ -11,7 +11,7 @@
 <meta name="robots" content="all">
 <title>Easeshop</title>
 <?php include("inc/layout.php"); ?>
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/custom.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -27,9 +27,10 @@
 <header class="header-style-1"> 
   
   <!-- ============================================== TOP MENU ============================================== -->
+ 
   <div id="mob-view">
     <?php include("inc/header_top.php"); ?>
-  </div>
+  
   <!-- /.header-top --> 
   <!-- ============================================== TOP MENU : END ============================================== -->
   <?php include("inc/main_header.php"); ?>
@@ -39,9 +40,26 @@
   <?php include("inc/menuNew.php"); ?>
   <!-- /.header-nav --> 
   <!-- ============================================== NAVBAR : END ============================================== --> 
-  
-</header>
+  </div>
 
+
+  <div class="mob-header">
+    <?php include("inc/mobheadermenu.php"); ?>
+  </div>
+  <div class="mobSpace">
+    <div class="search-area">
+    <form action="<?= base_url('Search/posts'); ?>" method="post">
+      <div class="control-group">
+        <input name="keys" class="search-field" id="keywords2" placeholder="Search here..." autocomplete="off" />
+        <button class="search-button" ></button> </div>
+        
+    </form>
+  </div>
+</div>
+  <div id="results2">
+    <ul id="resContent2"></ul>
+  </div>
+</header>
 <!-- ============================================== HEADER : END ============================================== -->
 <div class="body-content outer-top-vs" id="top-banner-and-menu">
   <div class="container">

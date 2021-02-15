@@ -223,7 +223,7 @@ class AdminModel extends CI_model
 				$data[] = array
 								(
 									"product_id"=>$proId,
-									"colorcode"=>$varColor[$i],
+									"color_name"=>$varColor[$i],
 									"price"=>$varsPrcc[$i],
 									"sale_price"=>$salePrice
 								);
@@ -358,7 +358,7 @@ class AdminModel extends CI_model
 						$variousData[] = array
 												(
 													"var_id"=>$verkey->id,
-													"size"=>$verkey->colorcode,
+													"size"=>$verkey->color_name,
 													"price"=>$verkey->price,
 													"sale_price"=>$verkey->sale_price
 												);

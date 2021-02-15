@@ -10,9 +10,17 @@
             {
                 keywords: keywords
             },function(response){
-                $("#resContent").html(response);
+                if(response=="NotFound")
+                {
+                    $("#results").hide();
+                }
+                else
+                {
+                    $("#results").show();
+                    $("#resContent").html(response);
+                }
             })
-    		$("#results").show();
+    		
     	}
     	else
     	{
@@ -20,11 +28,44 @@
     	}
     	
     });
+
+    $("#keywords2").keyup(function(){
+        var keywords = $("#keywords2").val();
+        if(keywords.length >0)
+        {
+            $.post("<?= base_url('SearchController/search2'); ?>",
+            {
+                keywords: keywords
+            },function(response){
+                if(response=="NotFound")
+                {
+                    $("#results2").hide();
+                }
+                else
+                {
+                    $("#results2").show();
+                    $("#resContent2").html(response);
+                }
+                
+            })
+            
+        }
+        else
+        {
+            $("#results2").hide();
+        }
+        
+    });
 });
 
 function selectSrc(name)
 {
     $("#keywords").val(name);
     $("#results").hide();
+}
+function selectSrc2(name)
+{
+    $("#keywords2").val(name);
+    $("#results2").hide();
 }
 </script>

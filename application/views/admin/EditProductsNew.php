@@ -161,12 +161,12 @@
 															
 														<div class="form-group col-sm-3">
 															<label>Color</label>
-															<input type="color" id="cl_<?= $vars['var_id']; ?>" name="colors[]" class="form-control clr clrd"  value="<?= $vars['size']; ?>">
+															<input type="text" id="cl_<?= $vars['var_id']; ?>" name="colors[]" class="form-control clr clrd"  value="<?= $vars['size']; ?>">
 														</div>
 														
 														<div class="form-group col-sm-4">
 															<label>Price</label>
-															<input type="text" id="clp_<?= $vars['var_id']; ?>" name="prcce[]" class="form-control clr clrP" value="<?= $vars['price']; ?>"  placeholder="Price">
+															<input type="text" id="clp_<?= $vars['var_id']; ?>" name="prcce[]" class="form-control  clrP" value="<?= $vars['price']; ?>"  placeholder="Price">
 														</div>
 														</div>
 													<?php endforeach; ?>
@@ -401,7 +401,7 @@
 	var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
     var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div class="row"><div class="form-group col-sm-3"><label>Color</label><input type="color" name="colors_new[]" class="form-control clr"  placeholder="10 gm"></div><div class="form-group col-sm-4"><label>Product Quantity</label><input type="text" name="prcce_new[]" class="form-control clr"  placeholder="Price"></div><a href="javascript:void(0);" class="remove_button"><i class="fas fa-times text-danger"></i> Remove</a></div>'; //New input field html 
+    var fieldHTML = '<div class="row"><div class="form-group col-sm-3"><label>Color</label><input type="text" name="colors_new[]" class="form-control clr"  placeholder="10 gm"></div><div class="form-group col-sm-4"><label>Product Quantity</label><input type="text" name="prcce_new[]" class="form-control clr"  placeholder="Price"></div><a href="javascript:void(0);" class="remove_button"><i class="fas fa-times text-danger"></i> Remove</a></div>'; //New input field html 
     var x = 1; //Initial field counter is 1
     
     //Once add button is clicked

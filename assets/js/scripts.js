@@ -293,6 +293,7 @@ jQuery(function(){
         pagination: true,
         rewindNav: true,
         itemsTablet : [768, 4],
+        itemsMobile : [478, 3],
         itemsDesktop : [1199,3]
     });
 

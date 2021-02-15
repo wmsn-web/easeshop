@@ -233,7 +233,7 @@ class AllProducts extends CI_controller
 		$id = $this->input->post("id");
 		$colorcode = $this->input->post("colorcode");
 		$this->db->where("id",$id);
-		$getvar = $this->db->update("varcolor", ["colorcode" =>$colorcode]);
+		$getvar = $this->db->update("varcolor", ["color_name" =>$colorcode]);
 	}
 
 	public function ChangeVarColor_prize()

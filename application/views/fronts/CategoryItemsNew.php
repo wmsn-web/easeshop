@@ -11,7 +11,7 @@
 <meta name="robots" content="all">
 <title>Easeshop</title>
 <?php include("inc/layout.php"); ?>
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/custom.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -29,7 +29,7 @@
       <!-- ============================================== TOP MENU ============================================== -->
       <div id="mob-view">
         <?php include("inc/header_top.php"); ?>
-      </div>
+      
       <!-- /.header-top --> 
       <!-- ============================================== TOP MENU : END ============================================== -->
       <?php include("inc/main_header.php"); ?>
@@ -39,7 +39,11 @@
       <?php include("inc/menuNew.php"); ?>
       <!-- /.header-nav --> 
       <!-- ============================================== NAVBAR : END ============================================== --> 
-  
+      </div>
+  <div class="mob-header">
+    <?php include("inc/goback.php"); ?>
+  </div>
+  <?= br(3); ?>
 </header>
 
 <!-- ============================================== HEADER : END ============================================== --> 

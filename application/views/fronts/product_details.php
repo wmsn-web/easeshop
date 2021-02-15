@@ -11,7 +11,7 @@
 <meta name="robots" content="all">
 <title>Easeshop</title>
 <?php include("inc/detail_layout.php"); ?>
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/custom.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -29,7 +29,7 @@
       <!-- ============================================== TOP MENU ============================================== -->
       <div id="mob-view">
         <?php include("inc/header_top.php"); ?>
-      </div>
+      
       <!-- /.header-top --> 
       <!-- ============================================== TOP MENU : END ============================================== -->
       <?php include("inc/main_header.php"); ?>
@@ -39,7 +39,11 @@
       <?php include("inc/menuNew.php"); ?>
       <!-- /.header-nav --> 
       <!-- ============================================== NAVBAR : END ============================================== --> 
-  
+    </div>
+  <div class="mob-header">
+    <?php include("inc/goback.php"); ?>
+  </div>
+  <?= br(3); ?>
 </header>
 
 <!-- ============================================== HEADER : END ============================================== --> 
@@ -50,7 +54,8 @@
       <div class="breadcrumb-inner">
         <ul class="list-inline list-unstyled">
           <li><a href="#">Home</a></li>
-          <li class='active'><?= $this->uri->segment(3); ?></li>
+          <li><a href="#">Product</a></li>
+          <li class='active'><?= $proData['prod_name'] ?></li>
         </ul>
       </div>
       <!-- /.breadcrumb-inner --> 
@@ -61,74 +66,7 @@
   <div class="body-content outer-top-xs">
     <div class="container">
       <div class='row single-product'>
-        <div class='col-md-3 sidebar'> 
-        <!-- ================================== TOP NAVIGATION ================================== -->
-          <div class="sidebar-widget outer-bottom-small wow fadeInUp">
-            <h3 class="section-title">Special Offer</h3>
-            <div class="sidebar-widget-body outer-top-xs">
-              <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
-                <?php if(!empty($spalOffer)): ?>
-                  heheheh
-                  <?php foreach($spalOffer as $spl): ?>
-                <div class="item">
-                  <div class="products special-product">
-                    <div class="product">
-                      <div class="product-micro">
-                        <div class="row product-micro-row">
-                          <div class="col col-xs-5">
-                            <div class="product-image">
-                              <div class="image"> <a href="#"> <img src="<?= base_url('uploads/products/'.$spl['mnImg']); ?>" alt=""> </a> </div>
-                              <!-- /.image --> 
-                              
-                            </div>
-                            <!-- /.product-image --> 
-                          </div>
-                          <!-- /.col -->
-                          <div class="col col-xs-7">
-                            <div class="product-info">
-                              <h3 class="name"><a href="#"><?= $spl['prod_name']; ?></a></h3>
-                              <div class="rating rateit-small"></div>
-                              <div class="product-price"> <span class="price">&#8377; <?= $spl['sale_price']; ?> </span> </div>
-                              <!-- /.product-price --> 
-                              
-                            </div>
-                          </div>
-                          <!-- /.col --> 
-                        </div>
-                        <!-- /.product-micro-row --> 
-                      </div>
-                      <!-- /.product-micro --> 
-                      
-                    </div>
-                  
-                  </div>
-                </div>
-                <?php endforeach; ?>
-                  <?php endif; ?>
-                
-                
-              </div>
-            </div>
-            <!-- /.sidebar-widget-body --> 
-          </div>
-          <!-- /.side-menu --> 
-          <!-- ================================== TOP NAVIGATION : END ================================== -->
-          <div class="sidebar-widget newsletter wow fadeInUp outer-bottom-small">
-            <h3 class="section-title">Newsletters</h3>
-            <div class="sidebar-widget-body outer-top-xs">
-              <p>Sign Up for Our Newsletter!</p>
-              <form>
-                <div class="form-group">
-                  <label class="sr-only" for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Subscribe to our newsletter">
-                </div>
-                <button class="btn btn-primary">Subscribe</button>
-              </form>
-            </div>
-            <!-- /.sidebar-widget-body --> 
-          </div>
-          <!-- /.sidebar-module-container --> 
-        </div>
+        
         <div class='col-md-9'>
             <div class="detail-block">
               <div class="row  wow fadeInUp">
@@ -216,22 +154,18 @@
 
                         <div class="col-sm-6">
                           <div class="price-box">
-                            <span class="price">&#8377; <?= $proData['sale_price']; ?></span>
+                            <span class="price">&#8377; <span id="slprc"><?= $proData['sale_price']; ?></span></span>
                             <span class="price-strike">&#8377; <?= $proData['price']; ?></span>
                           </div>
                         </div>
-
+                        
                         <div class="col-sm-6">
                           <div class="favorite-button m-t-10">
-                            <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" href="#">
+                            <a class="btn btn-primary wishbtn" data-toggle="tooltip" data-placement="right" title="Wishlist" href="#">
                                 <i class="fa fa-heart"></i>
                             </a>
-                            <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Add to Compare" href="#">
-                               <i class="fa fa-signal"></i>
-                            </a>
-                            <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="E-mail" href="#">
-                                <i class="fa fa-envelope"></i>
-                            </a>
+                            
+                            
                           </div>
                         </div>
 
@@ -239,34 +173,47 @@
                     </div><!-- /.price-container -->
 
                     <div class="quantity-container info-container">
+                      <form action="<?= base_url('Product_details/addToCart'); ?>" method="post">
                       <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-4">
                           <?php if(!empty($proData['varData'])): ?>
-                            <?php $vrr = 1; foreach($proData['varData'] as $vars): $vr = $vrr++; ?>
-                              <div class="color-thumb actv<?= $vr; ?> cp">
-                                <span style="background: <?= $vars['colorcode']; ?>; display: inline-block; width: 45px; height: 45px; border-radius: 12px"></span>
-                              </div>
+                                <select name="varnm" class="form-control" id="varss">  
+                                <?php $vrr = 1; foreach($proData['varData'] as $vars): $vr = $vrr++; ?>
+                                <option value="<?= $vars['varId'].'_'.$vars['sale_price'].'_'.$vars['varName']; ?>"><?= $vars['varName']; ?></option>
+                                 <?= nbs(5); ?>
                             <?php endforeach; ?>
+                            </select>
                           <?php endif; ?>
+                          <?= br(3); ?>
                         </div>
-                        <div class="col-sm-2">
-                          <span class="label">Qty :</span>
-                        </div>
-                        
-                        <div class="col-sm-2">
-                          <div class="cart-quantity">
-                            <div class="quant-input">
-                                      <div class="arrows">
-                                        <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-                                        <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
-                                      </div>
-                                      <input type="text" value="1">
+                        <div class="col-sm-4">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <span class="label">Qty :</span>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                              <div class="cart-quantity">
+                                <div class="quant-input">
+                                      <input type="number" name="qty" id="qty" value="1">
                                   </div>
                                 </div>
+                            </div>
+                          </div>
                         </div>
+                        <div class="col-sm-4">
+                          <?php if(!$this->session->userdata("userId")): ?>
+                            <a href="<?= base_url('Login'); ?>" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                          <?php else: ?>
+                            <input type="hidden" name="sale_price" id="slprcFixed" value="<?= $proData['sale_price']; ?>">
+                            <input type="hidden" name="price" id="nowPrc" value="<?= $proData['sale_price']; ?>">
+                            <input type="hidden" name="proId" value="<?= $proData['pro_id']; ?>">
+                            <input type="hidden" name="pro_type" value="<?= $proData['pro_type']; ?>">
+                            <input type="hidden" name="cat_id" value="<?= $proData['cat_id']; ?>">
+                            <input type="hidden" name="user_id" value="<?= $this->session->userdata('userId'); ?>">
 
-                        <div class="col-sm-7">
-                          <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                            <button class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
+                          <?php endif; ?>
                         </div>
                         <div class="clearfix"></div>
                         
@@ -780,10 +727,84 @@
 <!-- ============================================== UPSELL PRODUCTS : END ============================================== -->
       
       </div>
+      <div class='col-md-3 sidebar'> 
+        <!-- ================================== TOP NAVIGATION ================================== -->
+          <div class="sidebar-widget outer-bottom-small wow fadeInUp">
+            <h3 class="section-title">Special Offer</h3>
+            <div class="sidebar-widget-body outer-top-xs">
+              <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
+                <?php if(!empty($spalOffer)): ?>
+                  heheheh
+                  <?php foreach($spalOffer as $spl): ?>
+                <div class="item">
+                  <div class="products special-product">
+                    <div class="product">
+                      <div class="product-micro">
+                        <div class="row product-micro-row">
+                          <div class="col col-xs-5">
+                            <div class="product-image">
+                              <div class="image"> <a href="#"> <img src="<?= base_url('uploads/products/'.$spl['mnImg']); ?>" alt=""> </a> </div>
+                              <!-- /.image --> 
+                              
+                            </div>
+                            <!-- /.product-image --> 
+                          </div>
+                          <!-- /.col -->
+                          <div class="col col-xs-7">
+                            <div class="product-info">
+                              <h3 class="name"><a href="#"><?= $spl['prod_name']; ?></a></h3>
+                              <div class="rating rateit-small"></div>
+                              <div class="product-price"> <span class="price">&#8377; <?= $spl['sale_price']; ?> </span> </div>
+                              <!-- /.product-price --> 
+                              
+                            </div>
+                          </div>
+                          <!-- /.col --> 
+                        </div>
+                        <!-- /.product-micro-row --> 
+                      </div>
+                      <!-- /.product-micro --> 
+                      
+                    </div>
+                  
+                  </div>
+                </div>
+                <?php endforeach; ?>
+                  <?php endif; ?>
+                
+                
+              </div>
+            </div>
+            <!-- /.sidebar-widget-body --> 
+          </div>
+          <!-- /.side-menu --> 
+          <!-- ================================== TOP NAVIGATION : END ================================== -->
+          <div class="sidebar-widget newsletter wow fadeInUp outer-bottom-small">
+            <h3 class="section-title">Newsletters</h3>
+            <div class="sidebar-widget-body outer-top-xs">
+              <p>Sign Up for Our Newsletter!</p>
+              <form>
+                <div class="form-group">
+                  <label class="sr-only" for="exampleInputEmail1">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Subscribe to our newsletter">
+                </div>
+                <button class="btn btn-primary">Subscribe</button>
+              </form>
+            </div>
+            <!-- /.sidebar-widget-body --> 
+          </div>
+          <!-- /.sidebar-module-container --> 
+        </div>
+        <div style="width: 100%; height: 100px"></div>
       <div class="clearfix"></div>
       </div>
     </div>
   </div>
+  <?php if($feed = $this->session->flashdata("Feed")): ?>
+    <div class="toastMsg">
+      <div class="Msgs"><?= $feed; ?></div>
+    </div>
+  <?php endif; ?>
   <?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
@@ -793,5 +814,57 @@
 
 <?php include("inc/detail_js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".toastMsg").fadeOut(6000);
+    <?php if(!empty($proData['varData'])): ?>
+      var varss = $("#varss").val();
+      var spl = varss.split("_");
+      var salPrc = spl[1];
+      $("#slprc").html(salPrc);
+      $("#slprcFixed").val(salPrc);
+      $("#nowPrc").val(salPrc);
+    <?php endif; ?>
+
+    $("#qty").change(function(){
+      var price = $("#slprcFixed").val();
+      var qty = $("#qty").val();
+      if(qty > 0)
+       { 
+        var nowSalePrc = price*qty;
+        var slprc = nowSalePrc.toFixed(2);
+        $("#slprc").html(slprc);
+        $("#nowPrc").val(slprc);
+        //alert();
+      }
+      else
+      {
+        $("#qty").val("1");
+        return false;
+      }
+    });
+    $("#varss").change(function(){
+      var varss = $("#varss").val();
+      var spl = varss.split("_");
+      var salPrc = spl[1];
+    $("#slprc").html(salPrc);
+    $("#slprcFixed").val(salPrc);
+      var qty = $("#qty").val();
+      if(qty > 0)
+       { 
+        var nowSalePrc = salPrc*qty;
+        var slprc = nowSalePrc.toFixed(2);
+        $("#slprc").html(slprc);
+        $("#nowPrc").val(slprc);
+        //alert();
+      }
+      else
+      {
+        $("#qty").val("1");
+        return false;
+      }
+    })
+  })
+</script>
 </body>
 </html>

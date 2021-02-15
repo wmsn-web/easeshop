@@ -325,7 +325,8 @@ class ThemeModel extends CI_Model
 						$vardata[] = array
 											(
 												"sale_price"=>$vars->sale_price,
-												"varName"	=>$vars->color_name
+												"varName"	=>$vars->color_name,
+												"varId"		=>$vars->id
 											);
 					}
 				}
@@ -338,7 +339,8 @@ class ThemeModel extends CI_Model
 						$vardata[] = array
 											(
 												"varName"	=>$vars->sizeString,
-												"sale_price"=>$vars->sale_price
+												"sale_price"=>$vars->sale_price,
+												"varId"		=>$vars->id
 											);
 					}
 				}
@@ -360,11 +362,77 @@ class ThemeModel extends CI_Model
 									"galData"		=>$galData,
 									"stock"			=>$key->qty,
 									"varData"		=>$vardata,
-									"pro_type"		=>$key->pro_type
+									"pro_type"		=>$key->pro_type,
+									"var_type"		=>$key->var_type,
+									"cat_id"		=>$key->cat_id
 								);
 			
 		}
 
+		return $data;
+	}
+
+	public function getCart($user_id)
+	{
+		$this->db->order_by("cart_id","ASC");
+		$this->db->where(["user_id"=>$user_id,"status"=>0]);
+		$cartGet = $this->db->get("cart");
+		$numRow = $cartGet->num_rows();
+
+
+		if($numRow == 0)
+		{
+			$cartData = array();
+			$totAmt = "0.00";
+		}
+		else
+		{
+			$this->db->where("user_id",$user_id);
+			$this->db->select_sum("price");
+			$Amts = $this->db->get("cart")->row();
+			$totAmt = round($Amts->price);
+			$res = $cartGet->result();
+			foreach($res as $key)
+			{
+				if(!empty($key->variation_name))
+				{
+					$var = explode("_", $key->variation_name);
+					$varname = $var[2];
+				}
+				else
+				{
+					$varname = "";
+				}
+				$this->db->where(["pro_id"=>$key->product_id,"status"=>1]);
+				$getpro = $this->db->get("products")->row();
+				$cartData[] = array
+									(
+										"cart_id"		=>$key->cart_id,
+										"product_id"	=>$key->product_id,
+										"sale_price"	=>$key->sale_price,
+										"qty"			=>$key->qty,
+										"price"			=>round($key->price),
+
+										"prod_name"		=>$getpro->product_name,
+										"pricePro"		=>round($getpro->price),
+										"sale_price"	=>round($getpro->sale_price),
+										"id"			=>$getpro->id,
+										"pro_id"		=>$getpro->pro_id,
+										"mnImg"			=>$getpro->main_img,
+										"stock"			=>$getpro->qty,
+										"varname"		=>$varname
+										
+								
+
+									);
+			}
+		}
+
+		$data = array(
+						"numCart"	=>$numRow,
+						"totAmt"	=>$totAmt,
+						"cartData"	=>$cartData
+					);
 		return $data;
 	}
 }
