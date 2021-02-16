@@ -77,18 +77,7 @@
 					<th class="cart-total last-item">Subtotal</th>
 				</tr>
 			</thead><!-- /thead -->
-			<tfoot>
-				<tr>
-					<td colspan="7">
-						<div class="shopping-cart-btn">
-							<span class="">
-								<a href="#" class="btn btn-upper btn-primary outer-left-xs">Continue Shopping</a>
-								<a href="#" class="btn btn-upper btn-primary pull-right outer-right-xs">Update shopping cart</a>
-							</span>
-						</div><!-- /.shopping-cart-btn -->
-					</td>
-				</tr>
-			</tfoot>
+			
 			<tbody>
 				
 					<?php foreach($cartData["cartData"] as $cart): ?>
@@ -122,78 +111,106 @@
 			</tbody><!-- /tbody -->
 		</table><!-- /table -->
 	</div>
-</div><!-- /.shopping-cart-table -->				<div class="col-md-4 col-sm-12 estimate-ship-tax">
+</div><!-- /.shopping-cart-table -->
+
+<div class="col-md-8 col-sm-12 estimate-ship-tax">
+	<?php if(empty($cartData['shipData'])): ?>
 	<table class="table">
 		<thead>
 			<tr>
 				<th>
-					<span class="estimate-title">Estimate shipping and tax</span>
-					<p>Enter your destination to get shipping and tax.</p>
+					<span class="estimate-title">shipping Address</span>
+					<p>Enter your destination .</p>
 				</th>
 			</tr>
 		</thead><!-- /thead -->
 		<tbody>
+			<form>
 				<tr>
 					<td>
-						<div class="form-group">
-							<label class="info-title control-label">Country <span>*</span></label>
-							<select class="form-control unicase-form-control selectpicker">
-								<option>--Select options--</option>
-								<option>India</option>
-								<option>SriLanka</option>
-								<option>united kingdom</option>
-								<option>saudi arabia</option>
-								<option>united arab emirates</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label class="info-title control-label">State/Province <span>*</span></label>
-							<select class="form-control unicase-form-control selectpicker">
-								<option>--Select options--</option>
-								<option>TamilNadu</option>
-								<option>Kerala</option>
-								<option>Andhra Pradesh</option>
-								<option>Karnataka</option>
-								<option>Madhya Pradesh</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label class="info-title control-label">Zip/Postal Code</label>
-							<input type="text" class="form-control unicase-form-control text-input" placeholder="">
-						</div>
-						<div class="pull-right">
-							<button type="submit" class="btn-upper btn btn-primary">GET A QOUTE</button>
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<label class="info-title control-label">Address <span>*</span></label>
+								<small class="text-danger" id="msg1"></small>
+								<input id="addr" class="form-control unicase-form-control" type="text" name="address" id="addr" />
+							</div>
+							<div class="form-group col-sm-6">
+								<label class="info-title control-label">City <span>*</span></label>
+								<small class="text-danger" id="msg2"></small>
+								<input id="city" class="form-control unicase-form-control" type="text" name="address" id="addr" />
+							</div>
+							<div class="form-group col-sm-4">
+								<label class="info-title control-label">State <span>*</span></label>
+								<small class="text-danger" id="msg3"></small>
+								<select id="state" class="form-control unicase-form-control">
+									<option value="">Select State</option>
+									<option value="Andhra Pradesh">Andhra Pradesh</option>
+									<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+									<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+									<option value="Assam">Assam</option>
+									<option value="Bihar">Bihar</option>
+									<option value="Chandigarh">Chandigarh</option>
+									<option value="Chhattisgarh">Chhattisgarh</option>
+									<option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+									<option value="Daman and Diu">Daman and Diu</option>
+									<option value="Delhi">Delhi</option>
+									<option value="Lakshadweep">Lakshadweep</option>
+									<option value="Puducherry">Puducherry</option>
+									<option value="Goa">Goa</option>
+									<option value="Gujarat">Gujarat</option>
+									<option value="Haryana">Haryana</option>
+									<option value="Himachal Pradesh">Himachal Pradesh</option>
+									<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+									<option value="Jharkhand">Jharkhand</option>
+									<option value="Karnataka">Karnataka</option>
+									<option value="Kerala">Kerala</option>
+									<option value="Madhya Pradesh">Madhya Pradesh</option>
+									<option value="Maharashtra">Maharashtra</option>
+									<option value="Manipur">Manipur</option>
+									<option value="Meghalaya">Meghalaya</option>
+									<option value="Mizoram">Mizoram</option>
+									<option value="Nagaland">Nagaland</option>
+									<option value="Odisha">Odisha</option>
+									<option value="Punjab">Punjab</option>
+									<option value="Rajasthan">Rajasthan</option>
+									<option value="Sikkim">Sikkim</option>
+									<option value="Tamil Nadu">Tamil Nadu</option>
+									<option value="Telangana">Telangana</option>
+									<option value="Tripura">Tripura</option>
+									<option value="Uttar Pradesh">Uttar Pradesh</option>
+									<option value="Uttarakhand">Uttarakhand</option>
+									<option value="West Bengal">West Bengal</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-4">
+								<label class="info-title control-label">Zip/Postal Code <span>*</span></label><small class="text-danger" id="msg4"></small>
+								<input id="zip" type="text" class="form-control unicase-form-control text-input" placeholder="">
+							</div>
+							<div class="form-group col-sm-4">
+								<label class="info-title control-label">Land Mark</label>
+								<input id="lm" type="text" class="form-control unicase-form-control text-input" placeholder="">
+							</div>
 						</div>
 					</td>
 				</tr>
+			</form>
 		</tbody>
 	</table>
+<?php else: ?>
+	<h3>Shipping Address</h3>
+	<h4><i class="fa fa-user"></i> <?= $getUser['name']; ?></h4>
+	<p><i class="fa fa-phone"></i> <?= $getUser['phone']; ?><br>
+		<i class="fa fa-map-marker"></i> <?= $cartData['shipData']['address']; ?>,
+		<?= $cartData['shipData']['city']; ?><br>
+		<?= $cartData['shipData']['state']; ?>,<?= $cartData['shipData']['pin']; ?><br>
+		<?= $cartData['shipData']['landMark']; ?><br>
+		
+	</p>
+	
+<?php endif; ?>
 </div><!-- /.estimate-ship-tax -->
 
-<div class="col-md-4 col-sm-12 estimate-ship-tax">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					<span class="estimate-title">Discount Code</span>
-					<p>Enter your coupon code if you have one..</p>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-				<tr>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control unicase-form-control text-input" placeholder="You Coupon..">
-						</div>
-						<div class="clearfix pull-right">
-							<button type="submit" class="btn-upper btn btn-primary">APPLY COUPON</button>
-						</div>
-					</td>
-				</tr>
-		</tbody><!-- /tbody -->
-	</table><!-- /table -->
-</div><!-- /.estimate-ship-tax -->
+
 
 <div class="col-md-4 col-sm-12 cart-shopping-total">
 	<table class="table">
@@ -201,19 +218,47 @@
 			<tr>
 				<th>
 					<div class="cart-sub-total">
-						Subtotal<span class="inner-left-md">$600.00</span>
+						Subtotal<span class="inner-left-md">&#8377; <?= number_format($cartData['totAmt'],2); ?></span> 
+					</div>
+					<div class="cart-sub-total">
+						TAX<?= nbs(8); ?> <span class="inner-left-md">&#8377; <?= number_format($cartData['tax'],2); ?></span> 
 					</div>
 					<div class="cart-grand-total">
-						Grand Total<span class="inner-left-md">$600.00</span>
+						Grand Total<span class="inner-left-md">&#8377; <?= number_format($cartData['grand'],2); ?></span>
 					</div>
 				</th>
 			</tr>
 		</thead><!-- /thead -->
+		
+			<input type="" id="user_id" value="<?= $this->session->userdata('userId'); ?>">
+			<input type="" id="ship_id" value="<?= $cartData['shipData']['ship_id']; ?>">
+			<input type="" id="carts" value='<?= json_encode($cartData['cartall']); ?>'>
+			<input type="" id="subtot" value='<?= $cartData['totAmt']; ?>'>
+			<input type="" id="tax" value='<?= $cartData['tax']; ?>'>
+			<input type="" id="grosstot" value='<?= $cartData['grand']; ?>'>
+			
+		
+		<form id="checkout" method="post" action="<?= base_url('pgRedirect'); ?>">
+		<input id="ORDER_ID" tabindex="1" maxlength="20" size="20" type="hidden"
+			name="ORDER_ID" id="orderId" value='<?= rand(); ?>'>
+		<input type="hidden" id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="<?= $this->session->userdata('userId'); ?>">
+		<input type="hidden" id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail">
+		<input type="hidden" id="CHANNEL_ID" tabindex="4" maxlength="12"
+						size="12" name="CHANNEL_ID" autocomplete="off" value="WEB">
+		<input type="hidden" title="TXN_AMOUNT" tabindex="10"
+						type="text" name="TXN_AMOUNT"
+						value="<?= $cartData['grand']; ?>">
+		<input value="CheckOut" type="hidden" 	onclick="">
+	</form>
 		<tbody>
 				<tr>
 					<td>
 						<div class="cart-checkout-btn pull-right">
-							<button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
+							<?php if(empty($cartData['shipData'])): ?>
+								<button id="AddShip" type="button" class="btn btn-primary checkout-btn">Add Shipping Address</button>
+							<?php else: ?>
+								<button id="addOrd" type="button" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
+							<?php endif; ?>
 							<span class="">Checkout with multiples address!</span>
 						</div>
 					</td>
@@ -245,6 +290,69 @@
 <script type="text/javascript">
 	$(document).ready(function(){
     $(".toastMsg").fadeOut(6000);
+
+    $("#AddShip").click(function(){
+    	addr = $("#addr").val();
+    	city = $("#city").val();
+    	state = $("#state").val();
+    	zip = $("#zip").val();
+    	lm = $("#lm").val();
+    	user_id = "<?= $this->session->userdata('userId'); ?>";
+    	if(addr == ""){$("#addr").addClass("inpDanger").focus(); $("#msg1").html("Please Enter your address");}
+    	else if(city == ""){$("#addr").removeClass("inpDanger"); $("#msg1").html("");$("#city").addClass("inpDanger").focus(); $("#msg2").html("Please Enter your City Name");}
+    	else if(state == ""){$("#city").removeClass("inpDanger"); $("#msg2").html("");$("#state").addClass("inpDanger").focus(); $("#msg3").html("Please Enter your State Name");}
+    	else if(zip == ""){$("#state").removeClass("inpDanger"); $("#msg3").html("");$("#zip").addClass("inpDanger").focus(); $("#msg4").html("Please Enter your PIN/ZIP");}
+    	else
+    	{
+    		$("#addr").removeClass("inpDanger"); $("#msg1").html("");
+    		$("#city").removeClass("inpDanger"); $("#msg2").html("");
+    		$("#state").removeClass("inpDanger"); $("#msg3").html("");
+    		$("#zip").removeClass("inpDanger"); $("#msg4").html("");
+
+    		//Insert into database
+    		$.post("<?= base_url('My-Cart/AddShipAddr'); ?>",{
+    			addr: addr,
+    			city: city,
+    			state: state,
+    			zip: zip,
+    			lm: lm,
+    			user_id: user_id
+    		},function(resp){
+    			if(resp == "done")
+    			{
+    				location.href="<?= base_url('My-Cart'); ?>";
+    			}
+    			else
+    			{
+    				return false;
+    			}
+    		})
+    	}
+    });
+
+    $("#addOrd").click(function(){
+    	user_id = $("#user_id").val();
+    	ship_id = $("#ship_id").val();
+    	subtot = $("#subtot").val();
+    	tax = $("#tax").val();
+    	grosstot = $("#grosstot").val();
+    	carts = $("#carts").val();
+    	orderId = $("#orderId").val();
+    	$.post("<?= base_url('My-Cart/AddOrder'); ?>",{
+    		user_id: user_id,
+    		ship_id:ship_id,
+    		subtot:subtot,
+    		tax: tax,
+    		grosstot: grosstot,
+    		carts: carts,
+    		orderId: orderId
+    	},function(response){
+    		if(response=="done")
+    		{
+    			$("#checkout").submit();
+    		}
+    	})
+    })
 });
 	function edtQtyPrc(ids)
 	{

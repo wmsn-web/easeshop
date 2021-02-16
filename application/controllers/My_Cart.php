@@ -20,7 +20,8 @@ class My_Cart extends CI_controller
 		$getMenudata = $this->ThemeModel->getMenudata();
 		$user_id = $this->session->userdata("userId");
   		$getCart = $this->ThemeModel->getCart($user_id);
-		$this->load->view("fronts/My_Cart",["menus"=>$getMenudata,"spalOffer"=>$splOffer,"cartData"=>$getCart]);
+  		$getUser = $this->ThemeModel->getUserDetails($user_id);
+		$this->load->view("fronts/My_Cart",["menus"=>$getMenudata,"spalOffer"=>$splOffer,"cartData"=>$getCart,"getUser"=>$getUser]);
 		//echo "<pre>";
 		//print_r($getCart);
 	}
@@ -42,5 +43,33 @@ class My_Cart extends CI_controller
 		echo $price = $qty*$fixPrc;
 		$this->db->where("cart_id",$id);
 		$this->db->update("cart",["qty"=>$qty,"price"=>$price]);
+	}
+
+	public function AddShipAddr()
+	{
+		$addr = $this->input->post("addr");
+		$city = $this->input->post("city");
+		$state = $this->input->post("state");
+		$zip = $this->input->post("zip");
+		$lm = $this->input->post("lm");
+		$user_id = $this->input->post("user_id");
+		$add = $this->ThemeModel->addShippingAddress($addr,$city,$state,$zip,$lm,$user_id);
+		echo $add;
+	}
+
+	public function AddOrder()
+	{
+		$user_id = $this->input->post("user_id");
+		$ship_id = $this->input->post("ship_id");
+		$carts = htmlentities($this->input->post("carts"));
+		$subtot = $this->input->post("subtot");
+		$tax = $this->input->post("tax");
+		$grosstot = $this->input->post("grosstot");
+		$orderId = $this->input->post("orderId");
+		date_default_timezone_set("Asia/Kolkata");
+		$date = date('Y-m-d');
+		$addOrders = $this->ThemeModel->addOrders($user_id,$ship_id,$carts,$subtot,$tax,$grosstot,$orderId,$date);
+		echo $addOrders;
+
 	}
 }

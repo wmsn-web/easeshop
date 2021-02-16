@@ -379,6 +379,28 @@ class ThemeModel extends CI_Model
 		$cartGet = $this->db->get("cart");
 		$numRow = $cartGet->num_rows();
 
+		$getSetting = $this->db->get("settings")->row();
+
+		$this->db->where("user_id",$user_id);
+		$getShip = $this->db->get("shipping_address");
+		$numShip = $getShip->num_rows();
+		$rowShip = $getShip->row();
+		if($numShip > 0)
+		{
+			$shipData = array
+							(
+								"address"	=>$rowShip->address,
+								"city"		=>$rowShip->city,
+								"state"		=>$rowShip->state,
+								"pin"		=>$rowShip->pin,
+								"landMark"	=>$rowShip->nearby_location,
+								"ship_id"	=>$rowShip->ship_id
+							);
+		}
+		else
+		{
+			$shipData = array();
+		}
 
 		if($numRow == 0)
 		{
@@ -405,6 +427,7 @@ class ThemeModel extends CI_Model
 				}
 				$this->db->where(["pro_id"=>$key->product_id,"status"=>1]);
 				$getpro = $this->db->get("products")->row();
+				$cartall[] = ["cart_id"=>$key->cart_id];
 				$cartData[] = array
 									(
 										"cart_id"		=>$key->cart_id,
@@ -420,19 +443,89 @@ class ThemeModel extends CI_Model
 										"pro_id"		=>$getpro->pro_id,
 										"mnImg"			=>$getpro->main_img,
 										"stock"			=>$getpro->qty,
-										"varname"		=>$varname
+										"varname"		=>$varname,
+
 										
 								
 
 									);
 			}
 		}
+		$tx = $getSetting->tax / 100;
+		$nowTx = $tx*$totAmt;
+		$grandTot = round($nowTx+$totAmt);
 
 		$data = array(
 						"numCart"	=>$numRow,
 						"totAmt"	=>$totAmt,
-						"cartData"	=>$cartData
+						"cartData"	=>$cartData,
+						"tax"		=>$getSetting->tax,
+						"grand"		=>$grandTot,
+						"shipData"	=>$shipData,
+						"cartall"	=>$cartall
 					);
 		return $data;
+	}
+
+	public function addShippingAddress($addr,$city,$state,$zip,$lm,$user_id)
+	{
+		$data = array
+					(
+						"user_id"			=>$user_id,
+						"address"			=>$addr,
+						"city"				=>$city,
+						"state"				=>$state,
+						"pin"				=>$zip,
+						"nearby_location"	=>$lm
+					);
+		$this->db->insert("shipping_address",$data);
+		return "done";
+	}
+
+	public function getUserDetails($user_id)
+	{
+		$this->db->where("id",$user_id);
+		$get = $this->db->get("users");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$row = $get->row();
+			$data = array
+						(
+							"name"		=>$row->full_name,
+							"phone"		=>$row->phone
+						);
+		}
+
+		return $data;
+	}
+
+	public function addOrders($user_id,$ship_id,$carts,$subtot,$tax,$grosstot,$orderId,$date)
+	{
+		$data = array
+					(
+						"order_id"	=>$orderId,
+						"cart_id"	=>$carts,
+						"user_id"	=>$user_id,
+						"shipping_address_id"	=>$ship_id,
+						"prices"	=>$subtot,
+						"tax"		=>$tax,
+						"gross_total"	=>$grosstot,
+						"order_date"	=>$date
+					);
+		$this->db->where(["order_id"=>$orderId,"user_id"=>$user_id]);
+		$get = $this->db->get("orders_transaction")->num_rows();
+		if($get > 0)
+		{
+			return "exist";
+		}
+		else
+		{
+			$this->db->insert("orders_transaction",$data);
+			return "done";
+		}
 	}
 }
