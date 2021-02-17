@@ -17,8 +17,17 @@ function hideSidemenu()
     	}
     	
     }
-function hideSidemenudd()
+function showMyAc()
 {
-	//$("#sideMenus").animate({"left":"-350px"}, "slow").show();
-	//$("#barIcon").removeClass("fa-times").addClass("fa-bars");
+	var clas = $("#Myac");
+    if(clas.hasClass('fa-user'))
+    {
+        $("#subBtmMenuId").animate({"bottom":"63px"}, "slow").show();
+        $("#Myac").removeClass("fa-user").addClass("fa-times");
+    }
+    else
+    {
+        $("#subBtmMenuId").animate({"bottom":"-280px"}, "slow").show();
+        $("#Myac").removeClass("fa-times").addClass("fa-user");
+    }
 }

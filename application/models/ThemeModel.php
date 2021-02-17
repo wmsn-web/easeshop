@@ -462,7 +462,7 @@ class ThemeModel extends CI_Model
 						"tax"		=>$getSetting->tax,
 						"grand"		=>$grandTot,
 						"shipData"	=>$shipData,
-						"cartall"	=>$cartall
+						"cartall"	=>@$cartall
 					);
 		return $data;
 	}

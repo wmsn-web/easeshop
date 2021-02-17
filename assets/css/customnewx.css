@@ -18,7 +18,7 @@
 	z-index: 999;
 }
 
-#resContent li
+#resContent li 
 {
 	list-style-type: none;
 	padding: 4px 15px;
@@ -55,7 +55,7 @@
 		left: 0;
 		bottom: 0;
 	}
-.footMenu ul li 
+.footMenu .btm li 
 {
 	list-style-type: none;
 		display: inline-block;
@@ -67,6 +67,27 @@
 		width: 25%;
 		font-size: 22px;
 		text-align: center;
+}
+.footMenu .hasSub .subBtmMenu
+{
+	position: absolute;
+	bottom: -280px;
+	background: #fff;
+	z-index: 999;
+	padding: 6px;
+	margin: 0;
+	box-shadow: 2px 0px 15px grey;
+	height: 180px;
+
+}
+.footMenu .hasSub .subBtmMenu li
+{
+	font-size: 16px;
+	display: list-item;
+	padding: 6px;
+	width: 100%;
+	border-bottom: solid 1px #ccc;
+
 }
 .color-thumb
 {

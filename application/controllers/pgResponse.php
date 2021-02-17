@@ -31,22 +31,62 @@ class pgResponse extends CI_controller
 
 
 		if($isValidChecksum == "TRUE") {
-			echo "<b>Checksum matched and following are the transaction details:</b>" . "<br/>";
+			//echo "<b>Checksum matched and following are the transaction details:</b>" . "<br/>";
 			if ($_POST["STATUS"] == "TXN_SUCCESS") {
-				echo "<b>Transaction status is success</b>" . "<br/>";
-				//Process your transaction here as success transaction.
-				//Verify amount & order id received from Payment gateway with your application's order id and amount.
+				$orderId = $_POST['ORDERID'];
+				$status = $_POST["STATUS"];
+				$txnid = $_POST['TXNID'];
+				$this->db->where("order_id",$orderId);
+				$gets = $this->db->get("orders_transaction")->row();
+				$user = $gets->user_id;
+				date_default_timezone_set('Asia/Kolkata');
+				$date = date('Y-m-d');
+				$cartids = html_entity_decode($gets->cart_id);
+				$cartIds = json_decode($cartids);
+				foreach($cartIds as $crtId)
+				{
+					$this->db->where("cart_id",$crtId->cart_id);
+					$this->db->update("cart",["status"=>1]);
+				}
+				$txnData = array
+								(
+									"pay_method"		=>"payTm",
+									"txnid"				=>$txnid,
+									"payment_status"	=>$status,
+									"payment_date"		=>$date,
+									"status"			=>"Processing"
+								);
+				$this->db->where("order_id",$orderId);
+				$this->db->update("orders_transaction",$txnData); 
+				$this->session->set_userdata("userId",$user);
+				$this->session->set_flashdata("Feed","Transaction Successfull!");
+				return redirect("My-Cart");
 			}
 			else {
-				echo "<b>Transaction status is failure</b>" . "<br/>";
+				
+				$orderId = $_POST['ORDERID'];
+				$status = $_POST["STATUS"];
+				$txnid = $_POST['TXNID'];
+				$this->db->where("order_id",$orderId);
+				$gets = $this->db->get("orders_transaction")->row();
+				$user = $gets->user_id;
+				date_default_timezone_set('Asia/Kolkata');
+				$date = date('Y-m-d');
+				$this->db->where("order_id",$orderId);
+				$this->db->delete("orders_transaction");
+				/*
+				$this->db->update("orders_transaction",["pay_method"=>"payTm","txnid"=>$txnid,"payment_status"=>$status,"payment_date"=>$date]); */
+				$this->session->set_userdata("userId",$user);
+				$this->session->set_flashdata("Feed","Transaction Failed!");
+				return redirect("My-Cart");
 			}
-
+			/*
 			if (isset($_POST) && count($_POST)>0 )
 			{ 
 				foreach($_POST as $paramName => $paramValue) {
 						echo "<br/>" . $paramName . " = " . $paramValue;
 				}
-			}
+			} */
 			
 
 		}

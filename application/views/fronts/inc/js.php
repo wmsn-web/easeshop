@@ -11,4 +11,4 @@
 <script src="<?= base_url(); ?>assets/js/bootstrap-select.min.js"></script> 
 <script src="<?= base_url(); ?>assets/js/wow.min.js"></script> 
 <script src="<?= base_url(); ?>assets/js/scripts.js"></script>
-<script src="<?= base_url(); ?>assets/js/customyFin.js"></script>
+<script src="<?= base_url(); ?>assets/js/customy.js"></script>

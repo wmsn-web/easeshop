@@ -230,17 +230,17 @@
 			</tr>
 		</thead><!-- /thead -->
 		
-			<input type="" id="user_id" value="<?= $this->session->userdata('userId'); ?>">
-			<input type="" id="ship_id" value="<?= $cartData['shipData']['ship_id']; ?>">
-			<input type="" id="carts" value='<?= json_encode($cartData['cartall']); ?>'>
-			<input type="" id="subtot" value='<?= $cartData['totAmt']; ?>'>
-			<input type="" id="tax" value='<?= $cartData['tax']; ?>'>
-			<input type="" id="grosstot" value='<?= $cartData['grand']; ?>'>
+			<input type="hidden" id="user_id" value="<?= $this->session->userdata('userId'); ?>">
+			<input type="hidden" id="ship_id" value="<?= $cartData['shipData']['ship_id']; ?>">
+			<input type="hidden" id="carts" value='<?= json_encode($cartData['cartall']); ?>'>
+			<input type="hidden" id="subtot" value='<?= $cartData['totAmt']; ?>'>
+			<input type="hidden" id="tax" value='<?= $cartData['tax']; ?>'>
+			<input type="hidden" id="grosstot" value='<?= $cartData['grand']; ?>'>
 			
 		
-		<form id="checkout" method="post" action="<?= base_url('pgRedirect'); ?>">
+		<form id="checkout" method="post" action="<?= base_url('pgRedirect'); ?>"> 
 		<input id="ORDER_ID" tabindex="1" maxlength="20" size="20" type="hidden"
-			name="ORDER_ID" id="orderId" value='<?= rand(); ?>'>
+			name="ORDER_ID"  value='<?= rand(); ?>'>
 		<input type="hidden" id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="<?= $this->session->userdata('userId'); ?>">
 		<input type="hidden" id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail">
 		<input type="hidden" id="CHANNEL_ID" tabindex="4" maxlength="12"
@@ -259,7 +259,7 @@
 							<?php else: ?>
 								<button id="addOrd" type="button" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
 							<?php endif; ?>
-							<span class="">Checkout with multiples address!</span>
+							
 						</div>
 					</td>
 				</tr>
@@ -267,6 +267,12 @@
 	</table><!-- /table -->
 </div><!-- /.cart-shopping-total -->			</div><!-- /.shopping-cart -->
 		</div> <!-- /.row -->
+		<?php else: ?>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h4 class="text-danger">Cart is Empty!</h4>
+				</div>
+			</div>
 		<?php endif; ?>
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
 <!-- /.logo-slider -->
@@ -281,6 +287,7 @@
     <div class="toastMsg">
       <div class="Msgs"><?= $feed; ?></div>
     </div>
+
   <?php endif; ?>
 <!-- ============================================================= FOOTER : END============================================================= --> 
 
@@ -337,7 +344,7 @@
     	tax = $("#tax").val();
     	grosstot = $("#grosstot").val();
     	carts = $("#carts").val();
-    	orderId = $("#orderId").val();
+    	orderId = $("#ORDER_ID").val();
     	$.post("<?= base_url('My-Cart/AddOrder'); ?>",{
     		user_id: user_id,
     		ship_id:ship_id,
