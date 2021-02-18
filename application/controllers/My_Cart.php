@@ -57,6 +57,19 @@ class My_Cart extends CI_controller
 		echo $add;
 	}
 
+	public function UpdateShipAddr()
+	{
+		$addr = $this->input->post("addr");
+		$city = $this->input->post("city");
+		$state = $this->input->post("state");
+		$zip = $this->input->post("zip");
+		$lm = $this->input->post("lm");
+		$user_id = $this->input->post("user_id");
+		$ship_id = $this->input->post("ship_id");
+		$add = $this->ThemeModel->updtShippingAddress($addr,$city,$state,$zip,$lm,$user_id,$ship_id);
+		echo $add;
+	}
+
 	public function AddOrder()
 	{
 		$user_id = $this->input->post("user_id");

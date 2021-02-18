@@ -174,6 +174,40 @@ section.login
 {
 	display: none;
 }
+.cardDiv
+{
+	width: 50%;
+	float: left;
+	padding: 8px;
+	margin-bottom: 75px;
+	margin-top: 15px;
+}
+.deskSide
+{
+	padding: 8px;
+	margin-bottom: 75px;
+	margin-top: 15px;
+}
+.deskSidemenu 
+{
+	padding: 0; margin:0;
+}
+.deskSidemenu li
+{
+	padding-top: 8px;
+	padding-bottom: 8px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #F57B00;
+}
+.deskSidemenu li a
+{
+	color: #005DF5;
+}
+.deskSidemenu li a.active
+{
+	color: #F5A300;
+}
 @media only screen and (max-width: 1980px)
 {
 .footMenu
@@ -185,6 +219,18 @@ section.login
 
 @media only screen and (max-width: 991px) 
 {
+	.deskSide
+	{
+		display: none;
+	}
+	.cardDiv
+{
+	width: 100%;
+	float: left;
+	padding: 8px;
+	margin-bottom: 75px;
+	margin-top: 15px;
+}
 	#mob-view
 	{
 		display: none !important;

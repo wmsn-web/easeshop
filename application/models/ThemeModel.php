@@ -482,6 +482,32 @@ class ThemeModel extends CI_Model
 		return "done";
 	}
 
+	public function updtShippingAddress($addr,$city,$state,$zip,$lm,$user_id,$ship_id)
+	{
+		$data = array
+					(
+						"user_id"			=>$user_id,
+						"address"			=>$addr,
+						"city"				=>$city,
+						"state"				=>$state,
+						"pin"				=>$zip,
+						"nearby_location"	=>$lm
+					);
+			$this->db->where("user_id",$user_id);
+			$getSh = $this->db->get("shipping_address")->num_rows();
+			if($getSh > 0)
+			{
+				$this->db->where(["ship_id"=>$ship_id,"user_id"=>$user_id]);
+				$this->db->update("shipping_address",$data);
+				return "done";
+			}
+			else
+			{
+				$this->db->insert("shipping_address",$data);
+				return "done";
+			}
+		}
+
 	public function getUserDetails($user_id)
 	{
 		$this->db->where("id",$user_id);
@@ -493,10 +519,39 @@ class ThemeModel extends CI_Model
 		else
 		{
 			$row = $get->row();
+				$this->db->where("user_id",$user_id);
+				$getShip = $this->db->get("shipping_address");
+				$numShip = $getShip->num_rows();
+				$rowShip = $getShip->row();
+				if($numShip > 0)
+				{
+					$shipData = array
+									(
+										"address"	=>$rowShip->address,
+										"city"		=>$rowShip->city,
+										"state"		=>$rowShip->state,
+										"pin"		=>$rowShip->pin,
+										"landMark"	=>$rowShip->nearby_location,
+										"ship_id"	=>$rowShip->ship_id
+									);
+				}
+				else
+				{
+					$shipData = array
+									(
+										"address"	=>"",
+										"city"		=>"",
+										"state"		=>"",
+										"pin"		=>"",
+										"landMark"	=>"",
+										"ship_id"	=>""
+									);
+				}
 			$data = array
 						(
 							"name"		=>$row->full_name,
-							"phone"		=>$row->phone
+							"phone"		=>$row->phone,
+							"shipData"	=>$shipData
 						);
 		}
 
