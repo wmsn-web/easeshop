@@ -583,4 +583,9 @@ class ThemeModel extends CI_Model
 			return "done";
 		}
 	}
+
+	public function getMyOrders($user_id)
+	{
+		
+	}
 }

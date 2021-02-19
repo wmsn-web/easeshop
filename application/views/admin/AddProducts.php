@@ -6,6 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		
 		<?php include("inc/form_layout.php"); ?>
+		<script type="text/javascript" src="<?= base_url('ckeditor/ckeditor.js'); ?>"></script>
 
 		<title>Add Products- Admin Panel</title>
 	</head>
@@ -140,7 +141,7 @@
 												</div>
 												<div class="form-group col-sm-12">
 													<label>Short Description</label>
-													<textarea name="descr" class="form-control" required="required" placeholder="Short Description"></textarea> 
+													<textarea name="descr" class="form-control" required="required" id="ShortDesc" placeholder="Short Description"></textarea> 
 													
 												</div>
 											</div>
@@ -169,7 +170,7 @@
 		</div>
 		<?php include("inc/rightmenu.php"); ?>
 		<?php include("inc/footer.php"); ?>
-		<?php include("inc/form_js.php"); ?>
+		<?php //include("inc/form_js.php"); ?>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$("#varr1").hide();
@@ -214,6 +215,9 @@
         x--; //Decrement field counter
     });
 			});
+	
+	
+CKEDITOR.replace( 'ShortDesc');
 		</script>
 	</body>
 </html>

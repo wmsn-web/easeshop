@@ -65,7 +65,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="row justify-content-center">
-          <div class="col-md-3">
+          <div class="col-md3">
             <div class="deskSide">
               <div class="card">
                 <div class="card-title">

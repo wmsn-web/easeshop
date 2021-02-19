@@ -182,6 +182,14 @@ section.login
 	margin-bottom: 75px;
 	margin-top: 15px;
 }
+.cardDiv2
+{
+	width: 60%;
+	float: left;
+	padding: 8px;
+	margin-bottom: 75px;
+	margin-top: 15px;
+}
 .deskSide
 {
 	padding: 8px;
@@ -208,6 +216,37 @@ section.login
 {
 	color: #F5A300;
 }
+.ordTable
+{
+	width: 100%;
+}
+.ordTable th
+{
+	padding:15px;
+	font-size: 16px;
+	border-bottom: 1px solid #ccc;
+}
+.ordTable td
+{
+	padding: 12px 15px;
+	font-size: 13px;
+	word-wrap: break-word;
+}
+.badge-success
+{
+	background: #090;
+	color: #fff;
+}
+.badge-warning
+{
+	background: #F57300;
+	color: #fff;
+}
+.badge-danger
+{
+	background: #f00;
+	color: #fff;
+}
 @media only screen and (max-width: 1980px)
 {
 .footMenu
@@ -224,6 +263,15 @@ section.login
 		display: none;
 	}
 	.cardDiv
+{
+	width: 100%;
+	float: left;
+	padding: 8px;
+	margin-bottom: 75px;
+	margin-top: 15px;
+}
+
+.cardDiv2
 {
 	width: 100%;
 	float: left;

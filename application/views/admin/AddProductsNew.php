@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		
 		<?php include("inc/form_layout.php"); ?>
-
+		<script type="text/javascript" src="<?= base_url('assets/ckeditor/ckeditor.js'); ?>"></script>
 		<title>Add Products- Admin Panel</title>
 	</head>
 	<body class="main-body app sidebar-mini dark-theme">
@@ -169,7 +169,7 @@
 												</div>
 												<div class="form-group col-sm-12">
 													<label>Short Description</label>
-													<textarea name="descr" class="form-control" required="required" placeholder="Short Description"></textarea> 
+													<textarea name="descr" id="ShortDesc" class="form-control" required="required" placeholder="Short Description"></textarea> 
 													
 												</div>
 											</div>
@@ -294,6 +294,7 @@
     });
     //========================================================================
 			});
+			CKEDITOR.replace('ShortDesc');
 		</script>
 	</body>
 </html>
