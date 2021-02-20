@@ -482,7 +482,7 @@ class ThemeModel extends CI_Model
 		return "done";
 	}
 
-	public function updtShippingAddress($addr,$city,$state,$zip,$lm,$user_id,$ship_id)
+	public function updtShippingAddress($addr,$city,$state,$zip,$lm,$user_id,$ship_id,$eml='')
 	{
 		$data = array
 					(
@@ -493,6 +493,8 @@ class ThemeModel extends CI_Model
 						"pin"				=>$zip,
 						"nearby_location"	=>$lm
 					);
+			$this->db->where("id",$user_id);
+			$this->db->update("users",["email"=>$eml]);
 			$this->db->where("user_id",$user_id);
 			$getSh = $this->db->get("shipping_address")->num_rows();
 			if($getSh > 0)
@@ -551,6 +553,7 @@ class ThemeModel extends CI_Model
 						(
 							"name"		=>$row->full_name,
 							"phone"		=>$row->phone,
+							"email"		=>$row->email,
 							"shipData"	=>$shipData
 						);
 		}
@@ -586,6 +589,119 @@ class ThemeModel extends CI_Model
 
 	public function getMyOrders($user_id)
 	{
-		
+		$this->db->order_by("id","DESC");
+		$this->db->where("user_id",$user_id);
+		$getOrd = $this->db->get("orders_transaction");
+		if($getOrd->num_rows()==0)
+		{
+			$ordData = array();
+		}
+		else
+		{
+			$resOrd = $getOrd->result();
+			foreach($resOrd as $ord)
+			{
+				$dt = $ord->order_date;
+				$dts = date_create($dt);
+				$d = date_format($dts,"d");
+				if($d == 01){$sth = "st";}
+				elseif($d == 02){$sth = "nd";}
+				elseif($d == 03){$sth = "rd";}
+				elseif($d == 21){$sth = "st";}
+				elseif($d == 31){$sth = "st";}
+				else
+				{
+					$sth = "th";
+				}
+				if($ord->status == "Processing"){$bgCol = "badge-warning";}
+				elseif($ord->status == "Dispatch"){$bgCol = "badge-warning";}
+				elseif($ord->status == "Delivared"){$bgCol = "badge-success";}
+				else{$bgCol = "badge-danger";}
+				$date = date_format($dts,"d")."<span class='smallUper'>".$sth."</span>";
+				$month = date_format($dts,"M");
+				$year = date_format($dts,"y");
+				$ordData[] = array
+									(
+										"id"	=>$ord->id,
+										"order_id"=>$ord->order_id,
+										"date"	=>$date." ".$month.", ".$year,
+										"status"=>$ord->status,
+										"bgCol"=>$bgCol,
+										"price"=>$ord->gross_total
+									);
+			}
+		}
+
+		return $ordData;
+	}
+
+	public function getOrdById($id)
+	{
+		$this->db->where("id",$id);
+		$getOrd = $this->db->get("orders_transaction");
+		if($getOrd->num_rows()==0)
+		{
+			$ordData = array();
+		}
+		else
+		{
+			$ord = $getOrd->row();
+			$cartId = html_entity_decode($ord->cart_id);
+			$carts = json_decode($cartId);
+			foreach($carts as $cart)
+			{
+				$this->db->where("cart_id",$cart->cart_id);
+				$getCrt = $this->db->get("cart")->row();
+				$this->db->where("pro_id",$getCrt->product_id);
+				$getPro = $this->db->get("products")->row();
+				$cartData[] = array
+									(
+										"product_name"	=>$getPro->product_name,
+										"qty"			=>$getCrt->qty,
+										"price"			=>$getCrt->price,
+										"mnImg"			=>$getPro->main_img
+									);
+			}
+			$tx = $ord->tax /100;
+			$txAmt = round($ord->prices * $tx);
+			if($ord->status =="Processing")
+				{
+					$pross = "progtrckr-done";
+					$disp = "progtrckr-todo";
+					$delvr = "progtrckr-todo";
+				}
+				elseif($ord->status =="Dispatch")
+					{
+					$pross = "progtrckr-done";
+					$disp = "progtrckr-done";
+					$delvr = "progtrckr-todo";
+				}
+				elseif($ord->status =="Delivared")
+					{
+					$pross = "progtrckr-done";
+					$disp = "progtrckr-done";
+					$delvr = "progtrckr-done";
+				}
+				else
+				{
+					$pross = "";
+					$disp = "";
+					$delvr = "";
+				}
+			$ordData = array
+							(
+								
+								"cartData"=>$cartData,
+								"status"	=>$ord->status,
+								"tax"		=>$ord->tax,
+								"txAmt"		=>$txAmt,
+								"total"		=>$ord->gross_total,
+								"pross"		=>$pross,
+								"disp"		=>$disp,
+								"delvr"		=>$delvr
+							);
+		}
+
+		return $ordData;
 	}
 }

@@ -98,6 +98,13 @@
                         <label>Mobile Number</label>
                         <input type="text" name="phone" class="form-control unicase-form-control text-input" readonly value="<?= $getUser['phone']; ?>">
                       </div>
+                      <div class="form-group col-md-6">
+                        <label>Email</label>
+                        <input type="text" id="eml" name="email" class="form-control unicase-form-control text-input"  value="<?= $getUser['email']; ?>">
+                      </div>
+                      <div class="form-group col-md-6">
+                        
+                      </div>
                       <div class="form-group col-sm-12">
                         <h5>Shipping Address</h5>
                       </div>
@@ -190,6 +197,7 @@
       state = $("#state").val();
       zip = $("#zip").val();
       lm = $("#lm").val();
+      eml = $("#eml").val();
       ship_id = $("#ship_id").val();
       user_id = "<?= $this->session->userdata('userId'); ?>";
       if(addr == ""){$("#addr").addClass("inpDanger").focus(); $("#msg1").html("Please Enter your address");}
@@ -209,6 +217,7 @@
           state: state,
           zip: zip,
           lm: lm,
+          eml:eml,
           user_id: user_id,
           ship_id: ship_id
         },function(resp){

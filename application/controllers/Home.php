@@ -21,6 +21,7 @@ class Home extends CI_controller
 
 	public function index()
 	{
+
 		//$this->session->unset_userdata("userId");
 		$getMenudata = $this->ThemeModel->getMenudata();
 		$getBanner = $this->ThemeModel->getBanner();

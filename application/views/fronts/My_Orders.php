@@ -73,8 +73,8 @@
                 </div>
                   <div class="card-body">
                     <ul  class="deskSidemenu">
-                      <li><a class="active" href="<?= base_url('My-Account'); ?>">My Account</a></li>
-                      <li><a href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
+                      <li><a href="<?= base_url('My-Account'); ?>">My Account</a></li>
+                      <li><a class="active" href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
                       <li><a href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
                       <li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
                     </ul>
@@ -88,32 +88,28 @@
                 <h4>My Orders</h4>
               </div>
                 <div class="card-body">
-                  <table class="ordTable">
-                    <tr>
-                      <th>Date</th>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Status</th>
-                    </tr>
-                    <tr data-toggle="modal" onclick="getOrdSts()" data-target="#orderStatus" class="cp">
-                      <td>20-02-2021</td>
-                      <td class="text-primary">Samsung Galaxy 3 Smart phone With 6GB Ram, And more extra features</td>
-                      <td>&#8377; 56999.00</td>
-                       <td><span class="badge badge-warning">Cancelled</span></td>
-                    </tr>
-                    <tr>
-                      <td>20-02-2021</td>
-                      <td>Samsung Galaxy 3 Smart phone With 6GB Ram, And more extra features >Processing</span></td>
-                      <td>&#8377; 56999.00</td>
-                      <td><span class="badge badge-success">Cancelled</span></td>
-                    </tr>
-                    <tr>
-                      <td>20-02-2021</td>
-                      <td>Samsung Galaxy 3 Smart phone With 6GB Ram, And more extra features </td>
-                      <td>&#8377; 56999.00</td>
-                      <td><span class="badge badge-danger">Cancelled</span></td>
-                    </tr>
-                  </table>
+                  <div class="table-responsive">
+                    <table class="ordTable">
+                      <?php if(!empty($ordData)): ?>
+                        <tr>
+                          <th>Date</th>
+                          <th>Order ID</th>
+                          <th>Price</th>
+                          <th>Status</th>
+                        </tr>
+                        <?php foreach($ordData as $ord): ?>
+                          <tr data-toggle="modal" onclick="getOrdSts('ids_<?= $ord['id']; ?>')" data-target="#orderStatus" class="cp">
+                            <td><?= $ord['date']; ?></td>
+                            <td class="text-primary">#<?= $ord['order_id']; ?></td>
+                            <td>&#8377; <?= $ord['price']; ?></td>
+                             <td><span class="badge <?= $ord['bgCol']; ?>"><?= $ord['status']; ?></span></td>
+                          </tr>
+                        <?php endforeach; ?>
+                      <?php else: ?>
+                        <tr class="text-center">No Order Found!</tr>
+                      <?php endif; ?>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,9 +129,49 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 
               </div>
-              <div class="modal-body">
+              <div class="modal-body  ordTlbs">
                 <div class="row">
-                  
+                  <div class="col-md-12">
+                    <!--div class="ordTlb">
+                    <table class="tbl tbl-brd">
+                      <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                      </tr>
+                      <tr>
+                        <td><img src="" width="45"></td>
+                        <td>
+                          ksdn ksnkdnk sndn skndknks jdnk
+                        </td>
+                        <td>1</td>
+                        <td>&#8377; 15999.00</td>
+                      </tr>
+                      <tr>
+                        <td class="nobrd"></td>
+                        <td class="nobrd"></td>
+                        <td>Tax(18%)</td>
+                        <td>120</td>
+                      </tr>
+                      <tr>
+                        <td class="nobrd"></td>
+                        <td class="nobrd"></td>
+                        <td><b>Total</b></td>
+                        <td>12000</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                  <div class="col-md-12">
+                    <div class="ordStatus">
+                      <ol class="progtrckr" data-progtrckr-steps="3">
+                          <li class="progtrckr-done">Processing</li>
+                          <li class="progtrckr-todo">Dispatch</li>
+                          <li class="progtrckr-todo">Delivared</li>
+                      </ol>
+                    </div>
+                  </div-->
                 </div>
               </div>
               <div class="modal-footer">
@@ -145,6 +181,7 @@
             
           </div>
         </div>
+      </div>
 <?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
@@ -153,45 +190,17 @@
 <?php include("inc/js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
 <script type="text/javascript">
-  $("#proBtn").click(function(){
-      addr = $("#addr").val();
-      city = $("#city").val();
-      state = $("#state").val();
-      zip = $("#zip").val();
-      lm = $("#lm").val();
-      ship_id = $("#ship_id").val();
-      user_id = "<?= $this->session->userdata('userId'); ?>";
-      if(addr == ""){$("#addr").addClass("inpDanger").focus(); $("#msg1").html("Please Enter your address");}
-      else if(city == ""){$("#addr").removeClass("inpDanger"); $("#msg1").html("");$("#city").addClass("inpDanger").focus(); $("#msg2").html("Please Enter your City Name");}
-      else if(state == ""){$("#city").removeClass("inpDanger"); $("#msg2").html("");$("#state").addClass("inpDanger").focus(); $("#msg3").html("Please Enter your State Name");}
-      else if(zip == ""){$("#state").removeClass("inpDanger"); $("#msg3").html("");$("#zip").addClass("inpDanger").focus(); $("#msg4").html("Please Enter your PIN/ZIP");}
-      else
-      {
-        $("#addr").removeClass("inpDanger"); $("#msg1").html("");
-        $("#city").removeClass("inpDanger"); $("#msg2").html("");
-        $("#state").removeClass("inpDanger"); $("#msg3").html("");
-        $("#zip").removeClass("inpDanger"); $("#msg4").html("");
-        //Insert into database
-        $.post("<?= base_url('My-Cart/UpdateShipAddr'); ?>",{
-          addr: addr,
-          city: city,
-          state: state,
-          zip: zip,
-          lm: lm,
-          user_id: user_id,
-          ship_id: ship_id
-        },function(resp){
-          if(resp == "done")
-          {
-            location.href="<?= base_url('My-Account'); ?>";
-          }
-          else
-          {
-            return false;
-          }
-        })
-      }
-    });
+  function getOrdSts(ids)
+  {
+    var spl = ids.split("_");
+    var id = spl[1];
+    $.post("<?= base_url('My-Orders/orderById'); ?>",{
+      id: id
+    },function(data){
+      $(".ordTlbs").html(data);
+    })
+
+  }
 </script>
 </body>
 

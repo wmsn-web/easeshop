@@ -64,9 +64,10 @@ class My_Cart extends CI_controller
 		$state = $this->input->post("state");
 		$zip = $this->input->post("zip");
 		$lm = $this->input->post("lm");
+		$eml = $this->input->post("eml");
 		$user_id = $this->input->post("user_id");
 		$ship_id = $this->input->post("ship_id");
-		$add = $this->ThemeModel->updtShippingAddress($addr,$city,$state,$zip,$lm,$user_id,$ship_id);
+		$add = $this->ThemeModel->updtShippingAddress($addr,$city,$state,$zip,$lm,$user_id,$ship_id,$eml);
 		echo $add;
 	}
 
