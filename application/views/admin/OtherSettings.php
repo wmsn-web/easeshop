@@ -74,8 +74,7 @@
 						data-toggle="dropdown" id="dropdownMenuButton" type="button">Settings<i class="fas fa-caret-down ml-1"></i></button>
 						<div  class="dropdown-menu tx-13">
 							<a <?php if(isset($_GET['ref'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?>  href="<?= base_url('admin_panel/OtherSettings/?ref'); ?>">Referal Settings</a>
-							<a <?php if(isset($_GET['mot'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?mot'); ?>">Manage Order Timing</a>
-							<a <?php if(isset($_GET['moa'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?moa'); ?>">Minimum Order Amount</a>
+							
 							<a <?php if(isset($_GET['priv'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?priv'); ?>">Set Privacy Policy</a>
 							<a <?php if(isset($_GET['terms'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?terms'); ?>">Terms and condition</a>
 							<a <?php if(isset($_GET['help'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?help'); ?>">Help Desk</a>
@@ -122,60 +121,8 @@
 											<button class="btn btn-info"><i class="fas fa-save"></i> Save</button>
 										</div>
 									</form>
-									<?php elseif(isset($_GET['mot'])): ?>
-										<form action="<?= base_url('admin_panel/OtherSettings/updtTiming'); ?>" method="post">
-											<div class="row">
-												<div class="form-group col-sm-6">
-													<label>Start Working Time</label>
-														<input type="time" name="startTime" class="form-control Time1" value="<?= $mot['start_time']; ?>">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Finish Working Time</label>
-														<input type="time" name="finishTime" class="form-control Time2"   onblur="calculate()" value="<?= $mot['finish_time']; ?>">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Working Hour(s)</label>
-														<input type="number" name="workHour" class="form-control Hours" readonly value="<?= $mot['working_hour']; ?>">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Each Slot Duration</label>
-														<input type="number" name="esd" id="esd" class="form-control" value="<?= $mot['each_slot']; ?>">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Time Slot</label>
-														<input type="number" id="slots" name="timeSlot" class="form-control" readonly value="<?= $mot['time_slot']; ?>">
-												</div>
-												
-												<div class="form-group col-sm-6">
-													<label>Take Order Per Slot</label>
-														<input type="number" name="ordPerSlot" class="form-control" value="<?= $mot['take_ord']; ?>">
-												</div>
-												<div id="sslt">
-													<h5>Slot Timing</h5>
-													<div id="slotTiming" class="row">
-														<?php if(!empty($allSlots)): ?>
-															<?php foreach ($allSlots as $slotData): ?>
-																<div class="form-group col-sm-4">
-																	<label>Slot</label>
-																	<input type="number" name="slot[]" class="form-control" readonly value="<?= $slotData['slot']; ?>">
-																</div>
-																<div class="form-group col-sm-4">
-																	<label>Start</label>
-																	<input type="time" name="start[]" class="form-control" value="<?= $slotData['start']; ?>" required="required">
-																</div>
-																<div class="form-group col-sm-4">
-																	<label>End</label>
-																	<input type="time" name="end[]" class="form-control" value="<?= $slotData['end']; ?>" required="required">
-																</div>
-															<?php endforeach; ?>
-														<?php endif; ?>
-													</div>
-												</div>
-												<div class="form-group col-sm-12">
-													<button class="btn btn-primary">Save</button>
-												</div>
-											</div>
-										</form>
+									
+										
 									<?php endif; ?>
 							</div>
 						</div>

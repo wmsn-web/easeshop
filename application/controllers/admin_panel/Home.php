@@ -18,8 +18,8 @@ class Home extends CI_controller
 	
 	function index()
 	{
-		//$dashdata = $this->AdminModel->dashdata();
-		$dashdata = array();
+		$dashdata = $this->AdminModel->dashdata();
+		//$dashdata = array();
 		$this->load->view("admin/AdminHome",["dashdata"=>$dashdata]); 
 
 	}

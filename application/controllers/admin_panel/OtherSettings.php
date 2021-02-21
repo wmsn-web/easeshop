@@ -19,8 +19,8 @@ class OtherSettings extends CI_controller
 	public function index()
 	{
 		$getRefrl = $this->AdminModel->getRefrl();
-		$getTimeSlot = $this->AdminModel->getTimeSlot();
-		$getAllSlots = $this->AdminModel->getAllSlots();
+		//$getTimeSlot = $this->AdminModel->getTimeSlot();
+		//$getAllSlots = $this->AdminModel->getAllSlots();
 		$getminOrd = $this->AdminModel->getminOrd();
 		$getPrivacy = $this->AdminModel->getPrivacy();
 		$getTerms  = $this->AdminModel->getTerms();
@@ -52,7 +52,7 @@ class OtherSettings extends CI_controller
 							);
 			}
 		}
-		$this->load->view("admin/OtherSettings",["ref"=>$getRefrl,"mot"=>$getTimeSlot, "allSlots"=>$getAllSlots,"minOrd"=>$getminOrd,"getPrivacy"=>$getPrivacy,"getTerms"=>$getTerms,"getCnum"=>$getCnum,"getFaqs"=>$getFaqs,"faqrow"=>$dataR]);
+		$this->load->view("admin/OtherSettings",["ref"=>$getRefrl, "minOrd"=>$getminOrd,"getPrivacy"=>$getPrivacy,"getTerms"=>$getTerms,"getCnum"=>$getCnum,"getFaqs"=>$getFaqs,"faqrow"=>$dataR]);
 	}
 
 	public function updtRef()

@@ -1132,26 +1132,10 @@ class AdminModel extends CI_model
 				$getUser = $this->db->get("users")->row();
 
 				//Get Shipping Address
-				$this->db->where("shipping_address_id",$key->shipping_address_id);
+				$this->db->where("ship_id",$key->shipping_address_id);
 				$getShip = $this->db->get("shipping_address")->row();
 
-				$this->db->where("id",$key->slot_id);
-				$gtSlot = $this->db->get("slots_timing")->row();
-				$timeSlot = @$gtSlot->start."-".@$gtSlot->end;
-
-				$this->db->where("order_id",$key->order_id);
-				$getSlot = $this->db->get("slot_save");
-				if($getSlot->num_rows()==0)
-				{
-					$time = "";
-					$dt = "";
-				}
-				else
-				{
-					$rowSl = $getSlot->row();
-					$time = $rowSl->slot_details;
-					$dt = $rowSl->slot_date;
-				}
+				
 				
 				$data[] = array
 								(
@@ -1160,7 +1144,7 @@ class AdminModel extends CI_model
 									"user_id"	=>$key->user_id,
 									"user_name"=>@$getUser->full_name,
 									"contactNo"=>@$getUser->phone,
-									"date"		=>$key->date,
+									"date"		=>@$key->order_date,
 									"grossTotal"=>$key->gross_total,
 									"shipFullName" =>@$getShip->full_name,
 									"shipContact" =>@$getShip->phone,
@@ -1170,11 +1154,10 @@ class AdminModel extends CI_model
 									"nearLocation"	=>@$getShip->nearby_location,
 									"cardData" =>$cardData,
 									"status"	=>$key->status,
-									"asigned"	=>$key->asigned_delivery_boy,
+									
 									"pay_status"=>$key->payment_status,
 									"pay_method"=>$key->pay_method,
-									"wallet_price"=>$key->wallet_price,
-									"timeSlot"	=>$time."<br>".$dt
+									
 
 								);
 			}
@@ -1197,13 +1180,14 @@ class AdminModel extends CI_model
 		{
 			$key = $getOrd->row();
 			
-				$string = $key->cart_id;
-				$str_arr = preg_split ("/\,/", $string);
+				$string = html_entity_decode($key->cart_id);
+
+				$str_arr = json_decode($string);
 				$cardData = []; 
 				foreach($str_arr as $cart_id)
 				{
 					$this->db->order_by("cart_id","ASC");
-					$this->db->where("cart_id",$cart_id);
+					$this->db->where("cart_id",$cart_id->cart_id);
 					$getCart = $this->db->get("cart");
 					if($getCart->num_rows()==0)
 					{
@@ -1214,7 +1198,7 @@ class AdminModel extends CI_model
 						$resCart = $getCart->result();
 						foreach($resCart as $carts)
 						{
-							$this->db->where("id",$carts->product_id);
+							$this->db->where("pro_id",$carts->product_id);
 							$getProd = $this->db->get("products");
 							$proRow = $getProd->row();
 							if($getProd->num_rows()==0)
@@ -1233,28 +1217,14 @@ class AdminModel extends CI_model
 									$proImgs = $proImg;
 									$price = $proRow->sale_price;
 									$qty_unit = $proRow->units;
+									$varName = "";
 								}
 								else
 								{
-									$expl = explode("-", $carts->variation_name);
+									$expl = explode("_", $carts->variation_name);
 									$varId = $expl[0];
-									//Get Details from Various table
-									$this->db->where("id",$varId);
-									$getVar = $this->db->get("various");
-									if($getVar->num_rows()==0)
-									{
-										$qty_unit = "";
-										$price = "";
-										$proImg = "";
-									}
-									else
-									{
-										$varRow = $getVar->row();
-										$qty_unit = $varRow->qty_unit;
-										$price = $varRow->price;
-										$proImgs = base_url('uploads/products/'.$varRow->img);
-
-									}
+									$varName = $expl[2];
+									
 								}
 								
 							}
@@ -1266,10 +1236,9 @@ class AdminModel extends CI_model
 											(
 												"cart_id"		=>$carts->cart_id,
 												"userId"		=>$carts->user_id,
-												"product_name"	=>$product_name,
-												"proImg"		=>$proImgs,
-												"qty_unit"		=>$qty_unit,
-												"pricePer"		=>$price,
+												"product_name"	=>$product_name." ".$varName,
+												"proImg"		=>$proImg,
+												
 												"purchaseQty"	=>$carts->qty,
 												"cartPrice"		=>$carts->price
 												
@@ -1284,10 +1253,10 @@ class AdminModel extends CI_model
 				$getUser = $this->db->get("users")->row();
 
 				//Get Shipping Address
-				$this->db->where("shipping_address_id",$key->shipping_address_id);
+				$this->db->where("ship_id",$key->shipping_address_id);
 				$getShip = $this->db->get("shipping_address")->row();
 
-				$dt = date_create($key->date);
+				$dt = date_create($key->order_date);
 				$fullDate = date_format($dt,"F").",".date_format($dt,'d').", ".date_format($dt,"Y");;
 				
 				$data = array
@@ -1298,7 +1267,7 @@ class AdminModel extends CI_model
 									"user_name"=>@$getUser->full_name,
 									"contactNo"=>@$getUser->phone,
 									"email"=>@$getUser->email,
-									"date"		=>$key->date,
+									"date"		=>$key->order_date,
 									"grossTotal"=>$key->gross_total,
 									"shipFullName" =>@$getShip->full_name,
 									"shipContact" =>@$getShip->phone,

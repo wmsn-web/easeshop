@@ -614,8 +614,8 @@ class ThemeModel extends CI_Model
 					$sth = "th";
 				}
 				if($ord->status == "Processing"){$bgCol = "badge-warning";}
-				elseif($ord->status == "Dispatch"){$bgCol = "badge-warning";}
-				elseif($ord->status == "Delivared"){$bgCol = "badge-success";}
+				elseif($ord->status == "Despatched"){$bgCol = "badge-warning";}
+				elseif($ord->status == "Delivered"){$bgCol = "badge-success";}
 				else{$bgCol = "badge-danger";}
 				$date = date_format($dts,"d")."<span class='smallUper'>".$sth."</span>";
 				$month = date_format($dts,"M");
@@ -670,13 +670,13 @@ class ThemeModel extends CI_Model
 					$disp = "progtrckr-todo";
 					$delvr = "progtrckr-todo";
 				}
-				elseif($ord->status =="Dispatch")
+				elseif($ord->status =="Despatched")
 					{
 					$pross = "progtrckr-done";
 					$disp = "progtrckr-done";
 					$delvr = "progtrckr-todo";
 				}
-				elseif($ord->status =="Delivared")
+				elseif($ord->status =="Delivered")
 					{
 					$pross = "progtrckr-done";
 					$disp = "progtrckr-done";

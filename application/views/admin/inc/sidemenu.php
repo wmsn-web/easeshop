@@ -47,9 +47,8 @@
 					<li class="slide">
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-help-alt menu-icon"></i><span class="side-menu__label">Orders</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
-							<li><a class="slide-item" href="<?= base_url('admin_panel/Orders/NewOrders/Pending'); ?>">New Orders</a></li>
+							
 							<li><a class="slide-item" href="<?= base_url('admin_panel/Orders/NewOrders/Processing'); ?>">Order Processing</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/Orders/NewOrders/Packed'); ?>">Order Packed</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/Orders/NewOrders/Despatched'); ?>">Order Despatched</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/Orders/NewOrders/Delivered'); ?>">Order Delivered</a></li>
 							<li><a class="slide-item" href="<?= base_url('admin_panel/Orders/NewOrders/Cancel'); ?>">Order Cancelled</a></li>
@@ -62,14 +61,14 @@
 					</li>
 					
 
-					<li class="slide">
+					<!--li class="slide">
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-bell menu-icon"></i><span class="side-menu__label">Notifications</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="<?= base_url('admin_panel/Send-Offer-Notification'); ?>">Send Offer Notification</a></li>
 							
 							
 						</ul>
-					</li>
+					</li-->
 
 					
 
@@ -79,10 +78,7 @@
 						<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon ti-user menu-icon"></i><span class="side-menu__label">Users Profile</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="<?= base_url('admin_panel/AllUsers'); ?>">All Users</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/PremiumUsers'); ?>"><i class="fas fa-crown"></i> <?= nbs(3); ?>Premium Users</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/AddDelivaryBoys'); ?>">Register Delivary Boys</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/AllDelivaryBoys'); ?>">All Delivary Boys</a></li>
-							<li><a class="slide-item" href="<?= base_url('admin_panel/Staff'); ?>">Staff</a></li>
+							
 
 						</ul>
 					</li>
@@ -91,15 +87,11 @@
 					<li class="slide">
 						<a class="side-menu__item"  href="<?= base_url('admin_panel/OtherSettings'); ?>"><i class="side-menu__icon fas fa-cog fa-spin menu-icon"></i><span class="side-menu__label">Other Settings</span></a>
 					</li>
-					<li class="slide">
-						<a class="side-menu__item"  href="<?= base_url('admin_panel/ShippingZone'); ?>"><i class="side-menu__icon fas fa-map-marker  menu-icon"></i><span class="side-menu__label">Shipping Zone</span></a>
-					</li>
+					
 					<li class="slide">
 						<a class="side-menu__item"  href="<?= base_url('admin_panel/ChangePassword'); ?>"><i class="side-menu__icon ti-key menu-icon"></i><span class="side-menu__label">Change Password</span></a>
 					</li>
-					<li class="slide">
-						<a class="side-menu__item"  href="<?= base_url('admin_panel/MembershipPlans'); ?>"><i class="side-menu__icon ti-id-badge menu-icon"></i><span class="side-menu__label">Membership Plans</span></a>
-					</li>
+					
 				<?php endif; ?>
 			
 					<?= br(5); ?>

@@ -44,31 +44,16 @@
 											<th>Order ID</th>
 											<th>User name</th>
 											<th>Price</th>
-											<th>Pay Method</th>
 											<th>Payment Status</th>
 											<th>Status</th>
-											<th>Asigned Delivery Boy</th>
-											<th>Time Slot</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php if(!empty($orderData)): ?>
 											<?php $s=1; foreach($orderData as $orders): $sl=$s++;
-												if($orders['status']=="Pending"): 
-													$slc1 = "selected";
-													$slc2 ="";
-													$slc3 = "";
-													$slc4 ="";
-													$slc5 = "";
-													$slc6 = "";
-													$disb1 ="";
-													$disb2 = "";
-													$disb3 = "disabled";
-													$disb4 = "disabled";
-													$disb5 = "disabled";
-													$disb6 = "";
-												elseif($orders['status']=="Processing"):
+												
+												if($orders['status']=="Processing"):
 													$slc1 = "";
 													$slc2 ="selected";
 													$slc3 = "";
@@ -78,22 +63,10 @@
 													$disb1 ="disabled";
 													$disb2 = "";
 													$disb3 = "";
-													$disb4 = "disabled";
-													$disb5 = "disabled";
-													$disb6 = "disabled";
-												elseif($orders['status']=="Packed"):
-													$slc1 = "";
-													$slc2 ="";
-													$slc3 = "selected";
-													$slc4 ="";
-													$slc5 = "";
-													$slc6 = "";
-													$disb1 ="disabled";
-													$disb2 = "disabled";
-													$disb3 = "";
 													$disb4 = "";
 													$disb5 = "disabled";
 													$disb6 = "disabled";
+												
 												elseif($orders['status']=="Despatched"):
 													$slc1 = "";
 													$slc2 ="";
@@ -168,15 +141,6 @@
 												 else: $sts=$orders['pay_status'];
 												 	$xpl = explode("_", $orders['pay_method']);
 												 	$methods = @$xpl[0]."()<br>".@$xpl[1];
-												 	if($orders['wallet_price']=="0.00"):
-												 		$method = @$xpl[1];
-												 		else: 
-												 			$razor = $orders['grossTotal'] - $orders['wallet_price'];
-												 			$razor = number_format($razor,2);
-												 			$wallets = number_format($orders['wallet_price'],2);
-												 			$method = @$xpl[0]."(".$wallets.")<br>".@$xpl[1]."(".$razor.")";
-												 			
-												 		endif;
 												 	
 												  endif;
 
@@ -187,7 +151,7 @@
 													<td><?= $orders['order_id']; ?></td>
 													<td><?= $orders['user_name']; ?></td>
 													<td><?= $orders['grossTotal']; ?></td>
-													<td><?= $method; ?></td>
+													
 													<td><?= $sts; ?></td>
 													<td>
 														<?php
@@ -202,7 +166,7 @@
 														<select onchange="slctStus(this.value)">
 															<option <?= $slc1; ?> <?= $disb1; ?> value="Pending_<?= $orders['id']; ?>_<?= $orders['user_id']; ?>">Pending</option>
 															<option <?= $slc2; ?> <?= $disb2; ?> value="Processing_<?= $orders['id']; ?>_<?= $orders['user_id']; ?>">Processing</option>
-															<option <?= $slc3; ?> <?= $disb3; ?> value="Packed_<?= $orders['id']; ?>_<?= $orders['user_id']; ?>">Packed</option>
+															
 															<option <?= $slc4; ?> <?= $disb4; ?> value="Despatched_<?= $orders['id']; ?>_<?= $orders['user_id']; ?>">Despatched</option>
 															<option <?= $slc5; ?> <?= $disb5 ?> value="Delivered_<?= $orders['id']; ?>_<?= $orders['user_id']; ?>">Delivered</option>
 															<option <?= $slc6; ?> <?= $disb6 ?> value="Cancel_<?= $orders['id']; ?>_<?= $orders['user_id']; ?>">Cancel</option>
@@ -210,26 +174,7 @@
 														</select>
 													<?php } ?>
 													</td>
-													<td>
-														<select onchange="asignBoys(this.value)">
-															<option value="">Select Delivery Boy</option>
-															<?php if(!empty($delBoys)): ?>
-																<?php foreach($delBoys as $dlb):
-																	if($orders['asigned']==$dlb['id'])
-																	{
-																		$dlnSlct = "selected";
-																	}
-																	else
-																	{
-																		$dlnSlct = "";
-																	}
-																 ?>
-																	<option <?= $dlnSlct; ?> value="<?= $dlb['id']; ?>_<?= $orders['id']; ?>"><?= $dlb['name']; ?></option>
-																<?php endforeach; ?>
-															<?php endif; ?>
-														</select>
-													</td>
-													<td><span class="badge badge-success"><?= $orders['timeSlot']; ?></span></td>
+													
 													<td>	
 														<button  data-toggle="modal" data-target="#InvoiceDetails" class="btn btn-warning" onclick="viewD('ord_<?= $orders['id']; ?>')">View Details</button>
 														
@@ -294,6 +239,7 @@
 			});
 			function viewD(ordId)
 			{
+				$(".main-body").removeClass("dark-theme").addClass("Light-mode");
 				spl = ordId.split("_");
 				id = spl[1];
 				$.post("<?= base_url('admin_panel/Orders/orderDetails'); ?>",
@@ -302,8 +248,9 @@
 				},
 				function(data)
 				{
+					//alert(data);
 					dt = JSON.parse(data);
-					$("#compName").html("Buymenow Grocery");
+					$("#compName").html("Easeshop");
 					$("#username").html(dt.shipFullName);
 					$("#addr").html(dt.shipAddr+", "+dt.shipCity+", "+dt.shipPin);
 					$("#tel").html(dt.shipContact);
@@ -315,7 +262,7 @@
 					var cartss ="";
 
 					for (i = 0; i < dt.cartData.length; i++) {
-					  cartss += "<tr><td><img src='"+dt.cartData[i].proImg+"' width='25px' /> </td><td>"+dt.cartData[i].product_name+" ("+dt.cartData[i].qty_unit+")</td><td class='text-center'>"+dt.cartData[i].purchaseQty+"</td><td class='text-right'>"+addZeroes(dt.cartData[i].pricePer)+"</td><td class='text-right'>"+addZeroes(dt.cartData[i].cartPrice)+"</td></tr>";
+					  cartss += "<tr><td><img src='"+dt.cartData[i].proImg+"' width='25px' /> </td><td>"+dt.cartData[i].product_name+" </td><td class='text-center'>"+dt.cartData[i].purchaseQty+"</td><td class='text-right'>"+addZeroes(dt.cartData[i].pricePer)+"</td><td class='text-right'>"+addZeroes(dt.cartData[i].cartPrice)+"</td></tr>";
 					}
 
 					subtotal = '<tr><td class="valign-middle" colspan="2" rowspan="4"><div class="invoice-notes"><label class="main-content-label tx-13">Notes</label><p></p></div><!-- invoice-notes --></td><td class="tx-right">Sub-Total</td><td class="tx-right" colspan="2">&#8377; '+addZeroes(dt.subTotal)+'</td></tr>';
