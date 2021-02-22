@@ -36,4 +36,21 @@ class My_Account extends CI_controller
 		$add = $this->ThemeModel->updtShippingAddress($addr,$city,$state,$zip,$lm,$user_id,$ship_id,$eml);
 		echo $add;
 	}
+
+	public function AddReviews()
+	{
+		$user_id = $this->input->post("user_id");
+		$proId = $this->input->post("proId");
+		$stars = $this->input->post("stars");
+		$review = $this->input->post("review");
+		$rview = htmlentities($review);
+
+		$postReviews = $this->ThemeModel->postReviews($user_id,$proId,$stars,$rview);
+		if($postReviews == "succ")
+		{
+			$this->session->set_flashdata("Feed","Thank you for your review");
+			return redirect("Product_details/index/".$proId);
+		}
+
+	}
 }

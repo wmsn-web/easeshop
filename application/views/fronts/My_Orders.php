@@ -75,6 +75,7 @@
                     <ul  class="deskSidemenu">
                       <li><a href="<?= base_url('My-Account'); ?>">My Account</a></li>
                       <li><a class="active" href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
+                       <li><a href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
                       <li><a href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
                       <li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
                     </ul>

@@ -75,8 +75,8 @@
                     <ul  class="deskSidemenu">
                       <li><a href="<?= base_url('My-Account'); ?>">My Account</a></li>
                       <li><a href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
-                       <li><a href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
-                      <li><a class="active" href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
+                       <li><a class="active" href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
+                      <li><a href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
                       <li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
                     </ul>
                   </div>
@@ -86,31 +86,49 @@
           <div class="cardDiv2">
             <div class="card">
               <div class="card-title">
-                <h4>My Orders</h4>
+                <h4>My Wishlist</h4>
               </div>
                 <div class="card-body">
-                  <form id="chpasForm" action="<?= base_url('Change-Password/Chpass'); ?>" method="post">
-                    <?php if($feed = $this->session->flashdata("Feed")): ?>
-                      <h5 class="text-danger"><?= $feed; ?></h5>
-                    <?php endif; ?>
-                    <div class="form-group">
-                      <label>Old Password <?= nbs(8); ?> <span id="olp" class="fa"></span></label>
-                      <input type="password" name="oldPass" id="oldPass" class="form-control unicase-form-control text-input">
+                  <?php if (!empty($mywish)): ?>
+                    <?php foreach($mywish as $wishPro): ?>
+                  <div class="row">
+                    <div class="cols2-2">
+                      <div align="center">
+                        <a onclick="location.href='<?= base_url('My-wishlist/delWish/'.$wishPro['id']); ?>'" href="#">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label>New Password <?= nbs(8); ?> <span id="np" class="fa"></span></label>
-                      <input type="password" name="newPass" id="newPass" class="form-control unicase-form-control text-input">
+                    <div class="colss-10">
+                      <div class="proDetails">
+                        <div class="row">
+                          <div class="cols2-2">
+                            <img src="<?= base_url('uploads/products/'.$wishPro['proData']['mnImg']); ?>" width="60" alt="proImg" /></div>
+                          
+                          <div class="cols2-10">
+                            <div class="product-info">
+                              <h5 class="name"><a href="<?= base_url('Product_details/index/'.$wishPro['proData']['pro_id']); ?>"><?= $wishPro['proData']['prod_name']; ?></a></h5>
+                              <div class="rating rateit-small"></div>
+                              <div class="description"><span class="badge badge-danger"><?= $wishPro['proData']['discount']; ?>% Off</span></div>
+
+                              <div class="product-price"> 
+                                <span class="price">
+                                  &#8377; <?= $wishPro['proData']['sale_price']; ?>      </span>
+                                                 <span class="price-before-discount"><del>&#8377; <?= $wishPro['proData']['price']; ?></del></span>
+                                          
+                              </div><!-- /.product-price -->
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label>Confirm New Password <?= nbs(8); ?> <span id="cnp" class="fa"></span></label><?= nbs(8); ?>
-                      <small class="text-danger" id="msg"></small>
-                      <input type="password" name="conPass" id="conPass" class="form-control unicase-form-control text-input">
-                      <input type="hidden" name="userid" id="userid" value="<?= $this->session->userdata('userId'); ?>">
-                    </div>
-                    <div class="form-group">
-                      <button type="button" id="chPass" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form>
+                  </div>
+                  <?php endforeach; ?>
+                  <?php else: ?>
+                    <h5 class="text-danger">Wishlist is empty!</h5>
+                  <?php endif; ?>
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,7 +138,11 @@
     </div>
   </div>
 </div>
-
+<?php if($feed = $this->session->flashdata("Feed")): ?>
+    <div class="toastMsg">
+      <div class="Msgs"><?= $feed; ?></div>
+    </div>
+  <?php endif; ?>
 <?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
@@ -129,33 +151,7 @@
 <?php include("inc/js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
 <script type="text/javascript">
-  $("#chPass").click(function(){
-    var oldPass = $("#oldPass").val();
-    var newPass = $("#newPass").val();
-    var conPass = $("#conPass").val();
-    var userid = $("#userid").val();
-    if(oldPass == "" ){$("#olp").addClass("fa-times text-danger")}
-    else if(newPass == "" ){$("#np").addClass("fa-times text-danger"); $("#olp").addClass("fa-check text-success").removeClass("fa-times text-danger") }
-  else if(conPass == "" ){$("#cnp").addClass("fa-times text-danger"); $("#np").addClass("fa-check text-success").removeClass("fa-times text-danger")}
-  else
-  {
-    //$("#cnp").addClass("fa-check text-success").removeClass("fa-times text-danger");
-    if(newPass == conPass)
-    {
-      $("#cnp").addClass("fa-check text-success").removeClass("fa-times text-danger");
-      $("#olp").addClass("fa-check text-success").removeClass("fa-times text-danger");
-      $("#np").addClass("fa-check text-success").removeClass("fa-times text-danger");
-      $("#msg").html("");
-      $("#chpasForm").submit();
-    }
-    else
-    {
-      $("#cnp").addClass("fa-times text-danger").removeClass("fa-check text-success");
-      $("#msg").html("Password Does not match!");
-      return false;
-    }
-  }
-  })
+  $(".toastMsg").fadeOut(6000);
 </script>
 </body>
 

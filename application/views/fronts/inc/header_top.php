@@ -6,7 +6,7 @@
           <ul class="list-unstyled">
             <?php if($this->session->userdata("userId")): ?>
             <li><a href="<?= base_url('My-Account'); ?>"><i class="icon fa fa-user"></i>My Account</a></li>
-            <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+            <li><a href="<?= base_url('My-wishlist'); ?>"><i class="icon fa fa-heart"></i>Wishlist</a></li>
             <li><a href="<?= base_url('My-Cart'); ?>"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             
               <li><a href="<?= base_url("Logout"); ?>"><i class="icon fa fa-lock"></i>Logout</a></li>

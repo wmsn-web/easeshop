@@ -152,6 +152,32 @@ section.login
 {
 	display: none;
 }
+/*-- rating--*/
+.rating-stars {
+  width: 100%;
+  text-align: center; }
+  .rating-stars .rating-stars-container {
+    font-size: 0px; }
+    .rating-stars .rating-stars-container .rating-star {
+      display: inline-block;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 4px 8px;
+      color: #ababab; }
+      .rating-stars .rating-stars-container .rating-star.is--active .fa-heart, .rating-stars .rating-stars-container .rating-star.is--hover .fa-heart {
+        color: #fb0d00; }
+      .rating-stars .rating-stars-container .rating-star.sm {
+        display: inline-block;
+        font-size: 14px;
+        color: #ababab;
+        cursor: pointer;
+        padding: 5px; }
+      .rating-stars .rating-stars-container .rating-star.is--active, .rating-stars .rating-stars-container .rating-star.is--hover {
+        color: #ffb400; }
+      .rating-stars .rating-stars-container .rating-star.is--no-hover, .rating-stars .rating-stars-container .rating-star .fa-heart .is--no-hover {
+        color: #ababab; }
+      .rating-stars .rating-stars-container .rating-star.is--active, .rating-stars .rating-stars-container .rating-star.is--hover {
+        color: #ffb400; }
 @media only screen and (max-width: 1980px)
 {
 .footMenu

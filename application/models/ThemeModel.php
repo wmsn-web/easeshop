@@ -349,6 +349,31 @@ class ThemeModel extends CI_Model
 			{
 				$vardata = array();
 			}
+
+			//Relatet Products
+			$this->db->where(["brand_id"=>$key->brand_id,"id!="=>$key->id]);
+			$getRelPro = $this->db->get("products");
+			if($getRelPro->num_rows()==0)
+			{
+				$relProData = array();
+			}
+			else
+			{
+				$resRel = $getRelPro->result();
+				foreach($resRel as $keyRel)
+				{
+					$relProData[] = array
+										(
+											"prod_name"		=>$keyRel->product_name,
+											"price"			=>$keyRel->price,
+											"sale_price"	=>$keyRel->sale_price,
+											"id"			=>$keyRel->id,
+											"pro_id"		=>$keyRel->pro_id,
+											"mnImg"			=>$keyRel->main_img,
+											"discount"		=>$keyRel->offer
+										);
+				}
+			}
 			
 				$data = array
 								(
@@ -364,7 +389,9 @@ class ThemeModel extends CI_Model
 									"varData"		=>$vardata,
 									"pro_type"		=>$key->pro_type,
 									"var_type"		=>$key->var_type,
-									"cat_id"		=>$key->cat_id
+									"cat_id"		=>$key->cat_id,
+									"relProData"	=>$relProData,
+									"discount"		=>$key->offer
 								);
 			
 		}
@@ -703,5 +730,98 @@ class ThemeModel extends CI_Model
 		}
 
 		return $ordData;
+	}
+
+	public function chkPostRview($user_id,$proId)
+	{
+		$this->db->where(["user_id"=>$user_id,"product_id"=>$proId]);
+		$gets = $this->db->get("reviews")->num_rows();
+		if($gets > 0)
+		{
+			return "exst";
+		}
+		else
+		{
+			return "notExst";
+		}
+	}
+
+	public function postReviews($user_id,$proId,$stars,$rview)
+	{
+		date_default_timezone_set('Asia/Kolkata');
+		$data = array
+					(
+						"product_id"		=>$proId,
+						"rates"				=>$stars,
+						"review_comments"	=>$rview,
+						"user_id"			=>$user_id,
+						"date"				=>date('Y-m-d h:i:s')
+					);
+		$this->db->where(["user_id"=>$user_id,"product_id"=>$proId]);
+		$gets = $this->db->get("reviews")->num_rows();
+		if($gets > 0)
+		{
+			return "exst";
+		}
+		else
+		{
+			$this->db->insert("reviews",$data);
+			return "succ";
+		}
+	}
+
+	public function getAllReviews()
+	{
+		$this->db->order_by("id","DESC");
+		$gets = $this->db->get("reviews");
+		if($gets->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $gets->result();
+			foreach($res as $rev)
+			{
+				$this->db->where("id",$rev->user_id);
+				$rowUser = $this->db->get("users")->row();
+				$dt = $rev->date;
+				$dts = date_create($dt);
+				$fDate = date_format($dts,"d")."".date_format($dts,"M").", ".date_format($dts,"Y");
+				$data[] = array
+								(
+									"name"		=>$rowUser->full_name,
+									"rates"		=>$rev->rates,
+									"review"	=>$rev->review_comments,
+									"date"		=>$fDate
+								);	
+			}
+		}
+
+		return $data;
+	}
+
+	public function getMyWishlist($user_id)
+	{
+		$this->db->where("user_id",$user_id);
+		$getWish = $this->db->get("wishlist");
+		if($getWish->num_rows()==0)
+		{
+			$wishData = array();
+		}
+		else
+		{
+			$res = $getWish->result();
+			foreach ($res as $key => $value) {
+				$proData = $this->getProDetailsById($value->product_id);
+				$wishData[] = array
+									(
+										"proData"	=>$proData,
+										"id"		=>$value->id
+									);
+			}
+		}
+
+		return $wishData;
 	}
 }

@@ -1,3 +1,21 @@
+.cols2-2
+{
+	float: left;
+	width: 16.6666%;
+	padding: 6px 10px;
+}
+
+.cols2-10
+{
+	float: left;
+	width: 60.3334%;
+	padding: 6px 25px;
+}
+.proDetails
+{
+	padding: 0 15px;
+	text-align: left;
+}
 .search-field:focus 
 {
 	outline: none;
@@ -337,6 +355,41 @@ ol.progtrckr {
         font-size: 1.5em;
         bottom: -1.6em;
     }
+
+/*-- rating--*/
+.rating-stars {
+  width: 100%;
+  text-align: center; }
+  .rating-stars .rating-stars-container {
+    font-size: 0px; }
+    .rating-stars .rating-stars-container .rating-star {
+      display: inline-block;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 4px 8px;
+      color: #ababab; }
+      .rating-stars .rating-stars-container .rating-star.is--active .fa-heart, .rating-stars .rating-stars-container .rating-star.is--hover .fa-heart {
+        color: #fb0d00; }
+      .rating-stars .rating-stars-container .rating-star.sm {
+        display: inline-block;
+        font-size: 14px;
+        color: #ababab;
+        cursor: pointer;
+        padding: 5px; }
+      .rating-stars .rating-stars-container .rating-star.is--active, .rating-stars .rating-stars-container .rating-star.is--hover {
+        color: #ffb400; }
+      .rating-stars .rating-stars-container .rating-star.is--no-hover, .rating-stars .rating-stars-container .rating-star .fa-heart .is--no-hover {
+        color: #ababab; }
+      .rating-stars .rating-stars-container .rating-star.is--active, .rating-stars .rating-stars-container .rating-star.is--hover {
+        color: #ffb400; }
+.star-orange
+{
+	color: #ffb400;
+}
+.star-grey
+{
+	color: grey;
+}
 @media only screen and (max-width: 1980px)
 {
 .footMenu
@@ -469,13 +522,13 @@ ol.progtrckr {
 	.cols-2
 	{
 		float: left;
-		width: 16.666666;
+		width: 16.666666%;
 		padding: 4px 12px;
 	}
 	.cols-10
 	{
 		float: left;
-		width: 83.333333;
+		width: 83.333333%;
 		padding: 4px 12px;
 
 	}
