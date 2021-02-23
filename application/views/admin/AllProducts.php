@@ -144,6 +144,10 @@
 							<div class="modal-body">
 								<form action="<?= base_url('admin_panel/AllProducts/SetProSetting'); ?>" method="post">
 									<div class="form-group">
+										<input type="checkbox" name="upcoming" id="ucpro" value="1">
+										<label>UpComming Product</label>
+									</div>
+									<div class="form-group">
 										<input type="checkbox" name="new_pro" id="Npro" value="1">
 										<label>New Product</label>
 									</div>
@@ -237,6 +241,14 @@
 						 	$("#pro_id").val(obj.pro_id);
 						 	$("#proNameSS").html(obj.prod_name);
 						 	//alert(obj.prod_name)
+						 	if(obj.upcoming=="1")
+						 	{
+						 		$("#ucpro").attr("checked",true);
+						 	}
+						 	else
+						 	{
+						 		$("#ucpro").attr("checked",false);
+						 	}
 						 	if(obj.top_pro == "1")
 						 	{
 						 		$("#Tpro").attr("checked",true);

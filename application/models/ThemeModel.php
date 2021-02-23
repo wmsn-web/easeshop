@@ -391,7 +391,8 @@ class ThemeModel extends CI_Model
 									"var_type"		=>$key->var_type,
 									"cat_id"		=>$key->cat_id,
 									"relProData"	=>$relProData,
-									"discount"		=>$key->offer
+									"discount"		=>$key->offer,
+									"upcoming"		=>$key->upcoming
 								);
 			
 		}

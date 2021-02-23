@@ -1,3 +1,17 @@
+.btns-warn
+{
+	color: #fff;
+	background: #FF7400;
+}
+.btns-warn:hover
+{
+	color: #fff;
+	background: #FFAE00;
+}
+.btns-warn:focus
+{
+	outline: none;
+}
 .fq
 {
 	padding: 10px 18px;

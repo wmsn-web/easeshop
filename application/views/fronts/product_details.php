@@ -142,8 +142,14 @@
                         </div>
                         <div class="col-sm-9">
                           <div class="stock-box">
-                            <span class="value"><?= $proData['stock']; ?></span>
+                            <?php if($proData['upcoming']=="0"): ?>
+                              <span class="value"><?= $proData['stock']; ?></span>
                             <span class="badge badge-danger"><?= $proData['discount']; ?>% Off</span>
+                              <?php else: ?>
+                                <span class="value">Upcoming</span>
+                            
+                              <?php endif; ?>
+                            
                           </div>  
                         </div>
                       </div><!-- /.row -->  
@@ -156,38 +162,54 @@
                     <div class="price-container info-container m-t-20">
                       <div class="row">
                         
-
-                        <div class="col-sm-6">
-                          <div class="price-box">
-                            <span class="price">&#8377; <span id="slprc"><?= $proData['sale_price']; ?></span></span>
-                            <span class="price-strike">&#8377; <?= $proData['price']; ?></span>
+                        <?php if($proData['upcoming']=="0"): ?>
+                          <div class="col-sm-6">
+                            <div class="price-box">
+                              <span class="price">&#8377; <span id="slprc"><?= $proData['sale_price']; ?></span></span>
+                              <span class="price-strike">&#8377; <?= $proData['price']; ?></span>
+                            </div>
                           </div>
-                        </div>
-                        
-                        <div class="col-sm-6">
-                          <div class="favorite-button m-t-10">
-                            <?php if(!$this->session->userdata('userId')): ?>
-                              <a class="btn btn-primary wishbtn" data-toggle="tooltip" data-placement="right" title="Wishlist" href="<?= base_url('Login'); ?> ">
-                                <i class="fa fa-heart"></i>
-                            </a>
-                            <?php else: ?>
-                              <a class="btn btn-primary wishbtn" data-toggle="tooltip" data-placement="right" title="Wishlist" href="<?= base_url('My_wishlist/AddWish/'.$proData['pro_id'].'/'.$this->session->userdata('userId')); ?> ">
-                                <i class="fa fa-heart"></i>
-                            </a>
-                            <?php endif; ?>
-                            
-                            
-                            
+                          <div class="col-sm-6">
+                            <div class="favorite-button m-t-10">
+                              <?php if(!$this->session->userdata('userId')): ?>
+                                <a class="btn btn-primary wishbtn" data-toggle="tooltip" data-placement="right" title="Wishlist" href="<?= base_url('Login'); ?> ">
+                                  <i class="fa fa-heart"></i>
+                              </a>
+                              <?php else: ?>
+                                <a class="btn btn-primary wishbtn" data-toggle="tooltip" data-placement="right" title="Wishlist" href="<?= base_url('My_wishlist/AddWish/'.$proData['pro_id'].'/'.$this->session->userdata('userId')); ?> ">
+                                  <i class="fa fa-heart"></i>
+                              </a>
+                              <?php endif; ?>
+                            </div>
                           </div>
-                        </div>
+                          <?php else: ?>
+                            <div class="col-sm-12">
+                              <h5 class="text-warning">Available Soon</h5>
+                              <form action="<?= base_url('Product_details/notifyme'); ?>" method="post">
+                                <div class="row">
+                                  <div class="col-sm-6">
+                                    <input type="text" name="notEmail" class="form-control" placeholder="emanple@example.com" >
+                                    <input type="hidden" name="proId" value="<?= $this->uri->segment(3); ?>">
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <button class="btn btns-warn">Notify Me</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          <?php endif; ?>
 
                       </div><!-- /.row -->
                     </div><!-- /.price-container -->
-
+                    <?php if($proData['upcoming']=="1"){$stl = "style='display:none'"; }else{$stl = "style='display:block'";} ?>
+                    <div <?= $stl; ?>>
                     <div class="quantity-container info-container">
+                      
                       <form action="<?= base_url('Product_details/addToCart'); ?>" method="post">
                       <div class="row">
+                        
                         <div class="col-sm-4">
+                          <?php if($proData['upcoming']=="1"): ?>
                           <?php if(!empty($proData['varData'])): ?>
                                 <select name="varnm" class="form-control" id="varss">  
                                 <?php $vrr = 1; foreach($proData['varData'] as $vars): $vr = $vrr++; ?>
@@ -196,7 +218,8 @@
                             <?php endforeach; ?>
                             </select>
                           <?php endif; ?>
-                          <?= br(3); ?>
+                          
+                          <?php endif; ?>
                         </div>
                         <div class="col-sm-4">
                           <div class="row">
@@ -227,13 +250,15 @@
                             <button class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
                           <?php endif; ?>
                         </div>
+                     
                         <div class="clearfix"></div>
                         
                         
                       </div><!-- /.row -->
                     </form>
+                    
                     </div><!-- /.quantity-container -->
-
+                  </div>
                     
 
                     

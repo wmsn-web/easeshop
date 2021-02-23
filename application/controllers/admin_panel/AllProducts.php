@@ -368,6 +368,7 @@ class AllProducts extends CI_controller
 						"spl_offer"		=>$gtProd->spl_offer,
 						"new_pro"		=>$gtProd->new_pro,
 						"pro_id"		=>$pro_id,
+						"upcoming"		=>$gtProd->upcoming,
 						"prod_name"		=>$gtProd->product_name
 					);
 
@@ -378,6 +379,7 @@ class AllProducts extends CI_controller
 	{
 		$pro_id = $this->input->post("pro_id");
 		$top_pro = $this->input->post("top_pro");
+		$upcoming = $this->input->post("upcoming");
 		$feature_pro = $this->input->post("feature_pro");
 		$spl_offer = $this->input->post("spl_offer");
 		$new_pro = $this->input->post("new_pro");
@@ -386,7 +388,8 @@ class AllProducts extends CI_controller
 						"top_pro" 		=>$top_pro,
 						"feature_pro"	=>$feature_pro,
 						"spl_offer"		=>$spl_offer,
-						"new_pro"		=>$new_pro
+						"new_pro"		=>$new_pro,
+						"upcoming"		=>$upcoming
 
 						
 					);

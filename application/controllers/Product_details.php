@@ -58,4 +58,23 @@ class Product_details extends CI_controller
 		$this->session->set_flashdata("Feed",'Product Added to cart');
 		return redirect("Product_details/index/".$pro_id);
 	}
+
+	public function notifyme()
+	{
+		$data['notemail'] = $this->input->post("notEmail");
+		$data['product_id'] = $this->input->post("proId");
+		$this->db->where($data);
+		$get = $this->db->get("notifyme")->num_rows();
+		if($get==0)
+		{
+			$this->db->insert("notifyme",$data);
+			$this->session->set_flashdata("Feed",'We will notify when product will live');
+			return redirect("Product_details/index/".$data['product_id']);
+		}
+		else
+		{
+			$this->session->set_flashdata("Feed",'We will notify when product will live');
+			return redirect("Product_details/index/".$data['product_id']);
+		}
+	}
 }
