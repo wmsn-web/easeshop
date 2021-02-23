@@ -11,6 +11,6 @@
     		<li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
     	</ul>
     </li>
-    <li><a href="<?= base_url('Wishlist'); ?>"><i class="fa fa-heart"></i></a></li>
+    <li><a href="<?= base_url('My-wishlist'); ?>"><i class="fa fa-heart"></i></a></li>
   </ul>
 </div>

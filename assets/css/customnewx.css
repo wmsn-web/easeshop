@@ -1,3 +1,30 @@
+.fq
+{
+	padding: 10px 18px;
+	border:solid 1px #ccc;
+	border-radius: 6px;
+	box-shadow: 2px 2px 15px grey;
+	margin-bottom: 25px;
+	width: 100%;
+}
+.fq .qs
+{
+	display: inline-block;
+	padding: 3px 6px;
+	font-size: 16px;
+	font-style: italic;
+	color: #DE8600;
+	width: 100%;
+}
+.fq .ans
+{
+	display: inline-block;
+	padding: 3px 6px;
+	font-size: 14px;
+	font-style: italic;
+	color: #0043DE;
+	width: 100%;
+}
 .cols2-2
 {
 	float: left;

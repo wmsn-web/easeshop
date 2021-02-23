@@ -1026,11 +1026,23 @@ class AdminModel extends CI_model
 		{
 			$res = $get->result();
 			foreach ($res as $key) {
+				
+				$getPro = $this->getProductById($key->product_id);
+				if(!empty($getPro))
+				{
+					$prod_name = $getPro['prod_name'];
+				}
+				else
+				{
+					$prod_name = "";
+				}
 				$data[] = array
 								(
+
 									"qstn" =>$key->question,
 									"ansr"	=>$key->answer,
-									"id"	=>$key->id
+									"id"	=>$key->id,
+									"prod_name"=>$getPro['prod_name']
 								);
 			}
 		}

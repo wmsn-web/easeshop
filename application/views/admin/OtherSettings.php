@@ -247,6 +247,7 @@
 								</div>
 								<div class="card-body">
 									<form action="<?= base_url('admin_panel/OtherSettings/setCnum'); ?>" method="post">
+										
 										<div class="form-group">
 											<label>Customer Care Number</label>
 											<input type="tel" name="cNum" class="form-control" required="required" value="<?= $getCnum; ?>">
@@ -262,6 +263,27 @@
 									<?php else: ?>
 										<form action="<?= base_url('admin_panel/OtherSettings/addFaq'); ?>" method="post">
 									<?php endif; ?>
+										<div class="form-group">
+											<label>Select Product</label>
+											<select class="form-control" name="proId" required>
+												<option value="">Select Product</option>
+												<?php if(!empty($proData)): ?>
+													<?php foreach($proData as $pro):
+														if($pro['prId'] == $faqrow['proId'] )
+														{
+															$slc = "selected";
+														}
+														else
+														{
+															$slc = "";
+														}
+													 ?>
+
+														<option <?= $slc; ?> value="<?= $pro['prId']; ?>"><?= $pro['prod_name']; ?></option>
+													<?php endforeach; ?>
+												<?php endif; ?>
+											</select>
+										</div>
 										<div class="form-group">
 											<label>Question</label>
 											<input type="text" name="qstn" class="form-control" required="required" value="<?= $faqrow['qstn']; ?>">
@@ -292,6 +314,7 @@
 												<div class="qstn">
 													<span class="qss"><i class="fas fa-question-circle"></i></span>
 													<?= $faqs['qstn']; ?>
+													<small>~~<?= $faqs['prod_name']; ?></small>
 												</div>
 												<div class="ansr">
 													<?= $faqs['ansr']; ?>

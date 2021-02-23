@@ -1,6 +1,7 @@
 
 <!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="<?= base_url(); ?>assets/css/bootstrap.min.css">
+<link rel="icon" href="<?= base_url(); ?>admin_assets/img/brand/favicon.png" type="image/x-icon"/>
+<link rel="stylesheet" href="<?= base_url(); ?>assets/css/bootstrap.min.css"> 
 
 <!-- Customizable CSS -->
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">

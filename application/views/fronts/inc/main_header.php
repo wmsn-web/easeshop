@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder"> 
           <!-- ============================================================= LOGO ============================================================= -->
-          <div class="logo"> <a href="home.html"> <img src="<?= base_url(); ?>assets/images/easeshop_white2.png" alt="logo"> </a> </div>
+          <div class="logo"> <a href="<?= base_url(); ?>"> <img src="<?= base_url(); ?>assets/images/easeshop_white2.png" alt="logo"> </a> </div>
           <!-- /.logo --> 
           <!-- ============================================================= LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->
@@ -42,31 +42,7 @@
               <div class="total-price-basket"> <span class="lbl">cart -</span> <span class="total-price"> <span class="sign">&#8377;</span><span class="value"><?= number_format($getCart['totAmt'],2); ?></span> </span> </div>
             </div>
             </a>
-            <ul class="dropdown-menu">
-              <li>
-                <div class="cart-item product-summary">
-                  <div class="row">
-                    <div class="col-xs-4">
-                      <div class="image"> <a href="detail.html"><img src="<?= base_url(); ?>assets/images/cart.jpg" alt=""></a> </div>
-                    </div>
-                    <div class="col-xs-7">
-                      <h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a></h3>
-                      <div class="price">$600.00</div>
-                    </div>
-                    <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a> </div>
-                  </div>
-                </div>
-                <!-- /.cart-item -->
-                <div class="clearfix"></div>
-                <hr>
-                <div class="clearfix cart-total">
-                  <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
-                  <div class="clearfix"></div>
-                  <a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
-                <!-- /.cart-total--> 
-                
-              </li>
-            </ul>
+            
             <!-- /.dropdown-menu--> 
           </div>
           <!-- /.dropdown-cart --> 

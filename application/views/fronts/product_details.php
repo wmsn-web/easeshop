@@ -351,27 +351,16 @@
                 <div id="tags" class="tab-pane">
                   <div class="product-tag">
                     
-                    <h4 class="title">Product Tags</h4>
-                    <form role="form" class="form-inline form-cnt">
-                      <div class="form-container">
-                  
-                        <div class="form-group">
-                          <label for="exampleInputTag">Add Your Tags: </label>
-                          <input type="email" id="exampleInputTag" class="form-control txt">
-                          
-
+                    <h4 class="title">FAQ</h4>
+                    <?php if(!empty($faqData)): ?>
+                      <?php foreach($faqData as $faq): ?>
+                        <div class="fq">
+                          <span class="qs"><?= $faq['qstn']; ?></span>
+                          <span class="ans"> <?= $faq['ans']; ?></span>
                         </div>
-
-                        <button class="btn btn-upper btn-primary" type="submit">ADD TAGS</button>
-                      </div><!-- /.form-container -->
-                    </form><!-- /.form-cnt -->
-
-                    <form role="form" class="form-inline form-cnt">
-                      <div class="form-group">
-                        <label>&nbsp;</label>
-                        <span class="text col-md-offset-3">Use spaces to separate tags. Use single quotes (') for phrases.</span>
-                      </div>
-                    </form><!-- /.form-cnt -->
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                    
 
                   </div><!-- /.product-tab -->
                 </div><!-- /.tab-pane -->

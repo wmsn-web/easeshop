@@ -18,10 +18,11 @@ class Product_details extends CI_controller
 		//print_r($getProDetailsById);
 		$splOffer = $this->ThemeModel->splOffer();
 		$getMenudata = $this->ThemeModel->getMenudata();
-		$getAllReviews = $this->ThemeModel->getAllReviews();
+		$getAllReviews = $this->ThemeModel->getAllReviews($proId);
+		$getFaq = $this->ThemeModel->getFaq($proId);
 		if(!empty($getProDetailsById))
         {
-		   $this->load->view("fronts/product_details",["menus"=>$getMenudata,"spalOffer"=>$splOffer,"proData"=>$getProDetailsById,"allReviews"=>$getAllReviews]);
+		   $this->load->view("fronts/product_details",["menus"=>$getMenudata,"spalOffer"=>$splOffer,"proData"=>$getProDetailsById,"allReviews"=>$getAllReviews,"faqData"=>$getFaq]);
 		}
 		else
 		{

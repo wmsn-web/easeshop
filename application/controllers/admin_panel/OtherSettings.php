@@ -26,6 +26,8 @@ class OtherSettings extends CI_controller
 		$getTerms  = $this->AdminModel->getTerms();
 		$getCnum = $this->AdminModel->getCnum();
 		$getFaqs = $this->AdminModel->getFaqs();
+		$getAllPro = $this->AdminModel->getAllProducts();
+		//print_r($getFaqs);
 		$dataR = array("qstn" =>"",
 								"ansr"	=>"",
 								"id"	=>"");
@@ -39,7 +41,8 @@ class OtherSettings extends CI_controller
 			{
 				$dataR = array("qstn" =>"",
 								"ansr"	=>"",
-								"id"	=>"");
+								"id"	=>"",
+								"proId"	=>"");
 			}
 			else
 			{
@@ -48,11 +51,12 @@ class OtherSettings extends CI_controller
 							(
 								"qstn" =>$row->question,
 								"ansr"	=>$row->answer,
-								"id"	=>$row->id
+								"id"	=>$row->id,
+								"proId"=>$row->product_id
 							);
 			}
 		}
-		$this->load->view("admin/OtherSettings",["ref"=>$getRefrl, "minOrd"=>$getminOrd,"getPrivacy"=>$getPrivacy,"getTerms"=>$getTerms,"getCnum"=>$getCnum,"getFaqs"=>$getFaqs,"faqrow"=>$dataR]);
+		$this->load->view("admin/OtherSettings",["ref"=>$getRefrl, "minOrd"=>$getminOrd,"getPrivacy"=>$getPrivacy,"getTerms"=>$getTerms,"getCnum"=>$getCnum,"getFaqs"=>$getFaqs,"faqrow"=>$dataR,"proData"=>$getAllPro]);
 	}
 
 	public function updtRef()
@@ -227,7 +231,8 @@ class OtherSettings extends CI_controller
 
 	public function addFaq()
 	{
-		$qstn = $this->input->post("qstn");
+		$proId = $this->input->post("proId");
+		$qstn = htmlentities($this->input->post("qstn"));
 		$ansr = htmlentities($this->input->post("ansr"));
 		$low = strtolower($qstn);
 		$replce = str_replace(" ","_",$low);
@@ -241,15 +246,15 @@ class OtherSettings extends CI_controller
 		}
 		else
 		{
-			$this->db->insert("faq",["question"=>$qstn, "answer"=>$ansr,"slug"=>$slug]);
+			$this->db->insert("faq",["product_id"=>$proId,"question"=>$qstn, "answer"=>$ansr,"slug"=>$slug]);
 			$this->session->set_flashdata("Feed","Question Added Successfully");
 			return redirect("admin_panel/OtherSettings/?help");
 		}
 	}
 
 	public function UpdateFaq()
-	{
-		$qstn = $this->input->post("qstn");
+	{	$proId = $this->input->post("proId");
+		$qstn = htmlentities($this->input->post("qstn"));
 		$id = $this->input->post("id");
 		$ansr = htmlentities($this->input->post("ansr"));
 		$low = strtolower($qstn);
@@ -257,7 +262,7 @@ class OtherSettings extends CI_controller
 		$slug = $replce;
 
 		$this->db->where("id",$id);
-		$this->db->update("faq",["question"=>$qstn, "answer"=>$ansr,"slug"=>$slug]);
+		$this->db->update("faq",["product_id"=>$proId,"question"=>$qstn, "answer"=>$ansr,"slug"=>$slug]);
 		$this->session->set_flashdata("Feed","Question Updated Successfully");
 		return redirect("admin_panel/OtherSettings/?help");
 

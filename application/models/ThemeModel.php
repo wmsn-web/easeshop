@@ -79,7 +79,7 @@ class ThemeModel extends CI_Model
 
 	public function getNewProducts()
 	{
-		$this->db->order_by("id","DESC");
+		$this->db->order_by("id","RANDOM");
 		$this->db->where(["new_pro"=>"1","status"=>"1"]);
 		$getpro = $this->db->get("products");
 		if($getpro->num_rows()==0)
@@ -106,7 +106,7 @@ class ThemeModel extends CI_Model
 	}
 	public function splOffer()
 	{
-		$this->db->order_by("id","DESC");
+		$this->db->order_by("id","RANDOM");
 		$this->db->where(["spl_offer"=>"1","status"=>"1"]);
 		$getpro = $this->db->get("products");
 		if($getpro->num_rows()==0)
@@ -134,7 +134,7 @@ class ThemeModel extends CI_Model
 
 	public function fetPro()
 	{
-		$this->db->order_by("id","DESC");
+		$this->db->order_by("id","RANDOM");
 		$this->db->where(["feature_pro"=>"1","status"=>"1"]);
 		$getpro = $this->db->get("products");
 		if($getpro->num_rows()==0)
@@ -770,9 +770,10 @@ class ThemeModel extends CI_Model
 		}
 	}
 
-	public function getAllReviews()
+	public function getAllReviews($proId='')
 	{
 		$this->db->order_by("id","DESC");
+		$this->db->where("product_id",$proId);
 		$gets = $this->db->get("reviews");
 		if($gets->num_rows()==0)
 		{
@@ -823,5 +824,30 @@ class ThemeModel extends CI_Model
 		}
 
 		return $wishData;
+	}
+
+	public function getFaq($proId)
+	{
+		$this->db->where("pro_id",$proId);
+		$gtId = $this->db->get("products")->row();
+		$this->db->where("product_id",$gtId->id);
+		$getFaqs = $this->db->get("faq");
+		if($getFaqs->num_rows()==0)
+		{
+			$dataFaq = array();
+		}
+		else
+		{
+			$res = $getFaqs->result();
+			foreach ($res as $key) {
+				$dataFaq[] = array
+								(
+									"qstn"	=>$key->question,
+									"ans"	=>$key->answer
+								);
+			}
+		}
+
+		return $dataFaq;
 	}
 }
