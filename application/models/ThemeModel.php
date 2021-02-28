@@ -77,6 +77,55 @@ class ThemeModel extends CI_Model
 
 	}
 
+	public function getMorePro()
+	{
+		$getCat = $this->db->get("category");
+		if($getCat->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$resCat = $getCat->result();
+
+			foreach ($resCat as $keyct) {
+
+				$this->db->where("cat_id",$keyct->id);
+				$this->db->order_by("id","RANDOM");
+				$this->db->limit(8);
+				$getPr = $this->db->get("products");
+				if($getPr->num_rows()==0)
+				{
+					$proData = array();
+				}
+				else
+				{
+					$respr = $getPr->result();
+					$proData = [];
+					foreach($respr as $pr)
+					{
+						$proData[] = array
+										(
+											"prod_name"	=>$pr->product_name,
+											"price"			=>$pr->price,
+											"sale_price"	=>$pr->sale_price,
+											"id"			=>$pr->id,
+											"pro_id"		=>$pr->pro_id,
+											"mnImg"			=>$pr->main_img
+										);
+					}
+				}
+				$data[] = array
+								(
+									"cat_name"	=>$keyct->cat_name,
+									"proData"	=>$proData
+								);
+			}
+
+			return $data;
+		}
+	}
+
 	public function getNewProducts()
 	{
 		$this->db->order_by("id","RANDOM");
@@ -437,7 +486,7 @@ class ThemeModel extends CI_Model
 		}
 		else
 		{
-			$this->db->where("user_id",$user_id);
+			$this->db->where(["user_id"=>$user_id,"status"=>0]);
 			$this->db->select_sum("price");
 			$Amts = $this->db->get("cart")->row();
 			$totAmt = round($Amts->price);
@@ -488,6 +537,7 @@ class ThemeModel extends CI_Model
 						"totAmt"	=>$totAmt,
 						"cartData"	=>$cartData,
 						"tax"		=>$getSetting->tax,
+						"nowTx"		=>$nowTx,
 						"grand"		=>$grandTot,
 						"shipData"	=>$shipData,
 						"cartall"	=>@$cartall
@@ -618,7 +668,7 @@ class ThemeModel extends CI_Model
 	public function getMyOrders($user_id)
 	{
 		$this->db->order_by("id","DESC");
-		$this->db->where("user_id",$user_id);
+		$this->db->where(["user_id"=>$user_id,"status !="=>null]);
 		$getOrd = $this->db->get("orders_transaction");
 		if($getOrd->num_rows()==0)
 		{
@@ -687,7 +737,12 @@ class ThemeModel extends CI_Model
 										"product_name"	=>$getPro->product_name,
 										"qty"			=>$getCrt->qty,
 										"price"			=>$getCrt->price,
-										"mnImg"			=>$getPro->main_img
+										"mnImg"			=>$getPro->main_img,
+										"returnable"	=>$getPro->returnable,
+										"status"		=>$ord->status,
+										"returns"		=>$getCrt->returns,
+										"ordId"			=>$id,
+										"cart_id"		=>$getCrt->cart_id
 									);
 			}
 			$tx = $ord->tax /100;
@@ -716,6 +771,20 @@ class ThemeModel extends CI_Model
 					$disp = "";
 					$delvr = "";
 				}
+				$settings = $this->getSettings(); 
+				$now = time(); // or your date as well
+				$your_date = strtotime($ord->order_date);
+				$datediff = $now - $your_date;
+
+				$days = round($datediff / (60 * 60 * 24));
+				if($days > $settings['return_policy'])
+				{
+					$exp = "yes";
+				}
+				else
+				{
+					$exp = "no";
+				}
 			$ordData = array
 							(
 								
@@ -726,7 +795,9 @@ class ThemeModel extends CI_Model
 								"total"		=>$ord->gross_total,
 								"pross"		=>$pross,
 								"disp"		=>$disp,
-								"delvr"		=>$delvr
+								"delvr"		=>$delvr,
+								"status"		=>$ord->status,
+								"exp"			=>$exp
 							);
 		}
 
@@ -850,5 +921,17 @@ class ThemeModel extends CI_Model
 		}
 
 		return $dataFaq;
+	}
+
+	public function getSettings()
+	{
+		$get = $this->db->get("settings");
+		$setRow = $get->row();
+		$data = array
+					(
+						"return_policy"		=>$setRow->return_policy
+					);
+
+		return $data;
 	}
 }

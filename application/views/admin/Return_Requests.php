@@ -42,9 +42,9 @@
 												<th>Product Name</th>
 												<th>Reason</th>
 												<th>QTY</th>
-												<th>Price</th>
+												
 												<th>Dispute Image</th>
-												<th>Asign for pickup</th>
+												
 												<th>Action</th>
 											</tr>
 										</thead>
@@ -59,44 +59,14 @@
 														<td><?= $retrn['reason']; ?></td>
 														<td><?= $retrn['qty']; ?></td>
 														<td><?= $retrn['price']; ?></td>
-														<td class="cp" data-toggle="modal" data-target="#imgModal" onclick="getImg('<?= $retrn['photo']; ?>@<?= $retrn['product_name']; ?>')">
-															<img style="width: 45px; height: 45px" src="<?= $retrn['photo']; ?>">
-														</td>
-														<td>
-															<select onchange="asignBoys(this.value)">
-																<option value="">Asign for pickup</option>
-																<?php if(!empty($delBoys)): ?>
-																	<?php foreach($delBoys as $dlb):
-																		if($retrn["status"]=="1")
-																		{
-																			$disb = "disabled";
-																			$link = "#";
-																			$text = "Return Accepted";
-																			$class = "btn btn-danger";
-																		}
-																		else
-																		{
-																			$disb = "";
-																			$link = base_url('admin_panel/Return_Requests/AcceptReturn/'.$retrn['price'].'/'.$retrn['user_id'].'/'.$retrn['id']);
-																			$text = "Accept & Complete";
-																			$class = "btn btn-primary";
-																		}
-																		if($retrn['asigned_del_boy']==$dlb['id'])
-																		{
-																			$dlnSlct = "selected";
-																		}
-																		else
-																		{
-																			$dlnSlct = "";
-																		}
-																	 ?>
-																		<option <?= $disb; ?> <?= $dlnSlct; ?> value="<?= $dlb['id']; ?>_<?= $retrn['id']; ?>_<?= $retrn['user_id']; ?>"><?= $dlb['name']; ?></option>
-																	<?php endforeach; ?>
-																<?php endif; ?>
-															</select>
-															<p><?= $retrn['pickup_date']; ?></p>
-														</td>
-														<td><button onclick="location.href='<?= $link; ?>'" class="<?= $class; ?>"><?= $text; ?></button></td>
+														
+														<?php if($retrn['status']=="0"): ?>
+														<td><button onclick="location.href='<?= base_url('admin_panel/Return_Requests/AcceptReturn/'.$retrn['user_id'].'/'.$retrn['id']); ?>'" class="btn btn-primary">Accepts & Complete</button></td>
+														<?php else: ?>
+															<td>
+																<button class="btn btn-danger">Request Accepted</button>
+															</td>
+														<?php endif; ?>
 
 													</tr>
 												<?php endforeach; ?>

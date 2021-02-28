@@ -207,9 +207,8 @@
                       
                       <form action="<?= base_url('Product_details/addToCart'); ?>" method="post">
                       <div class="row">
-                        
                         <div class="col-sm-4">
-                          <?php if($proData['upcoming']=="1"): ?>
+                          
                           <?php if(!empty($proData['varData'])): ?>
                                 <select name="varnm" class="form-control" id="varss">  
                                 <?php $vrr = 1; foreach($proData['varData'] as $vars): $vr = $vrr++; ?>
@@ -219,7 +218,7 @@
                             </select>
                           <?php endif; ?>
                           
-                          <?php endif; ?>
+                          
                         </div>
                         <div class="col-sm-4">
                           <div class="row">
@@ -237,15 +236,16 @@
                           </div>
                         </div>
                         <div class="col-sm-4">
-                          <?php if(!$this->session->userdata("userId")): ?>
-                            <a href="<?= base_url('Login'); ?>" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
-                          <?php else: ?>
-                            <input type="hidden" name="sale_price" id="slprcFixed" value="<?= $proData['sale_price']; ?>">
+                          <input type="hidden" name="sale_price" id="slprcFixed" value="<?= $proData['sale_price']; ?>">
                             <input type="hidden" name="price" id="nowPrc" value="<?= $proData['sale_price']; ?>">
                             <input type="hidden" name="proId" value="<?= $proData['pro_id']; ?>">
                             <input type="hidden" name="pro_type" value="<?= $proData['pro_type']; ?>">
                             <input type="hidden" name="cat_id" value="<?= $proData['cat_id']; ?>">
                             <input type="hidden" name="user_id" value="<?= $this->session->userdata('userId'); ?>">
+                          <?php if(!$this->session->userdata("userId")): ?>
+                            <a href="<?= base_url('Login'); ?>" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                          <?php else: ?>
+                            
 
                             <button class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
                           <?php endif; ?>
@@ -584,7 +584,7 @@
       var qty = $("#qty").val();
       if(qty > 0)
        { 
-        var nowSalePrc = price*qty;
+        var nowSalePrc = parseInt(price*qty);
         var slprc = nowSalePrc.toFixed(2);
         $("#slprc").html(slprc);
         $("#nowPrc").val(slprc);

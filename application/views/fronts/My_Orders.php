@@ -133,46 +133,7 @@
               <div class="modal-body  ordTlbs">
                 <div class="row">
                   <div class="col-md-12">
-                    <!--div class="ordTlb">
-                    <table class="tbl tbl-brd">
-                      <tr>
-                        <th>Image</th>
-                        <th>Product Name</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                      </tr>
-                      <tr>
-                        <td><img src="" width="45"></td>
-                        <td>
-                          ksdn ksnkdnk sndn skndknks jdnk
-                        </td>
-                        <td>1</td>
-                        <td>&#8377; 15999.00</td>
-                      </tr>
-                      <tr>
-                        <td class="nobrd"></td>
-                        <td class="nobrd"></td>
-                        <td>Tax(18%)</td>
-                        <td>120</td>
-                      </tr>
-                      <tr>
-                        <td class="nobrd"></td>
-                        <td class="nobrd"></td>
-                        <td><b>Total</b></td>
-                        <td>12000</td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-                  <div class="col-md-12">
-                    <div class="ordStatus">
-                      <ol class="progtrckr" data-progtrckr-steps="3">
-                          <li class="progtrckr-done">Processing</li>
-                          <li class="progtrckr-todo">Dispatch</li>
-                          <li class="progtrckr-todo">Delivared</li>
-                      </ol>
-                    </div>
-                  </div-->
+                   
                 </div>
               </div>
               <div class="modal-footer">
@@ -183,6 +144,56 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="ReturnReq" role="dialog">
+          <div class="modal-dialog modal-md">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Return Request</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>Reason for Return</h5>
+                    <form id="rq" action="<?= base_url('My-Orders/returnRequest'); ?>" method="post">
+                      <p id="msg" class="text-danger"></p>
+                    <div class="form-group">
+                      <input type="radio" required name="notes" value="Delivered wrong Product"> <label>Delivered wrong Product.</label>
+                    </div>
+                    <div class="form-group">
+                      <input type="radio" required name="notes" value="Defective parts or Product"> <label>Defective parts or Product.</label>
+                    </div>
+                    <div class="form-group">
+                      <input type="radio" required name="notes" value="Product or parts missing"> <label>Product or parts missing.</label>
+                    </div>
+                    <div class="form-group">
+                      <textarea id="rp" required name="rq" placeholder="Why are you return this product?" class="form-control"></textarea>
+                      <input type="hidden" name="user_id" value="<?= $this->session->userdata('userId'); ?>">
+                      <input type="hidden" name="crtId" id="crt">
+                      <input type="hidden" name="ordId" id="ord">
+                      <input type="hidden" name="qty" id="qty">
+                    </div>
+                    <div class="form-group">
+                      <button type="button" id="subb" class="btn btn-primary">Request Return</button>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+       <?php if($feed = $this->session->flashdata("Feed")): ?>
+    <div class="toastMsg">
+      <div class="Msgs"><?= $feed; ?></div>
+    </div>
+  <?php endif; ?>
 <?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
@@ -191,6 +202,7 @@
 <?php include("inc/js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
 <script type="text/javascript">
+  $(".toastMsg").fadeOut(6000);
   function getOrdSts(ids)
   {
     var spl = ids.split("_");
@@ -202,6 +214,36 @@
     })
 
   }
+$("#subb").click(function(){
+  if($("input[name='notes']").is(":checked"))
+  {
+    var inpVal = $("input[name='notes']:checked").val();
+    $("#msg").html("");
+    var rp = $("#rp").val();
+    if(!rp.trim())
+    {
+      $("#msg").html("Please Select Reason");
+    }
+    else
+    {
+      $("#msg").html("");
+      $("#rq").submit();
+
+    }
+  }
+  else
+  {
+    $("#msg").html("Please Select Reason");
+  }
+  
+});
+function rqsupportData(nameId)
+{
+  spl = nameId.split("_");
+  $("#ord").val(spl[0]);
+  $("#crt").val(spl[1]);
+  $("#qty").val(spl[2]);
+}
 </script>
 </body>
 

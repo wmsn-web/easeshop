@@ -1281,8 +1281,8 @@ class AdminModel extends CI_model
 									"email"=>@$getUser->email,
 									"date"		=>$key->order_date,
 									"grossTotal"=>$key->gross_total,
-									"shipFullName" =>@$getShip->full_name,
-									"shipContact" =>@$getShip->phone,
+									"shipFullName" =>@$getUser->full_name,
+									"shipContact" =>@$getUser->phone,
 									"shipAddr"	=>@$getShip->address,
 									"shipCity"	=>@$getShip->city,
 									"shipPin"	=>@$getShip->pin,
@@ -1323,7 +1323,9 @@ class AdminModel extends CI_model
 				{
 					$name = $getUser->row()->full_name;
 				}
-				$this->db->where("id",$req->product_id);
+				$this->db->where("cart_id",$req->cart_id);
+				$gtCrt = $this->db->get("cart")->row();
+				$this->db->where("pro_id",$gtCrt->product_id);
 				$getProd = $this->db->get("products");
 				if($getProd->num_rows()==0)
 				{
@@ -1349,12 +1351,11 @@ class AdminModel extends CI_model
 								"product_name"	=>$proname,
 								"reason"		=>$req->notes,
 								"qty"			=>$req->qty,
-								"price"			=>$req->amount,
+								"price"			=>@$req->amount,
 								"status"		=>$req->status,
 								"photo"			=>$photo,
-								"asigned_del_boy"=>$req->asigned_del_boy,
 								"id"			=>$req->id,
-								"pickup_date"	=>$req->pickup_date,
+								"pickup_date"	=>@$req->pickup_date,
 								"user_id"		=>$req->user_id
 
 							);
@@ -1562,4 +1563,17 @@ class AdminModel extends CI_model
 
 		return $data;
 	}
+
+	public function getTax()
+	{
+		$get = $this->db->get("settings");
+		$row = $get->row();
+		$data = array
+					(
+						"tax"=>$row->tax
+					);
+		return $data;
+	}
+	
+	
 }

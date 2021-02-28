@@ -28,7 +28,9 @@ class Orders extends CI_controller
 		$sttat = $this->uri->segment(4);
 		$NewOrders = $this->AdminModel->newOrders($sttat); 
 		//$NewOrders = $this->AdminModel->getSingleOrder();
-		$this->load->view("admin/NewOrders",["orderData"=>$NewOrders,"delBoys"=>$delBoys]); 
+		$this->load->view("admin/NewOrders",["orderData"=>$NewOrders,"delBoys"=>$delBoys]);
+		//$data = array("orderId"=>"1234","name"=>"sanjay","email"=>"sn@gmail", "phone"=>"123456789", "addr"=>"address","city"=>"city","pin"=>"741222","dates"=>"2020-02-21","price"=>"7038.00","msgs"=>"message for you","hdd"=>"proooo","lm"=>"locatioin");
+		//$this->load->view("admin/emails/EmailTemplate.php",$data); 
 		//echo "<pre>"; 
 		//print_r($NewOrders);
 
@@ -54,22 +56,23 @@ class Orders extends CI_controller
 		$date = date('Y-m-d H:i:s');
 		$this->db->where("id",$id);
 		$this->db->update("orders_transaction",["status"=>$status]);
-		$this->db->where(["order_id"=>$id,"user_id"=>$user_id,"status"=>$status]);
-		$this->db->update('order_status',["status_date"=>$date,"status_type"=>1]);
+		//$this->db->where(["order_id"=>$id,"user_id"=>$user_id,"status"=>$status]);
+		//$this->db->update('order_status',["status_date"=>$date,"status_type"=>1]);
 
 		$Orders = $this->AdminModel->getSingleOrder($id);
 
 		$this->load->library('email');
 		$config = array(
-		           
-        'protocol' => 'sendmail', 
-        'smtp_host' => 'localhost', 
-        'smtp_port' => 25, 
-        'smtp_user' => 'applbuynow',  
-        'smtp_pass' => 'laluji@1A', 
+		          
+        'protocol' => 'smtp', 
+        'smtp_host' => 'smtp.hostinger.in', 
+        'smtp_port' => 587, 
+        'smtp_user' => 'adminteam@easeshop.in',  
+        'smtp_pass' => '@ase@2020', 
         'mailtype' => 'html', 
         'charset' => 'iso-8859-1'
-      	/*
+        /*
+      	
         'protocol' => 'smtp', 
         'smtp_host' => 'ssl://smtp.gmail.com', 
         'smtp_port' => 465, 
@@ -82,12 +85,25 @@ class Orders extends CI_controller
 		$this->email->initialize($config);
 		$this->email->set_mailtype("html");
 		$this->email->set_newline("\r\n");
-
-		$data = array("orderId"=>$Orders['order_id'],"name"=>$Orders['shipFullName'],"email"=>$Orders['email'], "phone"=>$Orders['shipContact'], "addr"=>$Orders['shipAddr'],"city"=>$Orders['shipCity'],"pin"=>$Orders['shipPin'],"dates"=>$Orders['fullDate'],"price"=>$Orders['grossTotal']);
+			if($status=="Despatched")
+			{
+				$hdd = "Order Despatched";
+				$mmsg = "Your Order has been Confirmed and despatched for delivery.";
+			}
+			elseif($status=="Delivered'"){
+				$hdd = "Order Delivered";
+				$mmsg = "Your Ordered Product has been delivered.";
+			}
+			else
+			{
+				$hdd = "Order Cancelled";
+				$mmsg = "Your order has been cancelled by us amount will be credited on your bank account within 5 days.";
+			}
+		$data = array("orderId"=>$Orders['order_id'],"name"=>$Orders['shipFullName'],"email"=>$Orders['email'], "phone"=>$Orders['shipContact'], "addr"=>$Orders['shipAddr'],"city"=>$Orders['shipCity'],"pin"=>$Orders['shipPin'],"dates"=>$Orders['fullDate'],"price"=>$Orders['grossTotal'],"msgs"=>$mmsg,"hdd"=>$hdd,"lm"=>$Orders['nearLocation']);
 
 		$mesage = $this->load->view("admin/emails/EmailTemplate.php",$data,TRUE);
 		$this->email->to($Orders['email']);
-		$this->email->from("sales@buymenow.app","Buymenow");
+		$this->email->from("sales@easeshop.in","Easeshop");
 		$this->email->subject("Order Status");
 		$this->email->message($mesage);
 		$dd = $this->email->send(); 
@@ -131,7 +147,7 @@ class Orders extends CI_controller
 		$ordrId = $Orders['order_id'];
 		$pushStatus = $this->pushNotice($fcmRegIds,$title,$message,$id,$ordrId);
 
-		
+		/*
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
@@ -154,6 +170,7 @@ class Orders extends CI_controller
         $err = curl_error($curl);
 
         curl_close($curl);
+        */
 	}
 
 

@@ -65,28 +65,57 @@ class Return_Requests extends CI_controller
 			
 	}
 
-	public function AcceptReturn($price='',$user_id='',$id='')
+	public function AcceptReturn($user_id='',$id='')
 	{
-		$this->db->where("user_id",$user_id);
-		$getwl = $this->db->get("wallet");
-		if($getwl->num_rows()==0)
-		{
+		
+			$getUserById = $this->AdminModel->getUserById($user_id);
+			$this->db->where("id",$id);
+			$get = $this->db->get("order_return")->row();
 			$this->db->where("id",$id);
 			$this->db->update("order_return",["status"=>1]);
-			$this->db->insert("wallet",["user_id"=>$user_id,"balance"=>$price]);
-			$this->session->set_flashdata("Feed","Return Accepted");
-			return redirect("admin_panel/Return_Requests");
-		}
-		else
-		{
-			$row = $getwl->row();
-			$bal = $row->balance+$price;
-			$this->db->where("id",$id);
-			$this->db->update("order_return",["status"=>1]);
-			$this->db->where("user_id",$user_id);
-		    $this->db->update("wallet",["balance"=>$bal]);
-		    $this->session->set_flashdata("Feed","Return Accepted");
-			return redirect("admin_panel/Return_Requests");
-		}
+
+			$this->db->where("cart_id",$get->cart_id);
+			$this->db->update("cart",["returns"=>"Request Accepted"]);
+			
+		    
+		$toEmail = $getUserById['email'];
+		$this->load->library('email');
+		$config = array(
+		 /*         
+        'protocol' => 'sendmail', 
+        'smtp_host' => 'smtp.hostinger.in', 
+        'smtp_port' => 587, 
+        'smtp_user' => 'adminteam@easeshop.in',  
+        'smtp_pass' => '@ase@2020', 
+        'mailtype' => 'html', 
+        'charset' => 'iso-8859-1'
+        */
+      	
+        'protocol' => 'smtp', 
+        'smtp_host' => 'ssl://smtp.gmail.com', 
+        'smtp_port' => 465, 
+        'smtp_user' => 'solutions.web2019@gmail.com', 
+        'smtp_pass' => 'Goodnight88', 
+        'mailtype' => 'html', 
+        'charset' => 'iso-8859-1'
+        
+		);
+		$data = array();
+		$this->email->initialize($config);
+		$this->email->set_mailtype("html");
+		$this->email->set_newline("\r\n");
+		$message = $this->load->view("admin/emails/returnRqEmail",$data,true);
+		$this->email->to($toEmail);
+		$this->email->from("sales@easeshop.in","Easeshop");
+		$this->email->subject("Return Request Accept");
+		$this->email->message($message);
+		$dd = $this->email->send(); 
+		//print_r($dd);
+
+		$this->session->set_flashdata("Feed","Return Accepted");
+		return redirect("admin_panel/Return_Requests");
+
+		
+
 	}
 }

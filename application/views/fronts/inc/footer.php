@@ -14,19 +14,18 @@
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </div>
                 <div class="media-body">
-                  <p>themesstock, 789 Main rd, Anytown, CA 12345 USA</p>
+                  <p>Netaji Park(Near netaji statue), Chakdaha, Nadia, PIN-741222</p>
                 </div>
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span> </div>
                 <div class="media-body">
-                  <p>+(888) 123-4567<br>
-                    +(888) 456-7890</p>
+                  <p>+917478824360
                 </div>
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-envelope fa-stack-1x fa-inverse"></i> </span> </div>
-                <div class="media-body"> <span><a href="#">Alturas@themesstock.com</a></span> </div>
+                <div class="media-body"> <span><a href="mailto:adminteam@easeshop.in">adminteam@easeshop.in</a></span> </div>
               </li>
             </ul>
           </div>
@@ -42,11 +41,11 @@
           
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a href="#" title="Contact us">My Account</a></li>
-              <li><a href="#" title="About us">Order History</a></li>
-              <li><a href="#" title="faq">FAQ</a></li>
-              <li><a href="#" title="Popular Searches">Specials</a></li>
-              <li class="last"><a href="#" title="Where is my order?">Help Center</a></li>
+              <li class="first"><a href="<?= base_url('My-Account'); ?>" title="Contact us">My Account</a></li>
+              <li><a href="<?= base_url('My-Orders'); ?>" title="Order History">Order History</a></li>
+              <li><a href="<?= base_url('Terms-And-Condition'); ?>" title="">Terms & Condition</a></li>
+              <li><a href="<?= base_url('Privacy'); ?>" title="">Privacy</a></li>
+              
             </ul>
           </div>
           <!-- /.module-body --> 
@@ -61,11 +60,11 @@
           
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a title="Your Account" href="#">About us</a></li>
-              <li><a title="Information" href="#">Customer Service</a></li>
-              <li><a title="Addresses" href="#">Company</a></li>
-              <li><a title="Addresses" href="#">Investor Relations</a></li>
-              <li class="last"><a title="Orders History" href="#">Advanced Search</a></li>
+              <li class="first"><a title="About us" href="<?= base_url('Upcomming'); ?>">About us</a></li>
+              <li><a title="Information" href="<?= base_url('Upcomming'); ?>">Customer Service</a></li>
+              <li><a title="Addresses" href="<?= base_url('Upcomming'); ?>">Company</a></li>
+              <li><a title="Addresses" href="<?= base_url('Upcomming'); ?>">Investor Relations</a></li>
+              
             </ul>
           </div>
           <!-- /.module-body --> 
@@ -80,11 +79,11 @@
           
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a href="#" title="About us">Shopping Guide</a></li>
-              <li><a href="#" title="Blog">Blog</a></li>
-              <li><a href="#" title="Company">Company</a></li>
-              <li><a href="#" title="Investor Relations">Investor Relations</a></li>
-              <li class=" last"><a href="contact-us.html" title="Suppliers">Contact Us</a></li>
+              <li class="first"><a href="<?= base_url('Upcomming'); ?>" title="About us">Shopping Guide</a></li>
+              <li><a href="<?= base_url('Upcomming'); ?>" title="Blog">Blog</a></li>
+              <li><a href="<?= base_url('Upcomming'); ?>" title="Company">Company</a></li>
+              <li><a href="<?= base_url('Upcomming'); ?>" title="Investor Relations">Investor Relations</a></li>
+              <li class=" last"><a href="<?= base_url('Upcomming'); ?>" title="Suppliers">Contact Us</a></li>
             </ul>
           </div>
           <!-- /.module-body --> 
@@ -94,7 +93,7 @@
   </div>
   <div class="copyright-bar">
     <div class="container">
-      <div class="col-xs-12 col-sm-6 no-padding social">
+      <div class="col-xs-12 col-sm-4 no-padding social">
         <ul class="link">
           <li class="fb pull-left"><a target="_blank" rel="nofollow" href="#" title="Facebook"></a></li>
           <li class="tw pull-left"><a target="_blank" rel="nofollow" href="#" title="Twitter"></a></li>
@@ -105,7 +104,10 @@
           <li class="youtube pull-left"><a target="_blank" rel="nofollow" href="#" title="Youtube"></a></li>
         </ul>
       </div>
-      <div class="col-xs-12 col-sm-6 no-padding">
+      <div class="col-xs-12 col-sm-4 no-padding" style="text-align: center;">
+        <span style="color: #fff; text-align: center;">Copyright &copy; 2020-2021 Easeshop All rights reserve | Developed by <a href="https://wmsn.in/">WMSN</a></span>
+      </div>
+      <div class="col-xs-12 col-sm-4 no-padding">
         <div class="clearfix payment-methods">
           <ul>
             <li><img src="<?= base_url(); ?>assets/images/payments/1.png" alt=""></li>

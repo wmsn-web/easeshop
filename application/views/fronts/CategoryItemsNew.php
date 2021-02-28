@@ -131,7 +131,7 @@
                                   <div class="product-info">
                                     <h3 class="name"><a href="<?= base_url('Product_details/index/'.$brI['pro_id']); ?>"><?= $brI['prod_name']; ?></a></h3>
                                     <div class="rating rateit-small"></div>
-                                    <div class="product-price"> <span class="price">&#8377; <?= $brI['price']; ?> </span> <span class="price-before-discount">&#8377; <?= $brI['sale_price']; ?></span> </div>
+                                    <div class="product-price"> <span class="price">&#8377; <?= $brI['sale_price']; ?> </span> <span class="price-before-discount">&#8377; <?= $brI['price']; ?></span> </div>
                                     <!-- /.product-price -->
                                     <div class="description m-t-10"><?= $brI['descr']; ?></div>
                                     <div class="cart clearfix animate-effect">

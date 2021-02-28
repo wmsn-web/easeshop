@@ -27,6 +27,7 @@ class OtherSettings extends CI_controller
 		$getCnum = $this->AdminModel->getCnum();
 		$getFaqs = $this->AdminModel->getFaqs();
 		$getAllPro = $this->AdminModel->getAllProducts();
+		$getTax = $this->AdminModel->getTax();
 		//print_r($getFaqs);
 		$dataR = array("qstn" =>"",
 								"ansr"	=>"",
@@ -56,7 +57,7 @@ class OtherSettings extends CI_controller
 							);
 			}
 		}
-		$this->load->view("admin/OtherSettings",["ref"=>$getRefrl, "minOrd"=>$getminOrd,"getPrivacy"=>$getPrivacy,"getTerms"=>$getTerms,"getCnum"=>$getCnum,"getFaqs"=>$getFaqs,"faqrow"=>$dataR,"proData"=>$getAllPro]);
+		$this->load->view("admin/OtherSettings",["ref"=>$getRefrl, "minOrd"=>$getminOrd,"getPrivacy"=>$getPrivacy,"getTerms"=>$getTerms,"getCnum"=>$getCnum,"getFaqs"=>$getFaqs,"faqrow"=>$dataR,"proData"=>$getAllPro,"tx"=>$getTax]);
 	}
 
 	public function updtRef()
@@ -274,5 +275,13 @@ class OtherSettings extends CI_controller
 		$this->db->delete("faq");
 		$this->session->set_flashdata("Feed","Question Deleted Successfully");
 		return redirect("admin_panel/OtherSettings/?help");
+	}
+
+	public function ChTax()
+	{
+		$tax = $this->input->post("tax");
+		$this->db->update("settings",["tax"=>$tax]);
+		$this->session->set_flashdata("Feed","Tax Updated Successfully");
+		return redirect("admin_panel/OtherSettings/?tax");
 	}
 }

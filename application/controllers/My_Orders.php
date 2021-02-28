@@ -30,6 +30,7 @@ class My_Orders extends CI_controller
 	{
 		$id = $this->input->post("id");
 		$getOrdById = $this->ThemeModel->getOrdById($id);
+    $getSet =  $this->ThemeModel->getSettings();
 		$ordd = $getOrdById;
 		if(!empty($getOrdById['cartData']))
 		{
@@ -42,16 +43,36 @@ class My_Orders extends CI_controller
                       	<th>Image</th>
                         <th>Product Name</th>
                         <th>Qty</th>
-                        <th>Price</th>
-                      </tr>';
+                        <th>Price</th>';
+                        if($ordd['status']=="Delivered" && $ordd['exp']=="no"):
+                          echo '<th>Return</th>';
+                        endif;
+                        
+                     echo '</tr>';
 			foreach($getOrdById['cartData'] as $crts)
 			{
 				echo '<tr>
                         <td><img src="'.base_url('uploads/products/'.$crts['mnImg']).'" width="45"></td>
-                        <td>'.$crts["product_name"].'</td>
+                        <td>'.$crts["product_name"];
+                        if(!empty($crts["returns"])): 
+                         echo ' <span class="badge badge-danger">Return '.$crts["returns"].'</span>';
+                       endif;
+                         echo '</td>
                         <td>'.$crts["qty"].'</td>
-                        <td>&#8377; '.number_format($crts["price"],2).'</td>
-                      </tr>';
+                        <td>&#8377; '.number_format($crts["price"],2).'</td>';
+                        if($crts['status']=="Delivered" && $ordd['exp']=="no" && empty($crts["returns"])):
+                        if($crts['returnable']=="yes")
+                  {
+                    echo '<td><button data-toggle="modal" onclick="rqsupportData(\''.$id.'_'.$crts["cart_id"].'_'.$crts["qty"].'\')"  data-target="#ReturnReq" class="btn btns-warn">Return Product</button></td>';
+                  }
+                  else
+                  {
+                    echo '<td><span class="badge badge-danger">Non-Returnable Product</span></td>';
+                  }
+                  else: echo '<td></td>';
+                endif;
+                     echo  '</tr>';
+                  
 
 
 			}
@@ -80,6 +101,51 @@ class My_Orders extends CI_controller
                       </ol>
                     </div>
                   </div>';
+
+      
 		}
 	}
+
+  public function returnRequest()
+  {
+    $user_id = $this->input->post("user_id");
+    $crtId = $this->input->post("crtId");
+    $ordId = $this->input->post("ordId");
+    $qty = $this->input->post("qty");
+    $rq = htmlentities($this->input->post("rq"));
+    $notes = $this->input->post("notes");
+    $fNote = $notes."_".$rq;
+    date_default_timezone_set('Asia/Kolkata');
+    $chkData = array
+                    (
+                      "user_id" =>$user_id,
+                      "cart_id" =>$crtId,
+                      "order_id"=>$ordId
+                    );
+    $Data = array
+                    (
+                      "user_id" =>$user_id,
+                      "cart_id" =>$crtId,
+                      "qty"     =>$qty,
+                      "notes"   =>$fNote,
+                      "request_date"  =>date('Y-m-d'),
+                      "order_id"=>$ordId,
+                      "status"  =>0
+                    );
+    $this->db->where($chkData);
+    $gt = $this->db->get("order_return")->num_rows();
+    if($gt > 0)
+    {
+        $this->session->set_flashdata("Feed","Request Already Exist!");
+        return redirect("My-Orders");
+    }
+    else
+    {
+      $this->db->where("cart_id",$crtId);
+      $this->db->update("cart",["returns"=>"Requested"]);
+      $this->db->insert("order_return",$Data);
+      $this->session->set_flashdata("Feed","Request Submitted successfully");
+        return redirect("My-Orders");
+    }
+  }
 }

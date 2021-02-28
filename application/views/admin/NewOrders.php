@@ -65,7 +65,7 @@
 													$disb3 = "";
 													$disb4 = "";
 													$disb5 = "disabled";
-													$disb6 = "disabled";
+													$disb6 = "";
 												
 												elseif($orders['status']=="Despatched"):
 													$slc1 = "";
@@ -79,7 +79,7 @@
 													$disb3 = "disabled";
 													$disb4 = "";
 													$disb5 = "";
-													$disb6 = "disabled";
+													$disb6 = "";
 												elseif($orders['status']=="Delivered"):
 													$slc1 = "";
 													$slc2 ="";
@@ -224,7 +224,7 @@
 
 		
 		<div align="center" class="loaderImg">
-			<img src="<?= base_url('assets/img/loder.gif'); ?>" width="95">
+			<img src="<?= base_url('admin_assets/img/loder.gif'); ?>" width="95">
 		</div>
 		<?php include("inc/invoice.php"); ?>
 		<?php include("inc/rightmenu.php"); ?>
@@ -325,6 +325,7 @@
 				order_id = spll[1];
 				status = spll[0];
 				userId = spll[2];
+				/*
 				if(status=="Cancel")
 				{
 					$.post("<?= base_url('admin_panel/Orders/orderDetails'); ?>",
@@ -348,7 +349,7 @@
 							function(response)
 							{
 								$("#newFlash").show();
-								$("#newFlash").fadeOut(8000);
+								$("#newFlash").fadeOut(2000);
 								location.href="";
 							}
 						)
@@ -362,6 +363,7 @@
 				
 				else
 				{
+					*/
 					$.post("<?= base_url('admin_panel/Orders/ChangeStatus'); ?>",
 							{
 								order_id: order_id,
@@ -380,7 +382,7 @@
 					//alert(name);
 				}
 				
-			}
+			//}
 		function asignBoys(names)
 		{
 			spl = names.split("_");

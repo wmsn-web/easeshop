@@ -212,7 +212,7 @@
 
 
 
-<div class="col-md-4 col-sm-12 cart-shopping-total">
+<div class="col-md-4 col-sm-12 cart-shopping-total"> 
 	<table class="table">
 		<thead>
 			<tr>
@@ -221,7 +221,7 @@
 						Subtotal<span class="inner-left-md">&#8377; <?= number_format($cartData['totAmt'],2); ?></span> 
 					</div>
 					<div class="cart-sub-total">
-						TAX<?= nbs(8); ?> <span class="inner-left-md">&#8377; <?= number_format($cartData['tax'],2); ?></span> 
+						TAX <?= $cartData['tax']; ?>%<?= nbs(2); ?> <span class="inner-left-md">&#8377; <?= number_format($cartData['nowTx'],2); ?></span> 
 					</div>
 					<div class="cart-grand-total">
 						Grand Total<span class="inner-left-md">&#8377; <?= number_format($cartData['grand'],2); ?></span>
@@ -231,7 +231,7 @@
 		</thead><!-- /thead -->
 		
 			<input type="hidden" id="user_id" value="<?= $this->session->userdata('userId'); ?>">
-			<input type="hidden" id="ship_id" value="<?= $cartData['shipData']['ship_id']; ?>">
+			<input type="hidden" id="ship_id" value="<?= @$cartData['shipData']['ship_id']; ?>">
 			<input type="hidden" id="carts" value='<?= json_encode($cartData['cartall']); ?>'>
 			<input type="hidden" id="subtot" value='<?= $cartData['totAmt']; ?>'>
 			<input type="hidden" id="tax" value='<?= $cartData['tax']; ?>'>

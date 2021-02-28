@@ -29,9 +29,10 @@ class Home extends CI_controller
 		$splOffer = $this->ThemeModel->splOffer();
 		$fetPro = $this->ThemeModel->fetPro();
 		$getCat = $this->ThemeModel->getCat();
-		$this->load->view("fronts/Home",["menus"=>$getMenudata,"banData" => $getBanner, "new_pro"=>$newProd,"spalOffer"=>$splOffer,"cats"=>$getCat,"fetPro"=>$fetPro ]);
+		$getMorePro = $this->ThemeModel->getMorePro();
+		$this->load->view("fronts/Home",["menus"=>$getMenudata,"banData" => $getBanner, "new_pro"=>$newProd,"spalOffer"=>$splOffer,"cats"=>$getCat,"fetPro"=>$fetPro,"morePro"=>$getMorePro ]);
 		
 		//echo "<pre>";
-		//print_r($getCat);
+		//print_r($getMorePro);
 	}
 }

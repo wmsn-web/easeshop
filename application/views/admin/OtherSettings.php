@@ -73,11 +73,12 @@
 						<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary"
 						data-toggle="dropdown" id="dropdownMenuButton" type="button">Settings<i class="fas fa-caret-down ml-1"></i></button>
 						<div  class="dropdown-menu tx-13">
-							<a <?php if(isset($_GET['ref'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?>  href="<?= base_url('admin_panel/OtherSettings/?ref'); ?>">Referal Settings</a>
+							
 							
 							<a <?php if(isset($_GET['priv'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?priv'); ?>">Set Privacy Policy</a>
 							<a <?php if(isset($_GET['terms'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?terms'); ?>">Terms and condition</a>
 							<a <?php if(isset($_GET['help'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?help'); ?>">Help Desk</a>
+							<a <?php if(isset($_GET['help'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?tax'); ?>">Tax</a>
 						</div>
 					</div>
 						
@@ -235,6 +236,33 @@
 					</div>
 				<?php endif; ?>
 			</div>
+			<?php if(isset($_GET['tax'])): ?>
+				<div class="row justify-content-center">
+					<div class="col-md-12"><?= br(2); ?></div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">
+											Tax
+										</h3>
+									</div>
+									<div class="card-body">
+										<form action="<?= base_url('admin_panel/OtherSettings/ChTax'); ?>" method="post">
+											<div class="form-group">
+												<label>TAX</label>
+												<input type="number" name="tax" class="form-control" placeholder="Update tax" value="<?= $tx['tax']; ?>">
+											</div>
+											<div class="form-group">
+												<button class="btn btn-primary">Update</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+			<?php endif; ?>
 				<?php if(isset($_GET['help'])): ?>
 					<div class="row">
 						<div class="col-md-12"><?= br(2); ?></div>
