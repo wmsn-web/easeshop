@@ -98,7 +98,7 @@ class Login extends CI_controller
 				$this->db->where("phone",$phone);
 				$this->db->update("users",["deviceid"=>$deviceid]);
 				$this->session->set_userdata("userId",$row->id);
-				$this->session->set_flashdata("Feed","Registration Successful");
+				$this->session->set_flashdata("Feed","Login Successful");
 				return redirect($backUrl);
 			}
 		}

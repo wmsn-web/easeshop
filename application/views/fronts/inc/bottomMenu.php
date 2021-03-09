@@ -4,11 +4,15 @@
     <li><a href="<?= base_url('My-cart'); ?>"><i class="fa fa-shopping-cart"></i></a></li>
     <li class="hasSub"><a href="#" onclick="showMyAc()"><i id="Myac" class="fa fa-user"></i></a>
     	<ul id="subBtmMenuId" class="subBtmMenu">
-    		<li><a href="<?= base_url('My-Account'); ?>">My Account</a></li>
-    		<li><a href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
-            <li><a href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
-    		<li><a href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
-    		<li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
+            <?php if($this->session->userdata("userId")): ?>
+        		<li><a href="<?= base_url('My-Account'); ?>">My Account</a></li>
+        		<li><a href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
+                <li><a href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
+        		<li><a href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
+        		<li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
+            <?php else: ?>
+                <li><a href="<?= base_url('Login'); ?>">Login</a></li>
+            <?php endif; ?>
     	</ul>
     </li>
     <li><a href="<?= base_url('My-wishlist'); ?>"><i class="fa fa-heart"></i></a></li>

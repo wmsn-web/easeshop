@@ -9,7 +9,7 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>Easeshop</title>
+<title>easeshop</title>
 <?php include("inc/detail_layout.php"); ?>
 <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/rating/themes/fontawesome-stars.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/rating/themes/css-stars.css">
@@ -24,6 +24,7 @@
     display: none !important;
   }
 }
+.rt{letter-spacing: 3px}
 </style>
 </head>
 <body>
@@ -47,7 +48,7 @@
   <div class="mob-header">
     <?php include("inc/goback.php"); ?>
   </div>
-  <?= br(3); ?>
+  <div style="width: 100%; background: #f1f3f6; height: 75px"></div>
 </header>
 
 <!-- ============================================== HEADER : END ============================================== --> 
@@ -118,16 +119,24 @@
               </div><!-- /.gallery-holder -->             
                 <div class='col-sm-6 col-md-7 product-info-block'>
                   <div class="product-info">
-                    <h1 class="name"><?= $proData['prod_name']; ?></h1>
+                    <h3 class="name"><?= $proData['prod_name']; ?></h3>
                     
                     <div class="rating-reviews m-t-20">
                       <div class="row">
                         <div class="col-sm-3">
-                          <div class="rating rateit-small"></div>
+                          <?php
+                          $remn1 = 5 - $proData['revs'];
+                          for ($i=0; $i < $proData['revs'] ; $i++) { 
+                            echo '<i class="fa fa-star rt star-orange"></i>';
+                          }
+                          for ($i=0; $i < $remn1 ; $i++) { 
+                            echo '<i class="fa fa-star-o rt star-grey"></i>';
+                          }
+                           ?>
                         </div>
                         <div class="col-sm-8">
                           <div class="reviews">
-                            <a href="#" class="lnk">(13 Reviews)</a>
+                            <a href="#" class="lnk">(<?= $proData['totRev']; ?> Reviews)</a>
                           </div>
                         </div>
                       </div><!-- /.row -->    
@@ -144,7 +153,7 @@
                           <div class="stock-box">
                             <?php if($proData['upcoming']=="0"): ?>
                               <span class="value"><?= $proData['stock']; ?></span>
-                            <span class="badge badge-danger"><?= $proData['discount']; ?>% Off</span>
+                            <span class="badge badge-danger"><?= round($proData['discount']); ?>% Off</span>
                               <?php else: ?>
                                 <span class="value">Upcoming</span>
                             
@@ -165,8 +174,10 @@
                         <?php if($proData['upcoming']=="0"): ?>
                           <div class="col-sm-6">
                             <div class="price-box">
-                              <span class="price">&#8377; <span id="slprc"><?= $proData['sale_price']; ?></span></span>
-                              <span class="price-strike">&#8377; <?= $proData['price']; ?></span>
+                              <span class="price">&#8377; <span id="slprc"><?= round($proData['sale_price']); ?></span></span>
+                              <?php if(!$proData['discount']=="0"): ?>
+                                <span class="price-strike">&#8377; <?= round($proData['price']); ?></span>
+                              <?php endif; ?>
                             </div>
                           </div>
                           <div class="col-sm-6">
@@ -417,8 +428,16 @@
     
     <div class="product-info text-left">
       <h3 class="name"><a href="<?= base_url('Product_details/index/'.$relPro['pro_id']); ?>"><?= $relPro['prod_name']; ?></a></h3>
-      <div class="rating rateit-small"></div>
-      <div class="description"><span class="badge badge-danger"><?= $relPro['discount']; ?>% Off</span></div>
+      <?php
+        $remn1 = 5 - $relPro['revs'];
+        for ($i=0; $i < $relPro['revs'] ; $i++) { 
+          echo '<i class="fa fa-star rt star-orange"></i>';
+        }
+        for ($i=0; $i < $remn1 ; $i++) { 
+          echo '<i class="fa fa-star-o rt star-grey"></i>';
+        }
+         ?>
+      <div class="description"><span class="badge badge-danger"><?= round($relPro['discount']); ?>% Off</span></div>
 
       <div class="product-price"> 
         <span class="price">
@@ -473,7 +492,7 @@
             <div class="sidebar-widget-body outer-top-xs">
               <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
                 <?php if(!empty($spalOffer)): ?>
-                  heheheh
+                  
                   <?php foreach($spalOffer as $spl): ?>
                 <div class="item">
                   <div class="products special-product">
@@ -482,7 +501,7 @@
                         <div class="row product-micro-row">
                           <div class="col col-xs-5">
                             <div class="product-image">
-                              <div class="image"> <a href="#"> <img src="<?= base_url('uploads/products/'.$spl['mnImg']); ?>" alt=""> </a> </div>
+                              <div class="image"> <a href="<?= base_url('Product_details/index/'.$spl['pro_id']); ?>"> <img src="<?= base_url('uploads/products/'.$spl['mnImg']); ?>" alt=""> </a> </div>
                               <!-- /.image --> 
                               
                             </div>
@@ -491,8 +510,16 @@
                           <!-- /.col -->
                           <div class="col col-xs-7">
                             <div class="product-info">
-                              <h3 class="name"><a href="#"><?= $spl['prod_name']; ?></a></h3>
-                              <div class="rating rateit-small"></div>
+                              <h3 class="name"><a href="<?= base_url('Product_details/index/'.$spl['pro_id']); ?>"><?= $spl['prod_name']; ?></a></h3>
+                              <?php
+                                $remn1 = 5 - $spl['revs'];
+                                for ($i=0; $i < $spl['revs'] ; $i++) { 
+                                  echo '<i class="fa fa-star rt star-orange"></i>';
+                                }
+                                for ($i=0; $i < $remn1 ; $i++) { 
+                                  echo '<i class="fa fa-star-o rt star-grey"></i>';
+                                }
+                                 ?>
                               <div class="product-price"> <span class="price">&#8377; <?= $spl['sale_price']; ?> </span> </div>
                               <!-- /.product-price --> 
                               
@@ -532,6 +559,9 @@
             </div>
             <!-- /.sidebar-widget-body --> 
           </div>
+          <div class="home-banner"> <img src="<?= base_url(); ?>assets/images/banners/LHS-banner22.jpg" alt="Image"> </div>
+          <?= br(3); ?>
+          <p>&nbsp;</p>
           <!-- /.sidebar-module-container --> 
         </div>
         <div style="width: 100%; height: 100px"></div>
@@ -586,7 +616,7 @@
        { 
         var nowSalePrc = parseInt(price*qty);
         var slprc = nowSalePrc.toFixed(2);
-        $("#slprc").html(slprc);
+        //$("#slprc").html(slprc);
         $("#nowPrc").val(slprc);
         //alert();
       }

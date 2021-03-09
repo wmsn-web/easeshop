@@ -14,7 +14,7 @@ class Category extends CI_controller
 
 	public function index($brand='') 
 	{
-
+		$this->load->view("admin/emails/orderSubmit");
 	}
 
 	public function Items($brand='')
@@ -28,8 +28,8 @@ class Category extends CI_controller
 		$config['num_tag_close'] = '</a></li>'; 
 		$config['cur_tag_open'] = '<li class="active"><a href="javascript:void(0);">'; 
 		$config['cur_tag_close'] = '</a></li>'; 
-		$config['next_link'] = '<li class="next"><a href="javascript:void(0);"><i class="fa fa-angle-right"></i>'; 
-		$config['prev_link'] = '<li class="prev"><a href="javascript:void(0);"><i class="fa fa-angle-left"></i>'; 
+		//$config['next_link'] = '<li class="next"><a href="javascript:void(0);"><i class="fa fa-angle-right"></i>'; 
+		//$config['prev_link'] = '<li class="prev"><a href="javascript:void(0);"><i class="fa fa-angle-left"></i>'; 
 		$config['next_tag_open'] = '<li class=""><a href="javascript:void(0);">'; 
 		$config['next_tag_close'] = '</a></li>'; 
 		$config['prev_tag_open'] = '<li class=""><a href="javascript:void(0);">'; 

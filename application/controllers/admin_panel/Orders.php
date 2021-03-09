@@ -1,7 +1,5 @@
-<?php
-/**
- * 
- */
+<?php 
+
 class Orders extends CI_controller
 {
 
@@ -19,7 +17,7 @@ class Orders extends CI_controller
 
 	public function index()
 	{
-		$this->load->view("admin/emails/EmailTemplate");
+		//$this->load->view("admin/emails/EmailTemplate");
 	}
 	
 	function NewOrders()
@@ -49,13 +47,13 @@ class Orders extends CI_controller
 	public function ChangeStatus()
 	{
 		
-		$id = $this->input->post("order_id");
-		$status = $this->input->post("status");
-		$user_id = $this->input->post("user_id");
+		 $id = 6; // $this->input->post("order_id");
+		$status = "Cancel"; //$this->input->post("status");
+		$user_id = 6; // $this->input->post("user_id");
 		date_default_timezone_set('Asia/Kolkata');
 		$date = date('Y-m-d H:i:s');
 		$this->db->where("id",$id);
-		$this->db->update("orders_transaction",["status"=>$status]);
+		//$this->db->update("orders_transaction",["status"=>$status]);
 		//$this->db->where(["order_id"=>$id,"user_id"=>$user_id,"status"=>$status]);
 		//$this->db->update('order_status',["status_date"=>$date,"status_type"=>1]);
 
@@ -63,15 +61,15 @@ class Orders extends CI_controller
 
 		$this->load->library('email');
 		$config = array(
-		          
-        'protocol' => 'smtp', 
+		 /*        
+        'protocol' => 'sendmail', 
         'smtp_host' => 'smtp.hostinger.in', 
         'smtp_port' => 587, 
         'smtp_user' => 'adminteam@easeshop.in',  
-        'smtp_pass' => '@ase@2020', 
+        'smtp_pass' => 'Ease@2020', 
         'mailtype' => 'html', 
         'charset' => 'iso-8859-1'
-        /*
+        */
       	
         'protocol' => 'smtp', 
         'smtp_host' => 'ssl://smtp.gmail.com', 
@@ -80,7 +78,7 @@ class Orders extends CI_controller
         'smtp_pass' => 'Goodnight88', 
         'mailtype' => 'html', 
         'charset' => 'iso-8859-1'
-        */
+        
 		);
 		$this->email->initialize($config);
 		$this->email->set_mailtype("html");
@@ -90,7 +88,7 @@ class Orders extends CI_controller
 				$hdd = "Order Despatched";
 				$mmsg = "Your Order has been Confirmed and despatched for delivery.";
 			}
-			elseif($status=="Delivered'"){
+			elseif($status=="Delivered"){
 				$hdd = "Order Delivered";
 				$mmsg = "Your Ordered Product has been delivered.";
 			}
@@ -106,7 +104,7 @@ class Orders extends CI_controller
 		$this->email->from("sales@easeshop.in","Easeshop");
 		$this->email->subject("Order Status");
 		$this->email->message($mesage);
-		$dd = $this->email->send(); 
+		//$dd = $this->email->send(); 
 
 
 		$this->db->where("order_id",$Orders['order_id']);
@@ -125,27 +123,29 @@ class Orders extends CI_controller
 		
 		
 		$title = "Order Status";
-		if($status == "Pending"): $message = "Thank you for your order. Your order is pending for approval.";
-			$smsCode = ""; $smsKey = ""; $smsVal = "";
-		elseif($status == "Processing"): $message = "Your order has approved it is under process.";
-			$smsCode = "42299"; $smsKey = "{BB}|{CC}"; $smsVal = $dt."|".$time;
-		elseif($status == "Packed"): $message = "Your Order goods has been Packed and ready for Despatch.";
-			$smsCode = ""; $smsKey = ""; $smsVal = "";
-		elseif($status == "Despatched"): $message = "You order has been Despatched from our store. Shortly it will be on you door step.";
-			$smsCode = "42348"; $smsKey = "{BB}"; $smsVal = $time;
+		
+		
+		if($status == "Despatched"): $message = "You order has been Despatched from our store. Shortly it will be on you door step.";
+			$snd = "";
+			
 		elseif($status == "Delivered"): $message = "Order delivered.";
-			$smsCode = ""; $smsKey = ""; $smsVal = "";
+			$this->db->where("id",$Orders['user_id']);
+			$users = $this->db->get("users")->row();
+			$phone = $users->phone;
+			 $snd = "";
+			
 		else:
 		
-			$message = "Your order has cancelled from us please check on you dashboard. Ypur paid amount added to your wallet.";
-			$smsCode = ""; $smsKey = ""; $smsVal = "";
+			$message = "Your order has cancelled from us please check on you dashboard. Your paid amount will be refund on your bank account within 5 days.";
+
+			$this->db->where("id",$Orders['user_id']);
+			$users = $this->db->get("users")->row();
+			$phone = $users->phone;
+			 $snd = $this->sendSms($phone,$message);
+			
 		endif;
-		$this->db->where("id",$Orders['user_id']);
-		$users = $this->db->get("users")->row();
-		$phone = $users->phone;
-		$fcmRegIds = $users->deviceid;
-		$ordrId = $Orders['order_id'];
-		$pushStatus = $this->pushNotice($fcmRegIds,$title,$message,$id,$ordrId);
+		//echo 
+		
 
 		/*
 		$curl = curl_init();
@@ -174,63 +174,13 @@ class Orders extends CI_controller
 	}
 
 
-	function pushNotice($fcmRegIds,$title,$message,$id,$ordrId)
-		{
-
-		ignore_user_abort();
-   		ob_start();
-		// API access key from Google FCM App Console
 	
-					$API_ACCESS_KEY = 'AAAATRYK8KY:APA91bFTUS2VayYqtugaMOuPYIAd_Xl2_kgZUdbISYR8NHUZvYCniJlqNakA_WpGub7M-qF1MuJs2Xu7XwswUT4ex7N6x01ypBQq6JOfTHOX4-kmrNVipMb-3k9fXb8E3VCDHlKbGgjr';
-
-					$fcmMsg = array(
-						'body' => $message,
-						'title' => $title,
-						'sound' => "default",
-					    'color' => "#203E78",
-					    
-					);
-
-					$fcmData = array('body' => $message,
-						'title' => $title,
-						'sound' => "default",
-					    'color' => "#203E78",
-					    'isGlobal'=>0,
-					    'order_id'=>$ordrId,
-					    'ord_id'=> $id
-					);
-
-					$fcmFields = array(
-						//'to' => $registrationIDs,
-						'to' => $fcmRegIds,
-					        'priority' => 'high',
-						'notification' => $fcmMsg,
-						'data' 	=>$fcmData
-					);
-
-					//print_r($fcmMsg);
-
-					$headers = array(
-						'Authorization: key=' . $API_ACCESS_KEY,
-						'Content-Type: application/json'
-					);
-
-					$ch = curl_init();
-					curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
-					curl_setopt( $ch,CURLOPT_POST, true );
-					curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-					curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-					curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-					curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fcmFields ) );
-					$result = curl_exec($ch );
-					curl_close( $ch );
-					//echo $result . "\n\n";
 
 
 				
 			
 	
-	}
+	
 
 	public function CancelStatus()
 	{
@@ -265,5 +215,25 @@ class Orders extends CI_controller
 		$this->db->update("orders_transaction",["payment_status"=>"Paid"]);
 		$this->session->set_flashdata("Feed","Payment Status Successfully Changed");
 		return redirect("admin_panel/Orders/NewOrders/Delivered");
+	}
+
+	public function sendSms($phone,$message)
+	{
+		$sms = $this->db->get("sms_set")->row();
+		$smsUser= $sms->sms_user;
+		$smsPass = $sms->sms_pass;
+		$number=$phone;
+		$sender= $sms->sender;
+		
+		
+
+		$url="https://login.bulksmsgateway.in/sendmessage.php?user=".urlencode($smsUser)."&password=".urlencode($smsPass)."&mobile=".urlencode($number)."&sender=".urlencode($sender)."&message=".urlencode($message)."&type=".urlencode('3'); 
+		
+			//$ch = curl_init($url);
+			//curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			//echo  $curl_scraped_page = curl_exec($ch);
+			//curl_close($ch); 
+		
+		echo file_get_contents($url);
 	}
 }

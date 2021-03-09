@@ -9,7 +9,7 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>Easeshop</title>
+<title>easeshop</title>
 <?php include("inc/layout.php"); ?>
 <link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
 <style type="text/css">
@@ -17,8 +17,12 @@
 {
   #mob-view
   {
-    display: none !important;
+    display: none !important; 
   }
+}
+.rt
+{
+  letter-spacing: 5px;
 }
 </style>
 </head>
@@ -43,7 +47,7 @@
   <div class="mob-header">
     <?php include("inc/goback.php"); ?>
   </div>
-  <?= br(3); ?>
+  <div style="width: 100%; background: #f1f3f6; height: 75px"></div>
 </header>
 
 <!-- ============================================== HEADER : END ============================================== --> 
@@ -127,13 +131,29 @@
                                   <!-- /.product-image --> 
                                 </div>
                                 <!-- /.col -->
-                                <div class="col col-sm-8 col-lg-8">
+                                <div class="col col-sm-8 col-lg-8"> 
                                   <div class="product-info">
                                     <h3 class="name"><a href="<?= base_url('Product_details/index/'.$brI['pro_id']); ?>"><?= $brI['prod_name']; ?></a></h3>
-                                    <div class="rating rateit-small"></div>
-                                    <div class="product-price"> <span class="price">&#8377; <?= $brI['sale_price']; ?> </span> <span class="price-before-discount">&#8377; <?= $brI['price']; ?></span> </div>
+                                    <?php
+                                      $remn1 = 5 - $brI['revs'];
+                                      for ($i=0; $i < $brI['revs'] ; $i++) { 
+                                        echo '<i class="fa fa-star rt star-orange"></i>';
+                                      }
+                                      for ($i=0; $i < $remn1 ; $i++) { 
+                                        echo '<i class="fa fa-star-o rt star-grey"></i>';
+                                      }
+                                       ?>
+                                    <?php if($brI['upcoming']==0): ?>
+                                    <div class="product-price"> <span class="price">&#8377; <?= $brI['sale_price']; ?> </span>
+                                      <?php if(!$brI['offer']==0): ?>
+                                        <span class="price-before-discount">&#8377; <?= $brI['price']; ?></span><?php endif; ?></div>
+                                        <?php else: ?>
+                                          <div class="product-price">
+                                            <b style="color: #f00">Upcoming</b>
+                                          </div>
+                                        <?php endif; ?> 
                                     <!-- /.product-price -->
-                                    <div class="description m-t-10"><?= $brI['descr']; ?></div>
+                                    <div class="description m-t-10"></div>
                                     <div class="cart clearfix animate-effect">
                                       <div class="action">
                                         <ul class="list-unstyled">
@@ -144,7 +164,7 @@
                                           
                                           </li>
                                           <li class="lnk wishlist"> <a class="add-to-cart" href="<?= base_url('My-wishlist/AddWish/'.$brI['pro_id'].'/'.$this->session->userdata('userId')); ?> " title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                                          <li class="lnk"> <a class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
+                                          <li class="lnk"> <a class="add-to-cart" href="<?= base_url('Product_details/index/'.$brI['pro_id']); ?>" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
                                         </ul>
                                       </div>
                                       <!-- /.action --> 
@@ -157,16 +177,17 @@
                                 <!-- /.col --> 
                               </div>
                               <!-- /.product-list-row -->
-                              <div class="tag new"><span>new</span></div>
+                              
                             </div>
                             <!-- /.product-list --> 
                           </div>
                           <!-- /.products --> 
-                        </div>
+                       </div>
                       <?php endforeach; ?>
                       <?php else: ?>
                       <h5 class="text-danger">Products not found!</h5>
                     <?php endif; ?>
+
                     <div class="col col-sm-6 col-md-4 text-right">
                 <div class="pagination-container">
                   <!--ul class="list-inline list-unstyled">
@@ -208,8 +229,8 @@
           
         </div>
         <!-- /.search-result-container --> 
-        
-      </div>
+        </div>
+
       <!-- /.col --> 
       <div class='col-md-3 sidebar'> 
         <!-- ================================== TOP NAVIGATION ================================== -->
@@ -218,7 +239,6 @@
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
               <?php if(!empty($spalOffer)): ?>
-                heheheh
                 <?php foreach($spalOffer as $spl): ?>
               <div class="item">
                 <div class="products special-product">
@@ -227,7 +247,7 @@
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
                           <div class="product-image">
-                            <div class="image"> <a href="#"> <img src="<?= base_url('uploads/products/'.$spl['mnImg']); ?>" alt=""> </a> </div>
+                            <div class="image"> <a href="<?= base_url('Product_details/index/'.$spl['pro_id']); ?>"> <img src="<?= base_url('uploads/products/'.$spl['mnImg']); ?>" alt=""> </a> </div>
                             <!-- /.image --> 
                             
                           </div>
@@ -236,8 +256,16 @@
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="#"><?= $spl['prod_name']; ?></a></h3>
-                            <div class="rating rateit-small"></div>
+                            <h3 class="name"><a href="<?= base_url('Product_details/index/'.$spl['pro_id']); ?>"><?= $spl['prod_name']; ?></a></h3>
+                            <?php
+                              $remn1 = 5 - $spl['revs'];
+                              for ($i=0; $i < $spl['revs'] ; $i++) { 
+                                echo '<i class="fa fa-star rt star-orange"></i>';
+                              }
+                              for ($i=0; $i < $remn1 ; $i++) { 
+                                echo '<i class="fa fa-star-o rt star-grey"></i>';
+                              }
+                               ?>
                             <div class="product-price"> <span class="price">&#8377; <?= $spl['sale_price']; ?> </span> </div>
                             <!-- /.product-price --> 
                             
@@ -276,7 +304,11 @@
             </form>
           </div>
           <!-- /.sidebar-widget-body --> 
+
         </div>
+        <div class="home-banner"> <img src="<?= base_url(); ?>assets/images/banners/LHS-banner22.jpg" alt="Image"> </div>
+          <?= br(3); ?>
+          <p>&nbsp;</p>
         <!-- /.sidebar-module-container --> 
       </div>
     </div>

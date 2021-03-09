@@ -23,6 +23,8 @@ class Product_details extends CI_controller
 		if(!empty($getProDetailsById))
         {
 		   $this->load->view("fronts/product_details",["menus"=>$getMenudata,"spalOffer"=>$splOffer,"proData"=>$getProDetailsById,"allReviews"=>$getAllReviews,"faqData"=>$getFaq]);
+        	//echo "<pre>";
+        	//print_r($getProDetailsById);
 		}
 		else
 		{

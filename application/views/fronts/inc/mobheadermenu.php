@@ -5,7 +5,7 @@
 				<i id="barIcon" onclick="hideSidemenu()" class="fa fa-bars" aria-hidden="true"></i>
 			</div>
 			<div class="cols-10">
-				<div class="logo"> <a href="home.html"> <img src="<?= base_url(); ?>assets/images/easeshop_white2.png" alt="logo"> </a> </div>
+				<div class="logo"> <a href="<?= base_url(); ?>"> <img src="<?= base_url(); ?>assets/images/smallLogo.png" alt="logo"> </a> </div>
 			</div>
 		</div>
 	</div>
@@ -15,9 +15,9 @@
 		<div class="circle">
 			<i class="fa fa-user"></i>
 		</div>
-		<?php if($this->session->userdata("userId")): ?>
-			<h5>Sanjay Natta</h5>
-			<span><a href="#">Edit Shipping Addtess</a></span><br>
+		<?php if($this->session->userdata("userId")): $getUser = $this->ThemeModel->getUserDetails($user_id); ?>
+			<h5><?= $getUser['name']; ?></h5>
+			<span><a href="<?= base_url('My-Account'); ?>">Edit Shipping Address</a></span><br>
 			<span><a href="<?= base_url('Logout'); ?>" style="color: #f00"><b>Logout</b></a></span>
 		<?php else: ?>
 			<h5><a href="<?= base_url('Login'); ?>" style="color: #f00"><b>Login</b></a></h5>
@@ -53,7 +53,7 @@
                 
                
                 
-                <li class="dropdown  navbar-right special-menu"> <a href="#">Todays offer</a> </li>
+                
               </ul>
               <!-- /.navbar-nav -->
               <div class="clearfix"></div>

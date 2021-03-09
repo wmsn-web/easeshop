@@ -89,7 +89,7 @@
           <?php if(!empty($privacyData)): ?>
             <?php foreach($privacyData as $priv): ?>
               <h2><?= $priv['heading']; ?></h2>
-              <p><?= $priv['descr']; ?></p>
+              <?= html_entity_decode($priv['descr']); ?>
             <?php endforeach; ?>
           <?php endif; ?>
           

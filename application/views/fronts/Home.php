@@ -20,6 +20,10 @@
     display: none !important;
   }
 }
+.rt
+{
+  letter-spacing: 5px;
+}
 </style>
 </head>
 <body class="cnt-home">
@@ -132,7 +136,15 @@
                         
                         <div class="product-info text-left">
                           <h3 class="name"><a href="<?= base_url('Product_details/index/'.$nPro['pro_id']); ?>"><?= $nPro['prod_name']; ?></a></h3>
-                          <div class="rating rateit-small"></div>
+                          <?php
+                          $remn = 5 - $nPro['revs'];
+                          for ($i=0; $i < $nPro['revs'] ; $i++) { 
+                            echo '<i class="fa fa-star rt star-orange"></i>';
+                          }
+                          for ($i=0; $i < $remn ; $i++) { 
+                            echo '<i class="fa fa-star-o rt star-grey"></i>';
+                          }
+                           ?>
                           <div class="description"></div>
                           <div class="product-price"> <span class="price">&#8377; <?= $nPro['sale_price']; ?> </span> <span class="price-before-discount">&#8377; <?= $nPro['price']; ?></span> </div>
                           <!-- /.product-price --> 
@@ -172,26 +184,26 @@
         <!-- /.scroll-tabs --> 
         <!-- ============================================== SCROLL TABS : END ============================================== --> 
         <!-- ============================================== WIDE PRODUCTS ============================================== -->
-        <div class="wide-banners wow fadeInUp outer-bottom-xs">
+        <!--div class="wide-banners wow fadeInUp outer-bottom-xs">
           <div class="row">
             <div class="col-md-7 col-sm-7">
               <div class="wide-banner cnt-strip">
                 <div class="image"> <img class="img-responsive" src="<?= base_url(); ?>assets/images/banners/home-banner1.jpg" alt=""> </div>
               </div>
-              <!-- /.wide-banner --> 
+              
             </div>
-            <!-- /.col -->
+            
             <div class="col-md-5 col-sm-5">
               <div class="wide-banner cnt-strip">
                 <div class="image"> <img class="img-responsive" src="<?= base_url(); ?>assets/images/banners/home-banner2.jpg" alt=""> </div>
               </div>
-              <!-- /.wide-banner --> 
+              
             </div>
-            <!-- /.col --> 
+           
           </div>
-          <!-- /.row --> 
-        </div>
-        <!-- /.wide-banners --> 
+         
+        </div-->
+       
         
         <!-- ============================================== WIDE PRODUCTS : END ============================================== --> 
         <!-- ============================================== FEATURED PRODUCTS ============================================== -->
@@ -208,13 +220,21 @@
                         <div class="image"> <a href="<?= base_url('Product_details/index/'.$fPro['pro_id']); ?>"><img  src="<?= base_url('uploads/products/'.$fPro['mnImg']); ?>" alt=""></a> </div>
                         <!-- /.image -->
                         
-                        <div class="tag hot"><span>hot</span></div>
+                        
                       </div>
                       <!-- /.product-image -->
                       
                       <div class="product-info text-left">
                         <h3 class="name"><a href="<?= base_url('Product_details/index/'.$fPro['pro_id']); ?>"><?= $fPro['prod_name']; ?></a></h3>
-                        <div class="rating rateit-small"></div>
+                        <?php
+                          $remn1 = 5 - $fPro['revs'];
+                          for ($i=0; $i < $fPro['revs'] ; $i++) { 
+                            echo '<i class="fa fa-star rt star-orange"></i>';
+                          }
+                          for ($i=0; $i < $remn1 ; $i++) { 
+                            echo '<i class="fa fa-star-o rt star-grey"></i>';
+                          }
+                           ?>
                         <div class="description"></div>
                         <div class="product-price"> <span class="price">&#8377; <?= $fPro['sale_price']; ?> </span> <span class="price-before-discount">&#8377; <?= $fPro['price']; ?></span> </div>
                         <!-- /.product-price --> 
@@ -261,13 +281,21 @@
                           <div class="image"> <a href="<?= base_url('Product_details/index/'.$pr['pro_id']); ?>"><img  src="<?= base_url('uploads/products/'.$pr['mnImg']); ?>" alt=""></a> </div>
                           <!-- /.image -->
                           
-                          <div class="tag hot"><span>hot</span></div>
+                          
                         </div>
                         <!-- /.product-image -->
                         
                         <div class="product-info text-left">
                           <h3 class="name"><a href="<?= base_url('Product_details/index/'.$pr['pro_id']); ?>"><?= $pr['prod_name']; ?></a></h3>
-                          <div class="rating rateit-small"></div>
+                          <?php
+                          $remn2 = 5 - $pr['revs'];
+                          for ($i=0; $i < $pr['revs'] ; $i++) { 
+                            echo '<i class="fa fa-star rt star-orange"></i>';
+                          }
+                          for ($i=0; $i < $remn2 ; $i++) { 
+                            echo '<i class="fa fa-star-o rt star-grey"></i>';
+                          }
+                           ?>
                           <div class="description"></div>
                           <div class="product-price"> <span class="price">&#8377; <?= $pr['sale_price']; ?> </span> <span class="price-before-discount">&#8377; <?= $pr['price']; ?></span> </div>
                           <!-- /.product-price --> 
@@ -325,7 +353,15 @@
                         <div class="col col-xs-7">
                           <div class="product-info">
                             <h3 class="name"><a href="<?= base_url('Product_details/index/'.$spl['pro_id']); ?>"><?= $spl['prod_name']; ?></a></h3>
-                            <div class="rating rateit-small"></div>
+                            <?php
+                          $remn3 = 5 - $spl['revs'];
+                          for ($i=0; $i < $spl['revs'] ; $i++) { 
+                            echo '<i class="fa fa-star rt star-orange"></i>';
+                          }
+                          for ($i=0; $i < $remn3 ; $i++) { 
+                            echo '<i class="fa fa-star-o rt star-grey"></i>';
+                          }
+                           ?>
                             <div class="product-price"> <span class="price">&#8377; <?= $spl['sale_price']; ?> </span> </div>
                             <!-- /.product-price --> 
                             
@@ -364,7 +400,9 @@
           </div>
           <!-- /.sidebar-widget-body --> 
         </div>
-          <div class="home-banner"> <img src="<?= base_url(); ?>assets/images/banners/LHS-banner.jpg" alt="Image"> </div>
+          <div class="home-banner"> <img src="<?= base_url(); ?>assets/images/banners/LHS-banner22.jpg" alt="Image"> </div>
+          <?= br(3); ?>
+          <p>&nbsp;</p>
         </div>
       
     </div>

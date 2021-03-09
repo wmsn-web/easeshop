@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder"> 
           <!-- ============================================================= LOGO ============================================================= -->
-          <div class="logo"> <a href="<?= base_url(); ?>"> <img src="<?= base_url(); ?>assets/images/easeshop_white2.png" alt="logo"> </a> </div>
+          <div class="logo"> <a href="<?= base_url(); ?>"> <img src="<?= base_url(); ?>assets/images/smallLogo.png" alt="logo"> </a> </div>
           <!-- /.logo --> 
           <!-- ============================================================= LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->

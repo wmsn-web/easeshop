@@ -99,25 +99,20 @@
 									<a id="email" href="#">rebaccanoim@gmail.com</a><br>
 									<a id="phone" href="#">7063245845</a>
 								</div>
-								<div class="chip cp bg-primary text-white rech">Recharge</div>
-									<div title="Block This User?" id="status" class="chip cp">Block</div>
-								<div class="text-center">
-									<div align="center" style="padding: 15px; text-align: center; display: none" id="rechCard">
-										<input style="" type="text" id="rechAmt" placeholder="amount">
-										<input type="hidden" id="rechUserId">
-										<div  class="chip cp payDone"><i class="far fa-tick"></i> Done</div>
-									</div>
-									<p><b>Wallet Balance:</b> &#8377; <span id="wlbal">0.00</span>/-</p>
-								</div>
+								
 							</div>
 							<div class="p-4 b-t card-footer">
-								<div class="row text-center">
-									<div class="col-6 border-right text-center">
-										
+								<h4>Shipping Address</h4>
+								<div class="row">
+									<div class="col-6 border-right">
+										<span>Address:</span> <span id="addr"></span><br>
+										<span>City:</span> <span id="city"></span>
 									</div>
-									<div class="col-6 text-center">
-										
+									<div class="col-6">
+										<span>State:</span> <span id="state"></span><br>
+										<span>PIN:</span> <span id="pin"></span>
 									</div>
+									<div class="col-12 text-center"></div>
 								</div>
 							</div>
 						</div>
@@ -228,9 +223,14 @@
 								$("#wlbal").html(obj.wldata);
 								$("#rechUserId").val(obj.user_id);
 								$("#rechAmt").val("");
+								$("#addr").html(obj.addr);
+								$("#city").html(obj.city);
+								$("#state").html(obj.state);
+								$("#pin").html(obj.pin);
+								$("#lm").html(obj.lm);
 								if(obj.proImg == null || obj.proImg == "")
 								{
-									pics = "<?= base_url('assets/img/brand/favicon.png'); ?>";
+									pics = "<?= base_url('admin_assets/img/brand/favicon.png'); ?>";
 								}
 								else
 								{

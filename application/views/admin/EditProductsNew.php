@@ -161,7 +161,7 @@
 															
 														<div class="form-group col-sm-3">
 															<label>Color</label>
-															<input type="text" id="cl_<?= $vars['var_id']; ?>" name="colors[]" class="form-control clr clrd"  value="<?= $vars['size']; ?>">
+															<input type="text" id="cl_<?= $vars['var_id']; ?>" name="colors[]" class="form-control clr clrd"  value="<?= $vars['size']; ?>"> 
 														</div>
 														
 														<div class="form-group col-sm-4">

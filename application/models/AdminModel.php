@@ -911,6 +911,25 @@ class AdminModel extends CI_model
 					$row = $getWlt->row();
 					$wldata = $row->balance;
 				}
+				$this->db->where("user_id",$key->id);
+				$gtShip = $this->db->get("shipping_address");
+				if($gtShip->num_rows()==0)
+				{
+					$addr = "Not found!";
+					$city = "Not found!";
+					$state = "Not found!";
+					$pin = "Not found!";
+					$lm = "Not found!";
+				}
+				else
+				{
+					$rShip = $gtShip->row();
+					$addr = $rShip->address;
+					$city = $rShip->city;
+					$state = $rShip->state;
+					$pin = $rShip->pin;
+					$lm = $rShip->nearby_location;
+				}
 			$data = array
 								(
 									"user_id"	=>$key->id,
@@ -920,7 +939,12 @@ class AdminModel extends CI_model
 									"phone"		=>$key->phone,
 									"status"	=>$status,
 									"wldata"	=>$wldata,
-									"proImg"	=>$key->profileimage
+									"proImg"	=>$key->profileimage,
+									"addr"		=>$addr,
+									"city"		=>$city,
+									"state"		=>$state,
+									"pin"		=>$pin,
+									"lm"		=>$lm
 								);
 		}
 

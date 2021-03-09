@@ -76,13 +76,16 @@ class My_Orders extends CI_controller
 
 
 			}
+      if(!$ordd['tax']=="0"):
 			 echo '<tr>
                         <td class="nobrd"></td>
                         <td class="nobrd"></td>
                         <td>Tax('.$ordd['tax'].'%)</td>
                         <td>'.number_format($ordd['txAmt'],2).'</td>
-                      </tr>
-                      <tr>
+                      </tr>';
+      endif;
+
+       echo               '<tr>
                         <td class="nobrd"></td>
                         <td class="nobrd"></td>
                         <td><b>Total</b></td>
@@ -93,14 +96,19 @@ class My_Orders extends CI_controller
 			echo '</div> </div>
                 </div>
                   <div class="col-md-12">
-                    <div class="ordStatus">
-                      <ol class="progtrckr" data-progtrckr-steps="3">
-                          <li class="'.$ordd['pross'].'">Processing</li>
-                          <li class="'.$ordd['disp'].'">Dispatch</li>
-                          <li class="'.$ordd['delvr'].'">Delivared</li>
-                      </ol>
-                    </div>
-                  </div>';
+                    <div class="ordStatus">';
+                    if($ordd['status']=="Cancel"):
+                      echo '<h3 style="color:#f00">Order Cancelled by Us</h3>';
+                      echo '<p>Paid amount will be refund your bank account within 5days</p>';
+                    else:
+                      echo '<ol class="progtrckr" data-progtrckr-steps="3">
+                                <li class="'.$ordd['pross'].'">Processing</li>
+                                <li class="'.$ordd['disp'].'">Dispatch</li>
+                                <li class="'.$ordd['delvr'].'">Delivared</li>
+                            </ol>
+                          </div>
+                        </div>';
+                    endif;
 
       
 		}

@@ -92,7 +92,7 @@ class ThemeModel extends CI_Model
 
 				$this->db->where("cat_id",$keyct->id);
 				$this->db->order_by("id","RANDOM");
-				$this->db->limit(8);
+				//$this->db->limit(20);
 				$getPr = $this->db->get("products");
 				if($getPr->num_rows()==0)
 				{
@@ -104,14 +104,30 @@ class ThemeModel extends CI_Model
 					$proData = [];
 					foreach($respr as $pr)
 					{
+
+						$this->db->where("product_id",$pr->pro_id);
+						$getTotUsr = $this->db->get("reviews")->num_rows();
+
+						$this->db->where("product_id",$pr->pro_id);
+						$this->db->select_sum("rates");
+						$getRevs = $this->db->get("reviews")->row();
+						if($getTotUsr > 0)
+						{
+							$calRev = round($getRevs->rates / $getTotUsr);
+						}
+						else
+						{
+							$calRev = 0;
+						}
 						$proData[] = array
 										(
 											"prod_name"	=>$pr->product_name,
 											"price"			=>$pr->price,
-											"sale_price"	=>$pr->sale_price,
+											"sale_price"	=>round($pr->sale_price),
 											"id"			=>$pr->id,
 											"pro_id"		=>$pr->pro_id,
-											"mnImg"			=>$pr->main_img
+											"mnImg"			=>$pr->main_img,
+											"revs"			=>$calRev
 										);
 					}
 				}
@@ -140,14 +156,30 @@ class ThemeModel extends CI_Model
 			$res = $getpro->result();
 			foreach($res as $key)
 			{
+				$this->db->where("product_id",$key->pro_id);
+				$getTotUsr = $this->db->get("reviews")->num_rows();
+
+				$this->db->where("product_id",$key->pro_id);
+				$this->db->select_sum("rates");
+				$getRevs = $this->db->get("reviews")->row();
+				if($getTotUsr > 0)
+				{
+					$calRev = round($getRevs->rates / $getTotUsr);
+				}
+				else
+				{
+					$calRev = 0;
+				}
+
 				$data[] = array
 								(
 									"prod_name"		=>$key->product_name, 
 									"price"			=>$key->price,
-									"sale_price"	=>$key->sale_price,
+									"sale_price"	=>round($key->sale_price),
 									"id"			=>$key->id,
 									"pro_id"		=>$key->pro_id,
-									"mnImg"			=>$key->main_img
+									"mnImg"			=>$key->main_img,
+									"revs"			=>$calRev
 								);
 			}
 		}
@@ -167,14 +199,29 @@ class ThemeModel extends CI_Model
 			$res = $getpro->result();
 			foreach($res as $key)
 			{
+				$this->db->where("product_id",$key->pro_id);
+				$getTotUsr = $this->db->get("reviews")->num_rows();
+
+				$this->db->where("product_id",$key->pro_id);
+				$this->db->select_sum("rates");
+				$getRevs = $this->db->get("reviews")->row();
+				if($getTotUsr > 0)
+				{
+					$calRev = round($getRevs->rates / $getTotUsr);
+				}
+				else
+				{
+					$calRev = 0;
+				}
 				$data[] = array
 								(
 									"prod_name"		=>$key->product_name,
 									"price"			=>$key->price,
-									"sale_price"	=>$key->sale_price,
+									"sale_price"	=>round($key->sale_price),
 									"id"			=>$key->id,
 									"pro_id"		=>$key->pro_id,
-									"mnImg"			=>$key->main_img
+									"mnImg"			=>$key->main_img,
+									"revs"			=>$calRev
 								);
 			}
 		}
@@ -195,14 +242,29 @@ class ThemeModel extends CI_Model
 			$res = $getpro->result();
 			foreach($res as $key)
 			{
+				$this->db->where("product_id",$key->pro_id);
+				$getTotUsr = $this->db->get("reviews")->num_rows();
+
+				$this->db->where("product_id",$key->pro_id);
+				$this->db->select_sum("rates");
+				$getRevs = $this->db->get("reviews")->row();
+				if($getTotUsr > 0)
+				{
+					$calRev = round($getRevs->rates / $getTotUsr);
+				}
+				else
+				{
+					$calRev = 0;
+				}
 				$data[] = array
 								(
 									"prod_name"		=>$key->product_name,
 									"price"			=>$key->price,
-									"sale_price"	=>$key->sale_price,
+									"sale_price"	=>round($key->sale_price),
 									"id"			=>$key->id,
 									"pro_id"		=>$key->pro_id,
-									"mnImg"			=>$key->main_img
+									"mnImg"			=>$key->main_img,
+									"revs"			=>$calRev
 								);
 			}
 		}
@@ -265,15 +327,32 @@ class ThemeModel extends CI_Model
 			$res = $getpro->result();
 			foreach($res as $key)
 			{
+				$this->db->where("product_id",$key->pro_id);
+				$getTotUsr = $this->db->get("reviews")->num_rows();
+
+				$this->db->where("product_id",$key->pro_id);
+				$this->db->select_sum("rates");
+				$getRevs = $this->db->get("reviews")->row();
+				if($getTotUsr > 0)
+				{
+					$calRev = round($getRevs->rates / $getTotUsr);
+				}
+				else
+				{
+					$calRev = 0;
+				}
 				$data[] = array
 								(
 									"prod_name"		=>$key->product_name,
 									"price"			=>$key->price,
-									"sale_price"	=>$key->sale_price,
+									"sale_price"	=>round($key->sale_price),
 									"id"			=>$key->id,
 									"pro_id"		=>$key->pro_id,
 									"mnImg"			=>$key->main_img,
-									"descr"			=>substr($key->descr, 0, 200)
+									"offer"			=>$key->offer,
+									"upcoming"		=>$key->upcoming,
+									"descr"			=>substr($key->descr, 0, 200),
+									"revs"			=>$calRev
 								);
 			}
 		}
@@ -298,15 +377,32 @@ class ThemeModel extends CI_Model
 			$res = $getpro->result();
 			foreach($res as $key)
 			{
+				$this->db->where("product_id",$key->pro_id);
+				$getTotUsr = $this->db->get("reviews")->num_rows();
+
+				$this->db->where("product_id",$key->pro_id);
+				$this->db->select_sum("rates");
+				$getRevs = $this->db->get("reviews")->row();
+				if($getTotUsr > 0)
+				{
+					$calRev = round($getRevs->rates / $getTotUsr);
+				}
+				else
+				{
+					$calRev = 0;
+				}
 				$data[] = array
 								(
 									"prod_name"		=>$this->highlight($key->product_name, $keys),
 									"price"			=>$key->price,
-									"sale_price"	=>$key->sale_price,
+									"sale_price"	=>round($key->sale_price),
 									"id"			=>$key->id,
 									"pro_id"		=>$key->pro_id,
 									"mnImg"			=>$key->main_img,
-									"descr"			=>substr($this->highlight($key->descr, $keys), 0, 200)
+									"descr"			=>substr($this->highlight($key->descr, $keys), 0, 200),
+									"offer"			=>$key->offer,
+									"upcoming"		=>$key->upcoming,
+									"revs"			=>$calRev
 								);
 			}
 		}
@@ -344,6 +440,23 @@ class ThemeModel extends CI_Model
 		else
 		{
 			$key = $getpro->row();
+
+			$this->db->where("product_id",$key->pro_id);
+			$getTotUsr = $this->db->get("reviews")->num_rows();
+
+			$this->db->where("product_id",$key->pro_id);
+			$this->db->select_sum("rates");
+			$getRevs = $this->db->get("reviews")->row();
+			if($getTotUsr > 0)
+			{
+				$calRev = round($getRevs->rates / $getTotUsr);
+
+			}
+			else
+			{
+				$calRev = 0;
+			}
+
 			$this->db->order_by("id","ASC");
 			$this->db->where("product_id",$key->id);
 			$gtGal = $this->db->get("product_gallery");
@@ -373,7 +486,7 @@ class ThemeModel extends CI_Model
 					{
 						$vardata[] = array
 											(
-												"sale_price"=>$vars->sale_price,
+												"sale_price"=>round($vars->sale_price),
 												"varName"	=>$vars->color_name,
 												"varId"		=>$vars->id
 											);
@@ -385,10 +498,11 @@ class ThemeModel extends CI_Model
 					$gtvar = $this->db->get("varsize")->result();
 					foreach($gtvar as $vars)
 					{
+
 						$vardata[] = array
 											(
 												"varName"	=>$vars->sizeString,
-												"sale_price"=>$vars->sale_price,
+												"sale_price"=>round($vars->sale_price),
 												"varId"		=>$vars->id
 											);
 					}
@@ -411,15 +525,30 @@ class ThemeModel extends CI_Model
 				$resRel = $getRelPro->result();
 				foreach($resRel as $keyRel)
 				{
+					$this->db->where("product_id",$keyRel->pro_id);
+					$getTotUsrRel = $this->db->get("reviews")->num_rows();
+
+					$this->db->where("product_id",$keyRel->pro_id);
+					$this->db->select_sum("rates");
+					$getRevs = $this->db->get("reviews")->row();
+					if($getTotUsrRel > 0)
+					{
+						$calRev0 = round($getRevs->rates / $getTotUsrRel);
+					}
+					else
+					{
+						$calRev0 = 0;
+					}
 					$relProData[] = array
 										(
 											"prod_name"		=>$keyRel->product_name,
 											"price"			=>$keyRel->price,
-											"sale_price"	=>$keyRel->sale_price,
+											"sale_price"	=>round($keyRel->sale_price),
 											"id"			=>$keyRel->id,
 											"pro_id"		=>$keyRel->pro_id,
 											"mnImg"			=>$keyRel->main_img,
-											"discount"		=>$keyRel->offer
+											"discount"		=>$keyRel->offer,
+											"revs"			=>$calRev0
 										);
 				}
 			}
@@ -428,7 +557,7 @@ class ThemeModel extends CI_Model
 								(
 									"prod_name"		=>$key->product_name,
 									"price"			=>$key->price,
-									"sale_price"	=>$key->sale_price,
+									"sale_price"	=>round($key->sale_price),
 									"id"			=>$key->id,
 									"pro_id"		=>$key->pro_id,
 									"mnImg"			=>$key->main_img,
@@ -441,7 +570,9 @@ class ThemeModel extends CI_Model
 									"cat_id"		=>$key->cat_id,
 									"relProData"	=>$relProData,
 									"discount"		=>$key->offer,
-									"upcoming"		=>$key->upcoming
+									"upcoming"		=>$key->upcoming,
+									"revs"			=>$calRev,
+									"totRev"		=>$getTotUsr
 								);
 			
 		}

@@ -44,7 +44,7 @@
   <div class="mob-header">
     <?php include("inc/goback.php"); ?>
   </div>
-  <?= br(3); ?>
+  <div style="width: 100%; background: #f1f3f6; height: 75px"></div>
 </header>
 
 <!-- ============================================== HEADER : END ============================================== -->
@@ -220,9 +220,11 @@
 					<div class="cart-sub-total">
 						Subtotal<span class="inner-left-md">&#8377; <?= number_format($cartData['totAmt'],2); ?></span> 
 					</div>
-					<div class="cart-sub-total">
-						TAX <?= $cartData['tax']; ?>%<?= nbs(2); ?> <span class="inner-left-md">&#8377; <?= number_format($cartData['nowTx'],2); ?></span> 
-					</div>
+					<?php if(!$cartData['tax'] == "0"): ?>
+						<div class="cart-sub-total">
+							TAX <?= $cartData['tax']; ?>%<?= nbs(2); ?> <span class="inner-left-md">&#8377; <?= number_format($cartData['nowTx'],2); ?></span> 
+						</div>
+					<?php endif; ?>
 					<div class="cart-grand-total">
 						Grand Total<span class="inner-left-md">&#8377; <?= number_format($cartData['grand'],2); ?></span>
 					</div>

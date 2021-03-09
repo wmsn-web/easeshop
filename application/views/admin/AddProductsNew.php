@@ -117,9 +117,9 @@
 													<div class="field_wrapper">
 														<div class="row">
 															
-														<div class="form-group col-sm-3">
+														<div class="form-group col-sm-3"> 
 															<label>Color</label>
-															<input type="color" name="colors[]" class="form-control clr"  placeholder="">
+															<input type="text" name="colors[]" class="form-control clr"  placeholder="">
 														</div>
 														
 														<div class="form-group col-sm-4">
@@ -251,7 +251,7 @@
 	var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
     var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div class="row"><div class="form-group col-sm-3"><label>Color</label><input type="color" name="colors[]" class="form-control clr"  placeholder="10 gm"></div><div class="form-group col-sm-4"><label>Product Quantity</label><input type="text" name="prcce[]" class="form-control clr"  placeholder="Price"></div><a href="javascript:void(0);" class="remove_button"><i class="fas fa-times text-danger"></i> Remove</a></div>'; //New input field html 
+    var fieldHTML = '<div class="row"><div class="form-group col-sm-3"><label>Color</label><input type="text" name="colors[]" class="form-control clr"  placeholder="Color Name"></div><div class="form-group col-sm-4"><label>Product Quantity</label><input type="text" name="prcce[]" class="form-control clr"  placeholder="Price"></div><a href="javascript:void(0);" class="remove_button"><i class="fas fa-times text-danger"></i> Remove</a></div>'; //New input field html 
     var x = 1; //Initial field counter is 1
     
     //Once add button is clicked
@@ -274,7 +274,7 @@
     var maxField2 = 10; //Input fields increment limitation
     var addButton2 = $('.add_button2'); //Add button selector
     var wrapper2 = $('.field_wrapper2'); //Input field wrapper
-    var fieldHTML2 = '<div class="row"><div class="form-group col-sm-3"><label>Size</label><input type="text" name="size[]" class="form-control siz"  placeholder="10 gm"></div><div class="form-group col-sm-4"><label>Product Quantity</label><input type="text" name="prcce2[]" class="form-control siz"  placeholder="Price"></div><a href="javascript:void(0);" class="remove_button2"><i class="fas fa-times text-danger"></i> Remove</a></div>'; //New input field html 
+    var fieldHTML2 = '<div class="row"><div class="form-group col-sm-3"><label>Size</label><input type="text" name="size[]" class="form-control siz"  placeholder="Size"></div><div class="form-group col-sm-4"><label>Product Quantity</label><input type="text" name="prcce2[]" class="form-control siz"  placeholder="Price"></div><a href="javascript:void(0);" class="remove_button2"><i class="fas fa-times text-danger"></i> Remove</a></div>'; //New input field html 
     var x2 = 1; //Initial field counter is 1
     
     //Once add button is clicked

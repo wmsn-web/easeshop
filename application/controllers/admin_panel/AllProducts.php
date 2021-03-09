@@ -44,7 +44,7 @@ class AllProducts extends CI_controller
 		return redirect("admin_panel/AllProducts");
 	}
 
-	 public function updateProduct()
+	 public function updateProduct() 
 	 {
 	 	$prod_name = $this->input->post("prod_name");
 		$catId = $this->input->post("cat_id");
@@ -287,7 +287,7 @@ class AllProducts extends CI_controller
 				foreach ($res as $key => $value) {
 					$data[] = array
 									(
-										"size" =>$value->colorcode,
+										"size" =>$value->color_name,
 										"price"	=>$value->price,
 										"salePrice"	=>$value->sale_price,
 										"img"	=>$value->img,
@@ -308,7 +308,7 @@ class AllProducts extends CI_controller
 			}
 			else
 			{
-				$sz = "<span style='display:inline-block; width:25px; height:25px; background:".$key['size']."; border-radius:50%; '></span>";
+				$sz = "<span>".$key['size']."</span>";
 			}
 		 ?>
 
