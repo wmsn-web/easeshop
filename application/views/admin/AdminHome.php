@@ -73,6 +73,19 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-sm-12 col-lg-6 col-xl-3">
+						<div class="card bg-success card-img-holder text-white">
+							<div class="card-body">
+								<a class="text-white" href="<?= base_url('admin_panel/AllVisitors'); ?>">
+									<img src="<?= base_url(); ?>admin_assets/img/svgicons/circle.svg" class="card-img-absolute" alt="circle-image">
+									<h4 class="font-weight-normal  mb-3">Visitors
+										<i class="far fa-paper-plane tx-30 float-right"></i>
+									</h4>
+									<h2 class="mb-0"><?= $dashdata['visitors']; ?></h2>
+								</a>
+							</div>
+						</div>
+					</div>
 				</div>
 				
 				<!-- row closed -->

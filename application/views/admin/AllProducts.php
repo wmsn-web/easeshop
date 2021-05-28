@@ -91,6 +91,8 @@
 													<a class="text-white" href="#" data-toggle="modal" data-target="#proSetting" onclick="getProsettings('pr_<?= $key['pro_id']; ?>')">
 														<i class="fa fa-cog"></i>
 													</a>
+													<?= nbs(2); ?>
+													<a class="text-white" href="<?= base_url('admin_panel/Product_setting/index/'.$key['prId']); ?>">&#8377;-%</a>
 												</td>
 											</tr>
 

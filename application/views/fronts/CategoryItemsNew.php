@@ -11,7 +11,7 @@
 <meta name="robots" content="all">
 <title>easeshop</title>
 <?php include("inc/layout.php"); ?>
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewxfinal.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -144,14 +144,14 @@
                                       }
                                        ?>
                                     <?php if($brI['upcoming']==0): ?>
-                                    <div class="product-price"> <span class="price">&#8377; <?= $brI['sale_price']; ?> </span>
+                                    <div class="product-price"> <span class="price">&#8377; <?= $brI['sale_price']; ?></span>
                                       <?php if(!$brI['offer']==0): ?>
-                                        <span class="price-before-discount">&#8377; <?= $brI['price']; ?></span><?php endif; ?></div>
+                                        <span class="price-before-discount">&#8377; <?= $brI['price']; ?></span> <b class="text-success"><?= round($brI['offer']); ?>% Off</b> <?php endif; ?></div>
                                         <?php else: ?>
                                           <div class="product-price">
                                             <b style="color: #f00">Upcoming</b>
                                           </div>
-                                        <?php endif; ?> 
+                                        <?php endif; ?> <b class="text-danger"><?= $brI['cashback']; ?></b>
                                     <!-- /.product-price -->
                                     <div class="description m-t-10"></div>
                                     <div class="cart clearfix animate-effect">

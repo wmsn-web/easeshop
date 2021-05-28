@@ -48,10 +48,11 @@
 													<small class="text-danger" id="msg"></small>
 													<input type="tel" name="phone" id="phone" class="form-control unicase-form-control text-input" placeholder="Enter Mobile Number">
 												</div>
+												
 												<div class="form-group">
-														<div id="recaptcha-container"></div>
+													<div id="loading" style="display: none">
+														<img src="<?= base_url('assets/images/loading.gif'); ?>">
 													</div>
-												<div class="form-group">
 													<button id="llog" type="button" class="btn btn-primary" >Verify Mobile Number</button>
 													
 												</div>
@@ -67,11 +68,19 @@
 												<input type="text" id="verificationCode" placeholder="Enter verification code" class="form-control unicase-form-control text-input">
 											</div>
 											<div class="form-group">
-    											<button type="button" class="btn btn-primary" onclick="codeverify();">Verify code</button>
+												<div id="loading3" style="display: none">
+														<img src="<?= base_url('assets/images/loading.gif'); ?>">
+													</div>
+    											<button type="button" id="vrcd" class="btn btn-primary" onclick="codeverify();">Verify code</button>
+    											<a href="javascript:void(0)" id="resend">Resend</a>
+    											<div id="loading2" style="display: none">
+														<img src="<?= base_url('assets/images/loading.gif'); ?>">
+													</div>
 											</div>
 										</div>
 										<div id="resetPass" style="display: none">
 											<form action="<?= base_url('Login/ChangePassword'); ?>" method="post">
+												<input type="hidden" name="fphone" id="fphone">
 												<div class="form-group">
 													<label>Password</label>
 													<input type="password" name="password" id="pass1" class="form-control unicase-form-control text-input" placeholder="Password">
@@ -96,32 +105,19 @@
 			</div>
 		</section>
 		<?php include("inc/js.php"); ?>
-		<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-		<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyAkKC4If-q2jAyoE_FRTSB6laUIfz3oRzc",
-    authDomain: "easeshop-13604.firebaseapp.com",
-    projectId: "easeshop-13604",
-    storageBucket: "easeshop-13604.appspot.com",
-    messagingSenderId: "927322896059",
-    appId: "1:927322896059:web:33fcb0ffb29beb2317db9e",
-    measurementId: "G-FHSPDJ1EHJ"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  
-</script>
+		
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$("#llog").click(function(){
+
 					var phones = $("#phone").val();
-					var phone = "+91"+phones;
+					var phone = phones;
 					if(phones ==""){$("#phone").addClass("inpDanger"); $("#phone").attr("placeholder","invalid Mobile Number!");$("#phone").focus();}
 					
 					else
 					{
+						$("#llog").hide();
+						$("#loading").show();
 						$.post("<?= base_url('Login/verifyExist'); ?>",
 						{
 							number: phones
@@ -130,24 +126,27 @@
 						{
 							if(response=="no")
 							{
-								$("#llog").attr("disabled", false);
+								$("#llog").show();
+								$("#loading").hide();
 								$("#msg").html("");
 								$("#msg").html("");
-										firebase.auth().signInWithPhoneNumber(phone,window.recaptchaVerifier).then(function (confirmationResult) {
-								        //s is in lowercase
-								        window.confirmationResult=confirmationResult;
-								        coderesult=confirmationResult;
-								        console.log(coderesult);
-								        //alert("Message sent");
-								        $("#rreegg").hide();
-								        $("#veriffy").show();
-								    }).catch(function (error) {
-								        alert(error.message);
-								    });
+									$.post("<?= base_url('Login/GetSms'); ?>",{
+										phone: phone
+									},function(msgs){
+										//alert(msgs);
+										if(msgs == "success")
+										{
+											$("#veriffy").show();
+											$("#rreegg").hide();
+											$("#fphone").val(phone);
+										}
+									})
 							}else
 							{
-								$("#llog").attr("disabled", true);
-								$("#msg").html("Mobile Number is not Registered!")
+								$("#llog").show();
+								$("#loading").hide();
+								$("#msg").html("Mobile Number is not Registered!");
+								//$("#resetPass").show();
 							}
 							//alert(response);
 						}
@@ -156,8 +155,10 @@
 				});
 
 				$("#phone").blur(function(){
+					$("#llog").hide();
+						$("#loading").show();
 					var phones = $("#phone").val();
-					var phone = "+91"+phones;
+					var phone = phones;
 					$.post("<?= base_url('Login/verifyExist'); ?>",
 						{
 							number: phones
@@ -166,29 +167,50 @@
 						{
 							if(response=="no")
 							{
-								$("#llog").attr("disabled", false);
+								$("#llog").show();
+								$("#loading").hide();
 								$("#msg").html("");
 								$("#msg").html("");
-										firebase.auth().signInWithPhoneNumber(phone,window.recaptchaVerifier).then(function (confirmationResult) {
-								        //s is in lowercase
-								        window.confirmationResult=confirmationResult;
-								        coderesult=confirmationResult;
-								        console.log(coderesult);
-								        //alert("Message sent");
-								        $("#rreegg").hide();
-								        $("#veriffy").show();
-								    }).catch(function (error) {
-								        alert(error.message);
-								    });
+								$.post("<?= base_url('Login/GetSms'); ?>",{
+										phone: phone
+									},function(msgs){
+										//alert(msgs);
+										if(msgs == "success")
+										{
+											$("#veriffy").show();
+											$("#rreegg").hide();
+											$("#fphone").val(phone);
+										}
+									})
 							}else
 							{
-								$("#llog").attr("disabled", true);
-								$("#msg").html("Mobile Number is not Registered!")
+								$("#llog").show();
+								$("#loading").hide();
+								$("#msg").html("Mobile Number is not Registered!");
+								//$("#resetPass").show();
 							}
 							//alert(response);
 						}
 						)
 				});
+
+				$("#resend").click(function(){
+					$("#loading2").show();
+					var phones = $("#phone").val();
+					var phone = phones;
+					$.post("<?= base_url('Login/GetSms'); ?>",{
+										phone: phone
+									},function(msgs){
+										//alert(msgs);
+										if(msgs == "success")
+										{
+											$("#veriffy").show();
+											$("#rreegg").hide();
+											$("#loading2").hide();
+											$("#fphone").val(phone);
+										}
+									})
+				})
 
 				$("#conpass").keyup(function(){
 					var pass = $("#pass1").val();
@@ -205,33 +227,38 @@
 					}
 				});
 			})
-		</script>
-		<script type="text/javascript">
-			window.onload=function () {
-			  render();
-			};
-			function render() {
-			    window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container');
-			    recaptchaVerifier.render();
-			}
 
-			function codeverify() {
+			function codeverify()
+			{
 				var phones = $("#phone").val();
-				var phone = "+91"+phones;
-		    var code=document.getElementById('verificationCode').value;
-		    coderesult.confirm(code).then(function (result) {
-		        //alert("Successfully registered");
-		        var user=result.user;
-		        console.log(user);
-		        //$("#regForm").submit();
-		        $("#rreegg").hide();
-				$("#veriffy").hide();
-				$("#resetPass").show();
-				$("#phh").val(phones);
-		    }).catch(function (error) {
-		        alert(error.message);
-		    });
-		}
+					var phone = phones;
+					$("#vrcd").hide();
+					$("#loading3").show();
+				var verCode = $("#verificationCode").val();
+
+				$.post("<?= base_url('Login/verifyCodes'); ?>",{
+					phone: phone,
+					code: verCode
+				},function(verCodes){
+					if(verCodes == "empty")
+					{
+						$("#verificationCode").attr("placeholder","invalid OTP Number!");
+						$("#verificationCode").addClass("inpDanger");
+						$("#verificationCode").val("");
+						$("#loading3").hide();
+						$("#vrcd").show();
+					}
+					else
+					{
+						$("#resetPass").show();
+						$("#veriffy").hide();
+						$("#loading3").hide();
+						$("#vrcd").show();
+					}
+					
+				})
+			}
 		</script>
+		
 	</body>
 </html>

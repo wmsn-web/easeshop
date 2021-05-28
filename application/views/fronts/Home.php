@@ -9,9 +9,9 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>Easeshop</title>
+<title>easeshop</title>
 <?php include("inc/layout.php"); ?>
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewxfinal.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -412,7 +412,11 @@
 </div>
 <!-- /#top-banner-and-menu --> 
 
-<!-- ============================================================= FOOTER ============================================================= -->
+<?php if($feed = $this->session->flashdata("Feed")): ?>
+    <div class="toastMsg">
+      <div class="Msgs"><?= $feed; ?></div>
+    </div>
+  <?php endif; ?>
 <?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
@@ -422,6 +426,9 @@
 
 <?php include("inc/js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
+<script type="text/javascript">
+  $(".toastMsg").fadeOut(6000);
+</script>
 </body>
 
 </html>

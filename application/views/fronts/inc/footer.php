@@ -60,7 +60,7 @@
           
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a title="About us" href="<?= base_url('Upcomming'); ?>">About us</a></li>
+              <li class="first"><a title="About us" href="<?= base_url('About-Us'); ?>">About us</a></li>
               <li><a title="Information" href="<?= base_url('Upcomming'); ?>">Customer Service</a></li>
               <li><a title="Addresses" href="<?= base_url('Upcomming'); ?>">Company</a></li>
               <li><a title="Addresses" href="<?= base_url('Upcomming'); ?>">Investor Relations</a></li>

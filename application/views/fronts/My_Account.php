@@ -9,9 +9,9 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>Easeshop-MyAccount</title>
+<title>easeshop-MyAccount</title>
 <?php include("inc/layout.php"); ?>
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewxfinal.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -76,6 +76,7 @@
                       <li><a class="active" href="<?= base_url('My-Account'); ?>">My Account</a></li>
                       <li><a href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
                        <li><a href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
+                       <li><a href="<?= base_url('My-wallet'); ?>">My wallet</a></li>
                       <li><a href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
                       <li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
                     </ul>
@@ -184,6 +185,11 @@
     </div>
   </div>
 </div>
+<?php if($feed = $this->session->flashdata("Feed")): ?>
+    <div class="toastMsg">
+      <div class="Msgs"><?= $feed; ?></div>
+    </div>
+  <?php endif; ?>
 <?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
@@ -192,6 +198,7 @@
 <?php include("inc/js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
 <script type="text/javascript">
+  $(".toastMsg").fadeOut(6000);
   $("#proBtn").click(function(){
       addr = $("#addr").val();
       city = $("#city").val();

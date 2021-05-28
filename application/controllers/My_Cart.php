@@ -20,10 +20,12 @@ class My_Cart extends CI_controller
 		$getMenudata = $this->ThemeModel->getMenudata();
 		$user_id = $this->session->userdata("userId");
   		$getCart = $this->ThemeModel->getCart($user_id);
-  		$getUser = $this->ThemeModel->getUserDetails($user_id);
-		$this->load->view("fronts/My_Cart",["menus"=>$getMenudata,"spalOffer"=>$splOffer,"cartData"=>$getCart,"getUser"=>$getUser]);
+  		$getUser = $this->ThemeModel->getUserDetails($user_id); 
+  		$walbal = $this->ThemeModel->getWalletBal($user_id);
+  		$getSettings = $this->ThemeModel->getSettings();
+		$this->load->view("fronts/My_Cart",["menus"=>$getMenudata,"spalOffer"=>$splOffer,"cartData"=>$getCart,"getUser"=>$getUser,"walbal"=>$walbal,"settings"=>$getSettings]);
 		//echo "<pre>";
-		//print_r($getCart);
+		//print_r($getSettings);
 	}
 
 	public function delCart($id='')
@@ -80,9 +82,10 @@ class My_Cart extends CI_controller
 		$tax = $this->input->post("tax");
 		$grosstot = $this->input->post("grosstot");
 		$orderId = $this->input->post("orderId");
+		$walPay = $this->input->post("walPay");
 		date_default_timezone_set("Asia/Kolkata");
 		$date = date('Y-m-d');
-		$addOrders = $this->ThemeModel->addOrders($user_id,$ship_id,$carts,$subtot,$tax,$grosstot,$orderId,$date);
+		$addOrders = $this->ThemeModel->addOrders($user_id,$ship_id,$carts,$subtot,$tax,$grosstot,$orderId,$date,$walPay);
 		echo $addOrders;
 
 	}

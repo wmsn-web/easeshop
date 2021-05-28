@@ -1531,7 +1531,7 @@ class AdminModel extends CI_model
 		return $data;
 	}
 
-	public function dashdata()
+	public function dashdata() 
 	{
 		$totUser = $this->db->get("users")->num_rows();
 		$this->db->where("active",1);
@@ -1541,12 +1541,15 @@ class AdminModel extends CI_model
 		$this->db->where("status",0);
 		$requests = $this->db->get("order_return")->num_rows();
 
+		$gtVisitor = $this->db->get("visitors")->num_rows();
+
 		$data = array
 					(
 						"totUser"		=>$totUser,
 						"totProducts"	=>$totProducts,
 						"newOrder"		=>$newOrder,
-						"requests"		=>$requests
+						"requests"		=>$requests,
+						"visitors"		=>$gtVisitor
 					);
 		return $data;
 	}
@@ -1599,5 +1602,111 @@ class AdminModel extends CI_model
 		return $data;
 	}
 	
-	
+	public function getAllBanks($proId)
+	{
+		$get = $this->db->get("all_banks");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach ($res as $key => $val) {
+				$this->db->where(["pro_id"=>$proId,"bank"=>$val->bank_code]);
+				$gt = $this->db->get("debit_bank")->row();
+				if(@$gt->bank == $val->bank_code)
+				{
+					$slct = "checked";
+				}
+				else
+				{
+					$slct = "";
+				}
+
+				$this->db->where(["pro_id"=>$proId,"bank"=>$val->bank_code]);
+				$gt2 = $this->db->get("credit_bank")->row();
+				if(@$gt2->bank == $val->bank_code)
+				{
+					$slct2 = "checked";
+				}
+				else
+				{
+					$slct2 = "";
+				}
+
+				$data[] = array
+								(
+									"bank_name"	=>$val->bank_name,
+									"bank_code"	=>$val->bank_code,
+									"slct"		=>$slct,
+									"slct2"		=>$slct2,
+									"drbId"		=>@$gt->id,
+									"crbId"		=>@$gt2->id
+								);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getOffers($proId)
+	{
+		
+		$this->db->where("pro_id",$proId);
+		$get = $this->db->get("cash_back_offer");
+		if($get->num_rows()==0)
+		{
+			$data = array
+						(
+							"debit_card"	=>"",
+							"credit_card"	=>"",
+							"upi"			=>"",
+							"offer_type"	=>"",
+							"offer_value"	=>"",
+							"date_limit"	=>""
+						);
+		}
+		else
+		{
+			$row = $get->row();
+			$data = array
+						(
+							"debit_card"	=>$row->debit_card,
+							"credit_card"	=>$row->credit_card,
+							"upi"			=>$row->upi,
+							"offer_type"	=>$row->offer_type,
+							"offer_value"	=>$row->offer_value,
+							"date_limit"	=>$row->date_limit
+						);
+		}
+
+		return $data;
+		
+	}
+
+	public function getAllVisitors()
+	{
+		$this->db->order_by("date","DESC");
+		$gt = $this->db->get("visitors");
+		if($gt->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $gt->result();
+			foreach($res as $vs)
+			{
+				$data[] = array
+								(
+									"id"	=>$vs->id,
+									"ip"	=>$vs->ip,
+									"date"	=>$vs->date
+								);
+			}
+		}
+
+		return $data;
+	}
 }

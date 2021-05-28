@@ -23,6 +23,12 @@ class Home extends CI_controller
 
 	public function index()
 	{
+		$ip = $_SERVER['REMOTE_ADDR'];
+		date_default_timezone_set('Asia/Kolkata');
+		$date = date('Y-m-d');
+		$vs_from = "Website";
+		$times = date('h:i:s');
+		$this->ThemeModel->setVisitor($ip,$date,$vs_from,$times);
 
 		//$this->session->unset_userdata("userId");
 		$getMenudata = $this->ThemeModel->getMenudata();

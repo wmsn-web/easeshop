@@ -372,10 +372,11 @@
 							},
 							function(response)
 							{
-								
+								//alert(response);
 								setTimeout(function() { $("#newFlash").show(); }, 4000);
 								$("#newFlash").fadeOut(5000);
-								setTimeout(function() { location.href=""; }, 6000);
+								setTimeout(function() { location.href="";
+								 }, 2000);
 								
 							}
 						)

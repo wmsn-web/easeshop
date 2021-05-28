@@ -13,7 +13,7 @@ class Product_details extends CI_controller
 
 	public function index($proId="")
 	{
-		$getProDetailsById = $this->ThemeModel->getProDetailsById($proId);
+		$getProDetailsById = $this->ThemeModel->getProDetailsById($proId); 
 		//echo "<pre>";
 		//print_r($getProDetailsById);
 		$splOffer = $this->ThemeModel->splOffer();

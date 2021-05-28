@@ -20,6 +20,39 @@
     display: none !important;
   }
 }
+.tbl
+{
+  width: 100%;
+}
+
+.tbl th
+{
+  padding: 4px;
+  font-weight: bold;
+  border:solid 1px #ccc;
+}
+.tbl td
+{
+  padding: 4px;
+  border:solid 1px #ccc;
+}
+.tbl td:last-child
+{
+  text-align: right;
+}
+.tbl tbody {
+    display: block;
+    height: 250px;
+    overflow: auto;
+}
+.tbl thead tr, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;/* even columns width , fix width of table too*/
+}
+.tbl thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
 </style>
 </head>
 <body class="cnt-home">
@@ -75,8 +108,8 @@
                     <ul  class="deskSidemenu">
                       <li><a href="<?= base_url('My-Account'); ?>">My Account</a></li>
                       <li><a href="<?= base_url('My-Orders'); ?>">My Orders</a></li>
-                       <li><a class="active" href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
-                       <li><a href="<?= base_url('My-wallet'); ?>">My wallet</a></li>
+                       <li><a href="<?= base_url('My-wishlist'); ?>">My Wishlist</a></li>
+                       <li><a class="active" href="<?= base_url('My-wallet'); ?>">My wallet</a></li>
                       <li><a href="<?= base_url('Change-Password'); ?>">Change Password</a></li>
                       <li><a href="<?= base_url('Logout'); ?>">Logout</a></li>
                     </ul>
@@ -87,49 +120,35 @@
           <div class="cardDiv2">
             <div class="card">
               <div class="card-title">
-                <h4>My Wishlist</h4>
+                <h4>My Wallet</h4>
               </div>
                 <div class="card-body">
-                  <?php if (!empty($mywish)): ?>
-                    <?php foreach($mywish as $wishPro): ?>
-                  <div class="row">
-                    <div class="cols2-2">
-                      <div align="center">
-                        <a onclick="location.href='<?= base_url('My-wishlist/delWish/'.$wishPro['id']); ?>'" href="#">
-                          <i class="fa fa-trash"></i>
-                        </a>
-                      </div>
-                    </div>
-                    <div class="colss-10">
-                      <div class="proDetails">
-                        <div class="row">
-                          <div class="cols2-2">
-                            <img src="<?= base_url('uploads/products/'.$wishPro['proData']['mnImg']); ?>" width="60" alt="proImg" /></div>
-                          
-                          <div class="cols2-10">
-                            <div class="product-info">
-                              <h5 class="name"><a href="<?= base_url('Product_details/index/'.$wishPro['proData']['pro_id']); ?>"><?= $wishPro['proData']['prod_name']; ?></a></h5>
-                              <div class="rating rateit-small"></div>
-                              <div class="description"><span class="badge badge-danger"><?= $wishPro['proData']['discount']; ?>% Off</span></div>
-
-                              <div class="product-price"> 
-                                <span class="price">
-                                  &#8377; <?= $wishPro['proData']['sale_price']; ?>      </span>
-                                                 <span class="price-before-discount"><del>&#8377; <?= $wishPro['proData']['price']; ?></del></span>
-                                          
-                              </div><!-- /.product-price -->
-                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <div align="center">
+                    <h3>Wallet Balance: &#8377; <?= number_format($walbal,2); ?></h3>
                   </div>
-                  <?php endforeach; ?>
-                  <?php else: ?>
-                    <h5 class="text-danger">Wishlist is empty!</h5>
-                  <?php endif; ?>
-                  </div>
+                  <h5>Transactions</h5>
+                  <table class="tbl ">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Notes</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php if(!empty($walTr)): ?>
+                        <?php foreach($walTr as $wal): ?>
+                          <tr>
+                            <td><?= $wal['date']; ?></td>
+                            <td><?= $wal['notes']; ?></td>
+                            <td><?= $wal['amount']; ?></td>
+                          </tr>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
+                      
+                      
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -139,11 +158,7 @@
     </div>
   </div>
 </div>
-<?php if($feed = $this->session->flashdata("Feed")): ?>
-    <div class="toastMsg">
-      <div class="Msgs"><?= $feed; ?></div>
-    </div>
-  <?php endif; ?>
+
 <?php include("inc/bottomMenu.php"); ?>
 <div id="mob-view">
   <?php include("inc/footer.php"); ?>
@@ -152,7 +167,7 @@
 <?php include("inc/js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
 <script type="text/javascript">
-  $(".toastMsg").fadeOut(6000);
+  
 </script>
 </body>
 

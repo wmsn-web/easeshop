@@ -182,8 +182,8 @@
 <!--<![endif]-->
 <div align="center" class="img-container center autowidth" style="padding-right: 5px;padding-left: 5px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 5px;padding-left: 5px;" align="center"><![endif]-->
-<div style="font-size:1px;line-height:5px"> </div><img align="center" alt="Main Image" border="0" class="center autowidth" src="https://easeshop.in/admin_assets/img_mail/main-image.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 590px; display: block;" title="Main Image" width="590"/>
-<div style="font-size:1px;line-height:5px"> </div>
+<div style="font-size:1px;line-height:5px"></div><img align="center" alt="Main Image" border="0" class="center autowidth" src="https://easeshop.in/admin_assets/img_mail/main-image.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 590px; display: block;" title="Main Image" width="590"/>
+<div style="font-size:1px;line-height:5px"></div>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 20px; padding-bottom: 20px; font-family: Arial, sans-serif"><![endif]-->
@@ -211,7 +211,7 @@
 		<?php foreach($mailData['cartData'] as $mldt): ?>
 			<tr>
 				<td style="border:solid 1px #f2f2f2; padding: 6px; text-align: center; "><img src="https://easeshop.in/uploads/products/<?= $mldt['mnImg']; ?>" width="65"></td>
-				<td style="border:solid 1px #f2f2f2; padding: 6px;  text-align: left;  "><?= $mldt['product_name']; ?></td>
+				<td style="border:solid 1px #f2f2f2; padding: 6px;  text-align: left;  "><?= $mldt['product_name']. " <small>".$mldt['varName']."</small>"; ?></td>
 				
 				<td style="border:solid 1px #f2f2f2; padding: 6px; text-align: center;  "><?= $mldt['qty']; ?></td>
 				<td style="border:solid 1px #f2f2f2; padding: 6px; text-align: right;  "><?= $mldt['price']; ?></td>

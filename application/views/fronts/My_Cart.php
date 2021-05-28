@@ -9,9 +9,9 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>Easeshop</title>
+<title>easeshop</title>
 <?php include("inc/detail_layout.php"); ?>
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewxfinal.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -22,7 +22,7 @@
 }
 </style>
 </head>
-<body>
+
     <body class="cnt-home">
 		<!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1"> 
@@ -113,7 +113,7 @@
 	</div>
 </div><!-- /.shopping-cart-table -->
 
-<div class="col-md-8 col-sm-12 estimate-ship-tax">
+<div class="col-md-4 col-sm-12 estimate-ship-tax">
 	<?php if(empty($cartData['shipData'])): ?>
 	<table class="table">
 		<thead>
@@ -200,6 +200,7 @@
 	<h3>Shipping Address</h3>
 	<h4><i class="fa fa-user"></i> <?= $getUser['name']; ?></h4>
 	<p><i class="fa fa-phone"></i> <?= $getUser['phone']; ?><br>
+		<i class="fa fa-envelope"></i> <?= $getUser['email']; ?><br>
 		<i class="fa fa-map-marker"></i> <?= $cartData['shipData']['address']; ?>,
 		<?= $cartData['shipData']['city']; ?><br>
 		<?= $cartData['shipData']['state']; ?>,<?= $cartData['shipData']['pin']; ?><br>
@@ -210,8 +211,12 @@
 <?php endif; ?>
 </div><!-- /.estimate-ship-tax -->
 
-
-
+<div class="col-md-4 col-sm-12"><?=nbs(); ?></div>
+<?php
+$walb = $walbal;
+$perc = $settings['wallet_pay_percent'] /100;
+$walPay = round($walbal*$perc);
+?>
 <div class="col-md-4 col-sm-12 cart-shopping-total"> 
 	<table class="table">
 		<thead>
@@ -220,6 +225,11 @@
 					<div class="cart-sub-total">
 						Subtotal<span class="inner-left-md">&#8377; <?= number_format($cartData['totAmt'],2); ?></span> 
 					</div>
+					<?php if($walbal >0): ?>
+						<div class="cart-sub-total">
+						Pay from Wallet<span class="inner-left-md text-danger">(-)<?= number_format($cartData['walPay'],2); ?></span> 
+					</div>
+					<?php endif; ?>
 					<?php if(!$cartData['tax'] == "0"): ?>
 						<div class="cart-sub-total">
 							TAX <?= $cartData['tax']; ?>%<?= nbs(2); ?> <span class="inner-left-md">&#8377; <?= number_format($cartData['nowTx'],2); ?></span> 
@@ -237,21 +247,12 @@
 			<input type="hidden" id="carts" value='<?= json_encode($cartData['cartall']); ?>'>
 			<input type="hidden" id="subtot" value='<?= $cartData['totAmt']; ?>'>
 			<input type="hidden" id="tax" value='<?= $cartData['tax']; ?>'>
+			<input type="hidden" id="walPay" value="<?= $walPay; ?>">
 			<input type="hidden" id="grosstot" value='<?= $cartData['grand']; ?>'>
 			
 		
-		<form id="checkout" method="post" action="<?= base_url('pgRedirect'); ?>"> 
-		<input id="ORDER_ID" tabindex="1" maxlength="20" size="20" type="hidden"
-			name="ORDER_ID"  value='<?= rand(); ?>'>
-		<input type="hidden" id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="<?= $this->session->userdata('userId'); ?>">
-		<input type="hidden" id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail">
-		<input type="hidden" id="CHANNEL_ID" tabindex="4" maxlength="12"
-						size="12" name="CHANNEL_ID" autocomplete="off" value="WEB">
-		<input type="hidden" title="TXN_AMOUNT" tabindex="10"
-						type="text" name="TXN_AMOUNT"
-						value="<?= $cartData['grand']; ?>">
-		<input value="CheckOut" type="hidden" 	onclick="">
-	</form>
+		<?php include("inc/payTmView.php"); ?>
+		<?php //include("inc/payU.php"); ?>
 		<tbody>
 				<tr>
 					<td>
@@ -263,6 +264,7 @@
 							<?php endif; ?>
 							
 						</div>
+						<div style="height: 100px; width: 100%">&nbsp;</div>
 					</td>
 				</tr>
 		</tbody><!-- /tbody -->
@@ -293,12 +295,19 @@
   <?php endif; ?>
 <!-- ============================================================= FOOTER : END============================================================= --> 
 
-
+<?php include("inc/modals.php"); ?>
 <?php include("inc/detail_js.php"); ?>
 <?php include("inc/searchjs.php"); ?>
+<?php if($walbal >0): ?>
+	<script type="text/javascript">
+		$("#WalletModal").modal('show');
+	</script>
+<?php endif; ?>
 <script type="text/javascript">
 	$(document).ready(function(){
     $(".toastMsg").fadeOut(6000);
+
+    
 
     $("#AddShip").click(function(){
     	addr = $("#addr").val();
@@ -347,6 +356,7 @@
     	grosstot = $("#grosstot").val();
     	carts = $("#carts").val();
     	orderId = $("#ORDER_ID").val();
+    	walPay = $("#walPay").val();
     	$.post("<?= base_url('My-Cart/AddOrder'); ?>",{
     		user_id: user_id,
     		ship_id:ship_id,
@@ -354,11 +364,15 @@
     		tax: tax,
     		grosstot: grosstot,
     		carts: carts,
-    		orderId: orderId
+    		orderId: orderId,
+    		walPay: walPay
     	},function(response){
     		if(response=="done")
     		{
+    			//For Paytm
     			$("#checkout").submit();
+    			//For Payumoney
+    			//$("#payUForm").submit();
     		}
     	})
     })

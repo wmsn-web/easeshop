@@ -59,9 +59,7 @@
 												</div>
 												<input type="hidden" name="backUrl" value="<?= @$_GET['url']; ?>">
 												<input type="hidden" name="deviceid" value="<?= md5($_SERVER['HTTP_USER_AGENT']); ?>">
-												<div class="form-group">
-													<div id="recaptcha-container"></div>
-												</div>
+												
 												<div class="form-group">
 													<button id="reg" type="button" class="btn btn-primary" >Register</button>
 													
@@ -78,6 +76,9 @@
 												<input type="text" id="verificationCode" placeholder="Enter verification code" class="form-control unicase-form-control text-input">
 											</div>
 											<div class="form-group">
+												<div id="loading3" style="display: none">
+														<img src="<?= base_url('assets/images/loading.gif'); ?>">
+													</div>
     											<button type="button" class="btn btn-primary" onclick="codeverify();">Verify code</button>
 											</div>
 										</div>
@@ -90,35 +91,16 @@
 			</div>
 		</section>
 		<?php include("inc/js.php"); ?>
-		<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-		<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyAkKC4If-q2jAyoE_FRTSB6laUIfz3oRzc",
-    authDomain: "easeshop-13604.firebaseapp.com",
-    projectId: "easeshop-13604",
-    storageBucket: "easeshop-13604.appspot.com",
-    messagingSenderId: "927322896059",
-    appId: "1:927322896059:web:33fcb0ffb29beb2317db9e",
-    measurementId: "G-FHSPDJ1EHJ"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  
-</script>
+		
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$("#reg").click(function(){
 					var name = $("#name").val();
 					var phones = $("#phone").val();
-					var phone = "+91"+phones;
+					var phone = phones;
 					var pass = $("#pass").val();
 					var conpass = $("#conpass").val();
-					/*if(name == "" || phone=="" || pass=="" || conpass=="")
-					{
-						$("#name").addClass("inpDanger"); $("#name").attr("placeholder","invalid Name!");$("#name").focus();$("#phone").addClass("inpDanger"); $("#phone").attr("placeholder","invalid Mobile Number!");$("#pass").addClass("inpDanger"); $("#pass").attr("placeholder","invalid Password!");$("#conpass").addClass("inpDanger"); $("#conpass").attr("placeholder","invalid Password!");
-					}*/
+					
 					if(name==""){$("#name").addClass("inpDanger"); $("#name").attr("placeholder","invalid Name!");$("#name").focus()}
 					else if(phone==""){$("#name").removeClass("inpDanger"); $("#phone").addClass("inpDanger"); $("#phone").attr("placeholder","invalid Mobile Number!");$("#phone").focus();}
 					else if(pass==""){$("#phone").removeClass("inpDanger"); $("#pass").addClass("inpDanger"); $("#pass").attr("placeholder","invalid Password!");$("#pass").focus()}
@@ -139,17 +121,17 @@
 								{
 									$("#reg").attr("disabled", false);
 									$("#msg").html("");
-										firebase.auth().signInWithPhoneNumber(phone,window.recaptchaVerifier).then(function (confirmationResult) {
-								        //s is in lowercase
-								        window.confirmationResult=confirmationResult;
-								        coderesult=confirmationResult;
-								        console.log(coderesult);
-								        //alert("Message sent");
-								        $("#rreegg").hide();
-								        $("#veriffy").show();
-								    }).catch(function (error) {
-								        alert(error.message);
-								    });
+										$.post("<?= base_url('Login/GetSms'); ?>",{
+										phone: phone
+									},function(msgs){
+										//alert(msgs);
+										if(msgs == "success")
+										{
+											$("#veriffy").show();
+											$("#rreegg").hide();
+											//$("#fphone").val(phone);
+										}
+									})
 								}
 							}
 							)
@@ -193,27 +175,34 @@
 				})
 				
 			})
-		</script>
-		<script type="text/javascript">
-			window.onload=function () {
-			  render();
-			};
-			function render() {
-			    window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container');
-			    recaptchaVerifier.render();
-			}
 
 			function codeverify() {
 		    var code=document.getElementById('verificationCode').value;
-		    coderesult.confirm(code).then(function (result) {
-		        //alert("Successfully registered");
-		        var user=result.user;
-		        console.log(user);
-		        $("#regForm").submit();
-		    }).catch(function (error) {
-		        alert(error.message);
-		    });
-		}
+		    var number = $("#phone").val();
+		    $.post("<?= base_url('Login/verifyCodesReg'); ?>",{
+					phone: number,
+					code: code
+				},function(verCodes){
+					//alert(code)
+					
+					if(verCodes == "empty")
+					{
+						$("#verificationCode").attr("placeholder","invalid OTP Number!");
+						$("#verificationCode").addClass("inpDanger");
+						$("#verificationCode").val("");
+						$("#loading3").hide();
+						$("#vrcd").show();
+					}
+					else
+					{
+						 $("#regForm").submit();
+					}
+					
+				})
+		   
+		        //$("#regForm").submit();
+		   }
 		</script>
+		
 	</body>
 </html>

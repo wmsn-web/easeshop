@@ -312,7 +312,7 @@ class ThemeModel extends CI_Model
 		//$this->db->limit($limit, $start);
 		$getBrand = $this->db->get("brands")->row();
 		$brandId = @$getBrand->brand_id;
-		$this->db->where(["brand_id"=>$brandId, "status"=>1]);
+		$this->db->where(["brand_id"=>$brandId, "status"=>1, "qty !="=>"Out Of Stock"]);
 		$this->db->limit($limit, $start);
 		//$this->db->select("*");
 		//$this->db->select_min("sale_price");
@@ -341,6 +341,24 @@ class ThemeModel extends CI_Model
 				{
 					$calRev = 0;
 				}
+				$this->db->where("pro_id",$key->id);
+				$gtOfr = $this->db->get("cash_back_offer");
+				if($gtOfr->num_rows() > 0)
+				{
+					$rowOfr = $gtOfr->row();
+					if($rowOfr->offer_type == "Flat")
+					{
+						$cashback = "Flat &#8377;" .$rowOfr->offer_value."/- Cashback";
+					}
+					else
+					{
+						$cashback = $rowOfr->offer_value."% Cashback";
+					}
+				}
+				else
+				{
+					$cashback="";
+				}
 				$data[] = array
 								(
 									"prod_name"		=>$key->product_name,
@@ -352,7 +370,8 @@ class ThemeModel extends CI_Model
 									"offer"			=>$key->offer,
 									"upcoming"		=>$key->upcoming,
 									"descr"			=>substr($key->descr, 0, 200),
-									"revs"			=>$calRev
+									"revs"			=>$calRev,
+									"cashback"		=>$cashback
 								);
 			}
 		}
@@ -552,6 +571,83 @@ class ThemeModel extends CI_Model
 										);
 				}
 			}
+
+			$this->db->where("pro_id",$key->id);
+			$gtOfr = $this->db->get("cash_back_offer");
+			if($gtOfr->num_rows() > 0)
+			{
+				$rowOfr = $gtOfr->row();
+				if($rowOfr->offer_type == "Flat")
+				{
+					$cashback = "Flat &#8377;" .$rowOfr->offer_value."/- Cashback";
+				}
+				else
+				{
+					$cashback = $rowOfr->offer_value."% Cashback";
+				}
+				$offeronDr = ""; $offeronCr =""; $offeronUpi ="";
+				if($rowOfr->debit_card = "yes")
+				{
+					$offeronDr = "<i class='fa fa-check-circle text-success'></i> Debit Card";
+				}
+				if($rowOfr->credit_card = "yes")
+				{
+					$offeronCr = "<i class='fa fa-check-circle text-success'></i> Credit Card";
+				}
+				if($rowOfr->upi = "yes")
+				{
+					$offeronUpi = "<i class='fa fa-check-circle text-success'></i> UPI Payment";
+				}
+				else
+				{
+					$offeronDr = ""; $offeronCr =""; $offeronUpi ="";
+				}
+
+				$offeron = $offeronDr .nbs(5).$offeronCr .nbs(5).$offeronUpi;
+			}
+			else
+			{
+				$cashback="";
+				$offeron = "";
+			}
+
+			$this->db->where("pro_id",$key->id);
+			$gtbnkDr = $this->db->get("debit_bank");
+			if($gtbnkDr->num_rows()==0)
+			{
+				$bnkDataDr = array();
+			}
+			else
+			{
+				$resBnk = $gtbnkDr->result();
+				foreach($resBnk as $bnk)
+				{
+					$this->db->where("bank_code",$bnk->bank);
+					$gtss = $this->db->get("all_banks")->row();
+					$bnkDataDr[] = array(
+						"bank_name"	=>$gtss->bank_name
+					);
+				}
+			}
+
+			$this->db->where("pro_id",$key->id);
+			$gtbnkCr = $this->db->get("credit_bank");
+			if($gtbnkCr->num_rows()==0)
+			{
+				$bnkDataCr = array();
+			}
+			else
+			{
+				$resBnk = $gtbnkCr->result();
+				foreach($resBnk as $bnk)
+				{
+					$this->db->where("bank_code",$bnk->bank);
+					$gtss = $this->db->get("all_banks")->row();
+					$bnkDataCr[] = array(
+						"bank_name"	=>$gtss->bank_name
+					);
+				}
+			}
 			
 				$data = array
 								(
@@ -572,7 +668,11 @@ class ThemeModel extends CI_Model
 									"discount"		=>$key->offer,
 									"upcoming"		=>$key->upcoming,
 									"revs"			=>$calRev,
-									"totRev"		=>$getTotUsr
+									"totRev"		=>$getTotUsr,
+									"cashback"		=>$cashback,
+									"offeron"		=>$offeron,
+									"bnkDataDr"		=>$bnkDataDr,
+									"bnkDataCr"		=>$bnkDataCr
 								);
 			
 		}
@@ -586,6 +686,8 @@ class ThemeModel extends CI_Model
 		$this->db->where(["user_id"=>$user_id,"status"=>0]);
 		$cartGet = $this->db->get("cart");
 		$numRow = $cartGet->num_rows();
+
+		$walbal = $this->getWalletBal($user_id);
 
 		$getSetting = $this->db->get("settings")->row();
 
@@ -659,9 +761,16 @@ class ThemeModel extends CI_Model
 									);
 			}
 		}
+
+		$walb = $walbal;
+		$perc = $getSetting->wallet_pay_percent /100;
+		$walPay = round($walbal*$perc);
+
+		$nextTot = $totAmt - $walPay;
+
 		$tx = $getSetting->tax / 100;
 		$nowTx = $tx*$totAmt;
-		$grandTot = round($nowTx+$totAmt);
+		$grandTot = round($nowTx+$nextTot);
 
 		$data = array(
 						"numCart"	=>$numRow,
@@ -670,6 +779,7 @@ class ThemeModel extends CI_Model
 						"tax"		=>$getSetting->tax,
 						"nowTx"		=>$nowTx,
 						"grand"		=>$grandTot,
+						"walPay"	=>$walPay,
 						"shipData"	=>$shipData,
 						"cartall"	=>@$cartall
 					);
@@ -770,7 +880,7 @@ class ThemeModel extends CI_Model
 		return $data;
 	}
 
-	public function addOrders($user_id,$ship_id,$carts,$subtot,$tax,$grosstot,$orderId,$date)
+	public function addOrders($user_id,$ship_id,$carts,$subtot,$tax,$grosstot,$orderId,$date,$walPay)
 	{
 		$data = array
 					(
@@ -779,6 +889,7 @@ class ThemeModel extends CI_Model
 						"user_id"	=>$user_id,
 						"shipping_address_id"	=>$ship_id,
 						"prices"	=>$subtot,
+						"wallet_pay"=>$walPay,
 						"tax"		=>$tax,
 						"gross_total"	=>$grosstot,
 						"order_date"	=>$date
@@ -863,6 +974,15 @@ class ThemeModel extends CI_Model
 				$getCrt = $this->db->get("cart")->row();
 				$this->db->where("pro_id",$getCrt->product_id);
 				$getPro = $this->db->get("products")->row();
+				if(!empty($getCrt->variation_name))
+				{
+					$vr = explode("_", $getCrt->variation_name);
+					$varName = "--".$vr[2];
+				}
+				else
+				{
+					$varName = "";
+				}
 				$cartData[] = array
 									(
 										"product_name"	=>$getPro->product_name,
@@ -873,7 +993,8 @@ class ThemeModel extends CI_Model
 										"status"		=>$ord->status,
 										"returns"		=>$getCrt->returns,
 										"ordId"			=>$id,
-										"cart_id"		=>$getCrt->cart_id
+										"cart_id"		=>$getCrt->cart_id,
+										"varName"		=>$varName
 									);
 			}
 			$tx = $ord->tax /100;
@@ -1060,9 +1181,86 @@ class ThemeModel extends CI_Model
 		$setRow = $get->row();
 		$data = array
 					(
-						"return_policy"		=>$setRow->return_policy
+						"return_policy"		=>$setRow->return_policy,
+						"wallet_pay_percent"=>$setRow->wallet_pay_percent
 					);
 
 		return $data;
+	}
+
+	public function getWalletBal($user_id)
+	{
+		$this->db->where("user_id",$user_id);
+		$this->db->select_sum("withdraw");
+		$getwdr = $this->db->get("user_wallet")->row();
+
+		$this->db->where("user_id",$user_id);
+		$this->db->select_sum("deposit");
+		$getdep = $this->db->get("user_wallet")->row();
+		$bal = $getdep->deposit - $getwdr->withdraw;
+		return $bal;
+	}
+
+	public function getWalletTransaction($user_id)
+	{
+		$this->db->order_by("id","DESC");
+		$this->db->where("user_id",$user_id);
+		$get = $this->db->get("user_wallet");
+		if($get->num_rows()==0)
+		{
+			$data = array();
+		}
+		else
+		{
+			$res = $get->result();
+			foreach($res as $key)
+			{
+				$expl = explode("_", $key->proid_notes);
+				if($expl[1] == "cashback")
+				{
+					$notes = "Cashback Received";
+					$amount = "<b style='color:#090'>&#8377 ".number_format($key->deposit,2)."</b>";
+				}
+				elseif($expl[1] == "cashbackcancel")
+				{
+					$notes = "Cashback Cancelled";
+					$amount = "<b style='color:#f00'>&#8377 ".number_format($key->withdraw,2)."</b>";
+				}
+				elseif($expl[1] == "cashbackwidthdraw")
+				{
+					$notes = "Purchase Product using cashback amount";
+					$amount = "<b style='color:#f00'>&#8377 ".number_format($key->withdraw,2)."</b>";
+				}
+				$data[] = array(
+					"date"		=>$key->date,
+					"notes"		=>$notes,
+					"amount"	=>$amount
+				);
+			}
+		}
+
+		return $data;
+	}
+
+	public function setVisitor($ip,$date,$vs_from,$times)
+	{
+		$data['ip'] = $ip;
+		$data['date'] = $date;
+		$data['vs_from'] = $vs_from;
+
+		$datas['ip'] = $ip;
+		$datas['date'] = $date;
+		$datas['vs_from'] = $vs_from;
+		$datas['times'] = $times;
+		$this->db->where($data);
+		$gt = $this->db->get("visitors")->num_rows();
+		if($gt > 0)
+		{
+
+		}
+		else
+		{
+			$this->db->insert("visitors",$datas);
+		}
 	}
 }

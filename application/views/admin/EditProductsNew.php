@@ -167,7 +167,9 @@
 														<div class="form-group col-sm-4">
 															<label>Price</label>
 															<input type="text" id="clp_<?= $vars['var_id']; ?>" name="prcce[]" class="form-control  clrP" value="<?= $vars['price']; ?>"  placeholder="Price">
-														</div>
+														</div><br><a onclick="delCol('<?= $vars['var_id']; ?>')" href="javascript:void(0)" class="text-danger">
+															<i class="fa fa-trash"></i>
+														</a>
 														</div>
 													<?php endforeach; ?>
 													</div>
@@ -190,7 +192,9 @@
 															<label>Price</label>
 															<input type="text" id="clz_<?= $vars['var_id']; ?>" name="prcce2[]" class="form-control siz priz" value="<?= $vars['price']; ?>"  placeholder="Price">
 														</div>
-														
+														<a onclick="delSz('<?= $vars['var_id']; ?>')" href="javascript:void(0)" class="text-danger">
+															<i class="fa fa-trash"></i>
+														</a>
 														    
 														</div>
 													<?php endforeach; ?>
@@ -514,6 +518,27 @@
     })
 			});
 CKEDITOR.replace('ShortDesc');
+function delCol(id)
+{
+	$.post("<?= base_url('admin_panel/AllProducts/delvarCol'); ?>",
+			{id: id},
+			function(resps)
+			{
+				location.href="";
+			}
+		)
+}
+
+function delSz(id)
+{
+	$.post("<?= base_url('admin_panel/AllProducts/delvarSz'); ?>",
+			{id: id},
+			function(resps)
+			{
+				location.href="";
+			}
+		)
+}
 		</script>
 	</body>
 </html>

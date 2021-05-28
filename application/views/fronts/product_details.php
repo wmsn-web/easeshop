@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/rating/themes/css-stars.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/rating/themes/bootstrap-stars.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/rating/themes/fontawesome-stars-o.css">
-<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewx.css'); ?>">
+<link rel="stylesheet"  type='text/css' href="<?= base_url('assets/css/customnewxfinal.css'); ?>">
 <style type="text/css">
   @media only screen and (max-width: 991px) 
 {
@@ -133,6 +133,7 @@
                             echo '<i class="fa fa-star-o rt star-grey"></i>';
                           }
                            ?>
+                           <span class="badge badge-success"><?= $proData['cashback']; ?></span>
                         </div>
                         <div class="col-sm-8">
                           <div class="reviews">
@@ -193,7 +194,7 @@
                               <?php endif; ?>
                             </div>
                           </div>
-                          <?php else: ?>
+                          <?php elseif($proData['stock']=="Out Of Stock"): ?>
                             <div class="col-sm-12">
                               <h5 class="text-warning">Available Soon</h5>
                               <form action="<?= base_url('Product_details/notifyme'); ?>" method="post">
@@ -247,6 +248,9 @@
                           </div>
                         </div>
                         <div class="col-sm-4">
+                          <?php if($proData['stock']=="Out Of Stock"): ?>
+                              <h5 class="text-danger">Product is Out Of Stock</h5>
+                            <?php else: ?>
                           <input type="hidden" name="sale_price" id="slprcFixed" value="<?= $proData['sale_price']; ?>">
                             <input type="hidden" name="price" id="nowPrc" value="<?= $proData['sale_price']; ?>">
                             <input type="hidden" name="proId" value="<?= $proData['pro_id']; ?>">
@@ -255,10 +259,12 @@
                             <input type="hidden" name="user_id" value="<?= $this->session->userdata('userId'); ?>">
                           <?php if(!$this->session->userdata("userId")): ?>
                             <a href="<?= base_url('Login'); ?>" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                             
                           <?php else: ?>
                             
-
+                            
                             <button class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
+                          <?php endif; ?>
                           <?php endif; ?>
                         </div>
                      
@@ -267,17 +273,48 @@
                         
                       </div><!-- /.row -->
                     </form>
-                    
+                   
                     </div><!-- /.quantity-container -->
                   </div>
                     
-
+ 
                     
 
                     
                   </div><!-- /.product-info -->
+
                 </div><!-- /.col-sm-7 -->
               </div><!-- /.row -->
+              <?php if(!empty($proData['cashback'])): ?>
+                <h5>Cashback Offers</h5>
+                <span class="badge badge-success"><?= $proData['cashback']; ?></span> On 
+                <?= $proData['offeron']; ?>
+                <div class="row">
+                  <?php if(!empty($proData['bnkDataDr'])): ?>
+                    <div class="col-md-6">
+                      <h5><b>Banks allow for debit card</b></h5>
+                      <p>
+                      <?php foreach($proData['bnkDataDr'] as $drbnk): ?>
+                        <i class="fa fa-check-circle text-success"></i> <?= $drbnk['bank_name'].br(); ?>
+                      <?php endforeach; ?>
+                    </p>
+                    </div>
+                  <?php endif; ?>
+                  <?php if(!empty($proData['bnkDataCr'])): ?>
+                    <div class="col-md-6">
+                      <h5><b>Banks allow for credit card</b></h5>
+                      <p>
+                      <?php foreach($proData['bnkDataCr'] as $crbnk): ?>
+                        <i class="fa fa-check-circle text-success"></i> <?= $crbnk['bank_name'].br(); ?>
+                      <?php endforeach; ?>
+                    </p>
+                    </div>
+                  <?php endif; ?>
+                </div>
+                
+                
+              <?php endif; ?>
+               
                 </div>
         
         <div class="product-tabs inner-bottom-xs  wow fadeInUp">
@@ -615,7 +652,8 @@
       if(qty > 0)
        { 
         var nowSalePrc = parseInt(price*qty);
-        var slprc = nowSalePrc.toFixed(2);
+        //var slprc = nowSalePrc.toFixed(2);
+        var slprc = nowSalePrc;
         //$("#slprc").html(slprc);
         $("#nowPrc").val(slprc);
         //alert();
@@ -636,7 +674,8 @@
       if(qty > 0)
        { 
         var nowSalePrc = salPrc*qty;
-        var slprc = nowSalePrc.toFixed(2);
+        //var slprc = nowSalePrc.toFixed(2);
+        var slprc = nowSalePrc;
         $("#slprc").html(slprc);
         $("#nowPrc").val(slprc);
         //alert();

@@ -78,7 +78,8 @@
 							<a <?php if(isset($_GET['priv'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?priv'); ?>">Set Privacy Policy</a>
 							<a <?php if(isset($_GET['terms'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?terms'); ?>">Terms and condition</a>
 							<a <?php if(isset($_GET['help'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?help'); ?>">Help Desk</a>
-							<a <?php if(isset($_GET['help'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?tax'); ?>">Tax</a>
+							<a <?php if(isset($_GET['tax'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?tax'); ?>">Tax</a>
+							<a <?php if(isset($_GET['coupon'])){ echo 'class="dropdown-item active"';}else{ echo 'class="dropdown-item"';} ?> href="<?= base_url('admin_panel/OtherSettings/?coupon'); ?>">Coupon Codes</a>
 						</div>
 					</div>
 						

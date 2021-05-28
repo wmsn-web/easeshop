@@ -53,7 +53,7 @@ class My_Orders extends CI_controller
 			{
 				echo '<tr>
                         <td><img src="'.base_url('uploads/products/'.$crts['mnImg']).'" width="45"></td>
-                        <td>'.$crts["product_name"];
+                        <td>'.$crts["product_name"].' <small>'.$crts["varName"].'</small>';
                         if(!empty($crts["returns"])): 
                          echo ' <span class="badge badge-danger">Return '.$crts["returns"].'</span>';
                        endif;

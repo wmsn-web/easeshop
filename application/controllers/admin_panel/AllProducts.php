@@ -398,4 +398,20 @@ class AllProducts extends CI_controller
 		$this->session->set_flashdata("Feed","Product Settings Successfully");
 				return redirect("admin_panel/AllProducts");
 	}
+
+	public function delvarCol()
+	{
+		$id = $this->input->post("id");
+		$this->db->where("id",$id);
+		$this->db->delete("varcolor");
+		echo "trues";
+	}
+
+	public function delvarSz()
+	{
+		$id = $this->input->post("id");
+		$this->db->where("id",$id);
+		$this->db->delete("varsize");
+		echo "trues";
+	}
 }
